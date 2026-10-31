@@ -1,55 +1,57 @@
-# 🇳🇵 Digitalize Nepal — Multi-Tenant QR Menu & Hotel Management Platform
+# 🌟 RestroAstra — One platform. Every restaurant operation.
 
-**Digitalize Nepal** is a production-grade, self-hosted web platform designed for restaurants, hotels, and lounges in Nepal. It replaces paper menus with real-time interactive QR menus, table ordering, live order-based chat between diners and receptionists, feedback collection, comprehensive hotel dashboards, and platform super-admin controls.
+[![Node.js](https://img.shields.io/badge/Node.js-20+-68a063?logo=node.js)](https://nodejs.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-14.2-black?logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.6-blue?logo=typescript)](https://www.typescriptlang.org/)
+[![Socket.io](https://img.shields.io/badge/Socket.io-4.8-010101?logo=socket.io)](https://socket.io/)
+[![Prisma](https://img.shields.io/badge/Prisma-5.22-2D3748?logo=prisma)](https://www.prisma.io/)
+[![TailwindCSS](https://img.shields.io/badge/Tailwind-3.4-38B2AC?logo=tailwind-css)](https://tailwindcss.com/)
+
+**RestroAstra** is an enterprise-grade, multi-tenant restaurant operating system and digital dining platform. It seamlessly unifies contactless tabletop QR ordering, 3D culinary previews, real-time kitchen display (KOT), POS billing, live diner-to-staff messaging, daily financial reconciliation, and intelligent inventory tracking into a single, high-performance platform.
 
 ---
 
-## 🌟 Key Features
+## 💎 Core Architecture & Capabilities
 
-### 1. Customer Dining Experience (`/menu/[slug]`)
-- **No App or Login Required:** Instant access via QR scan at any dining table.
-- **Table Detection:** Automatically detects table numbers via URL query parameter (e.g. `/menu/sitan-dabaka-sekuwa?table=1`).
-- **Bilingual Localization:** 1-click toggle between **English** and **नेपाली (Nepali)**.
-- **Categorized Menu Grid:** Cards styled with luxury dark & gold/pink accents matching the design specification.
-- **3D Food Preview:** Interactive 3D model viewer (`<model-viewer>`) for dishes with 3D enabled.
-- **Floating Cart & Instant Ordering:** Add dishes, specify special cooking instructions, and place orders directly to the kitchen.
-- **Live Order Tracking Stepper (`/order/[id]`):** Real-time status progression (`Received` → `Preparing` → `Served`) powered by Socket.io.
-- **Thank You Celebration Card:** High-aesthetic completion card matching PDF mockup.
-- **Live Receptionist Chat:** Real-time two-way messaging between diners and hotel staff.
-- **5-Star Post-Order Feedback:** Interactive rating with comments and celebratory confetti.
+### 1. Contactless Table Dining (`/menu/[slug]`)
+- **Zero App Download:** Instant access by scanning table QR codes.
+- **Table Session Integrity:** Server-side verification binds orders to verified tabletop sessions, preventing order submission from outside or settled tables.
+- **3D Food Exploration:** Interactive WebGL 3D model viewer (`<model-viewer>`) allowing guests to inspect dishes in 360°.
+- **Bilingual Experience:** Instant 1-click toggle between **English** and **नेपाली (Nepali)**.
+- **Cart & Order Submission:** Real-time price verification directly against database records to prevent client tampering.
+- **Live Order Progression (`/order/[id]`):** Live stepper tracking (`Received` → `Preparing` → `Served`) powered by Socket.io.
+- **Two-Way Table Chat:** Direct live messaging channel connecting diners with restaurant staff.
+- **One-Click Waiter Call:** Real-time acoustic alert sent to the staff dashboard.
+- **5-Star Post-Order Reviews:** Interactive dining rating, guest review notes, and celebratory confetti.
 
-### 2. Hotel Staff & Kitchen Dashboard (`/dashboard`)
-- **Realtime Orders Feed & Kanban:** Live incoming orders stream with zero-dependency browser **Audio Chimes** on incoming orders.
-- **1-Click Status Transitions:** Advance orders from Received → In Progress → Done / Cancelled.
-- **Printable Thermal Receipts & KOT Slips:** Formatted kitchen order tickets and customer bills.
-- **Menu Management (`/dashboard/menu`):** Add/edit/delete dishes, upload images, set NPR prices, and toggle in-stock availability instantly.
-- **Live Chat Center (`/dashboard/chat`):** Active table conversation threads with instant reply capability.
-- **Customer Reviews & Ratings (`/dashboard/feedback`):** Overall rating calculation, 5-star distribution chart, and customer comments.
-- **Sales Analytics & Reports (`/dashboard/reports`):** Daily sales trends, revenue totals, average order value (AOV), and top 8 selling dishes.
-- **Table QR Generator (`/dashboard/qr`):** High-resolution QR code generator for general menu and specific tables with printable table tent card template.
-- **Subscription Inactivity Guard:** Enforces account status checks (`pending` / `active` / `expired`).
+### 2. Kitchen Display & Operations Hub (`/dashboard`)
+- **Live Orders Feed & Audio Chimes:** Instant order broadcast with browser Web Audio API acoustic bells.
+- **1-Click Order Workflow:** Advance orders through Received, In Progress, Done, and Settled.
+- **Printable Thermal Receipts & KOT:** Pre-formatted 80mm/58mm kitchen tickets and customer VAT invoices.
+- **Menu Management (`/dashboard/menu`):** Add dishes, upload and auto-compress photos (WebP via Sharp), manage 3D GLB models, and toggle stock.
+- **Realtime Table Chat (`/dashboard/chat`):** Manage active diner threads with instant replies.
+- **Daily Financial Register & Reports (`/dashboard/reports`):** Opening/closing cash register balance, gross sales, payment breakdown (Cash vs. QR), and top-selling items.
+- **Table QR Generator (`/dashboard/qr`):** High-resolution QR generator for individual tables and general menus with printable luxury table tent cards.
+- **Ingredient & Inventory Management (`/dashboard/inventory`):** Ingredient tracking, low-stock threshold notifications, and usage deductions.
 
 ### 3. Platform Super Admin (`/admin`)
-- **Admin Control Hub:** Platform metrics (Total Hotels, Active Subscriptions, Total Platform Orders, Total Platform Volume).
-- **Provision New Hotels:** Admin-only account creation (no public registration), auto-generating URL slug and temporary password.
-- **Instant Status Management:** 1-click dropdown to toggle status (`pending` ↔ `active` ↔ `expired`).
-- **Password Reset:** Generate or customize secure passwords for hotel accounts.
-- **Global QR Code Viewer:** Preview and download QR codes for any onboarded hotel.
+- **Multi-Tenant Administration:** Provision new restaurants, generate unique slugs, and assign credentials.
+- **Subscription Lifecycle Control:** 1-click account status toggle (`pending` ↔ `active` ↔ `expired`).
+- **Global Metrics:** Platform-wide volume, order counts, and tenant activity.
+- **Credential Management:** Secure administrative password reset tools.
 
 ---
 
 ## 🛠️ Technology Stack
 
-| Layer | Technology |
-|---|---|
-| **Framework** | Next.js (App Router + API Routes) |
-| **Server Engine** | Node.js HTTP Server + Socket.io 4.x |
-| **Database & ORM** | PostgreSQL / SQLite with Prisma ORM 5.x |
-| **Realtime WebSockets** | Socket.io with dedicated room isolation (`hotel_${id}`, `order_${id}`) |
-| **Authentication** | JWT (`jsonwebtoken`) + `bcryptjs` password hashing |
-| **QR Code Generation** | `qrcode` server-side rendering to high-res PNG / Data URL |
-| **Styling** | Tailwind CSS with mobile-first dark luxury theme |
-| **Deployment** | Docker Compose (App + PostgreSQL 16 + Nginx Reverse Proxy) |
+| Layer | Technology | Details |
+|---|---|---|
+| **Frontend & APIs** | Next.js 14.2 (App Router) | React 18, TypeScript, Tailwind CSS |
+| **Realtime Engine** | Node.js HTTP + Socket.io 4.8 | Low-latency WebSockets with tenant-isolated rooms |
+| **Database & ORM** | Prisma ORM 5.22 | SQLite (`restroastra.db`) or PostgreSQL (`restroastra_prod`) |
+| **Media Processing** | Sharp 0.35 | Automatic EXIF orientation, WebP compression, 1400px resize |
+| **Authentication** | JWT (`jsonwebtoken`) + `bcryptjs` | Multi-role HTTP-only cookies (`restroastra_hotel_token`, `restroastra_admin_token`) |
+| **Process Manager** | PM2 | Configured as `restroastra-app` on internal port `3005` |
 
 ---
 
@@ -60,22 +62,66 @@
 npm install
 ```
 
-### 2. Generate Prisma Client & Setup Database
+### 2. Configure Environment
+Copy the example environment configuration:
+```bash
+cp .env.example .env
+```
+Default local port is configured to `3005` to prevent conflicts with other services.
+
+### 3. Initialize Database & Seed
 ```bash
 npx prisma generate
 npx prisma db push
-```
-
-### 3. Seed Database with Realistic Demo Restaurant Data
-```bash
 npm run prisma:seed
 ```
 
-### 4. Start Development Server
+### 4. Run Development Server
 ```bash
 npm run dev
 ```
-Visit `http://localhost:3000` in your browser.
+Open **`http://localhost:3005`** in your browser.
+
+- **Customer Menu Demo:** `http://localhost:3005/menu/sitan-dabaka-sekuwa?table=1&qr=1`
+- **Staff Operations Hub:** `http://localhost:3005/dashboard/login` (Email: `sitan@sekuwacornor.com` | Password: `password123`)
+- **Platform Super Admin:** `http://localhost:3005/admin/login` (Email: `admin@restroastra.com` | Password: `adminpassword123`)
 
 ---
 
+## 🛡️ Production Deployment & Isolation (VPS)
+
+RestroAstra is engineered to run alongside other websites on a shared VPS without interference:
+
+### Key Isolation Points:
+- **Dedicated Port:** Uses port `3005` (the original application uses 3000/3001).
+- **Dedicated PM2 Process:** Named `restroastra-app`.
+- **Dedicated Directory:** `/var/www/restroastra`.
+- **Dedicated Database:** `restroastra_prod` (or SQLite `restroastra.db`).
+- **Dedicated Cookies:** `restroastra_hotel_token` & `restroastra_admin_token`.
+- **Nginx Upstream:** `restroastra_upstream` proxying `127.0.0.1:3005`.
+
+### Deployment Steps on VPS:
+1. Copy project files to `/var/www/restroastra`.
+2. Configure `.env` with production secrets, port `3005`, and dedicated database credentials.
+3. Install Nginx configuration from `nginx-vps.conf` into `/etc/nginx/sites-available/restroastra.conf`.
+4. Link to `sites-enabled` and test Nginx:
+   ```bash
+   ln -s /etc/nginx/sites-available/restroastra.conf /etc/nginx/sites-enabled/
+   nginx -t
+   systemctl reload nginx
+   ```
+5. Issue SSL certificate via Certbot:
+   ```bash
+   certbot --nginx -d NEW_APP_DOMAIN -d www.NEW_APP_DOMAIN
+   ```
+6. Build and launch with PM2:
+   ```bash
+   ./deploy-vps.sh
+   ```
+
+---
+
+## 📄 License & Attribution
+
+Copyright © 2026 RestroAstra. All rights reserved.  
+**RestroAstra — One platform. Every restaurant operation.**

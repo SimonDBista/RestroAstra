@@ -4,20 +4,20 @@ import bcrypt from 'bcryptjs';
 const prisma = new PrismaClient();
 
 async function main() {
-  console.log('--- Starting digitalizemenu Database Seed ---');
+  console.log('--- Starting RestroAstra Database Seed ---');
 
   // 1. Create Platform Super Admin
   const adminPasswordHash = await bcrypt.hash('adminpassword123', 10);
   const admin = await prisma.admin.upsert({
-    where: { email: 'admin@digitalizenepal.com' },
+    where: { email: 'admin@restroastra.com' },
     update: {
       passwordHash: adminPasswordHash,
-      name: 'digitalizemenu Super Admin',
+      name: 'RestroAstra Super Admin',
     },
     create: {
-      email: 'admin@digitalizenepal.com',
+      email: 'admin@restroastra.com',
       passwordHash: adminPasswordHash,
-      name: 'digitalizemenu Super Admin',
+      name: 'RestroAstra Super Admin',
     },
   });
   console.log(`Created/Verified Admin: ${admin.email}`);

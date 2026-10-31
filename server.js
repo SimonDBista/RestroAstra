@@ -11,9 +11,9 @@ const path = require('path');
 
 const dev = process.env.NODE_ENV !== 'production';
 const hostname = process.env.HOSTNAME || '0.0.0.0';
-const port = parseInt(process.env.PORT || '3000', 10);
+const port = parseInt(process.env.PORT || '3005', 10);
 
-console.log(`> Starting digitalizemenu server (${dev ? 'development' : 'production'})...`);
+console.log(`> Starting RestroAstra server (${dev ? 'development' : 'production'})...`);
 
 const app = next({ dev, hostname: dev ? 'localhost' : hostname, port });
 const handle = app.getRequestHandler();
@@ -110,7 +110,7 @@ app.prepare().then(() => {
 
   server.listen(port, '0.0.0.0', (err) => {
     if (err) throw err;
-    console.log(`> digitalizemenu ready on:`);
+    console.log(`> RestroAstra ready on:`);
     console.log(`  - Local:   http://localhost:${port}`);
     console.log(`  - Network: http://127.0.0.1:${port}`);
     console.log(`> Socket.io listening on path /api/socketio`);

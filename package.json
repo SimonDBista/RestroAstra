@@ -1,6 +1,7 @@
 {
-  "name": "digitalizemenu",
+  "name": "restroastra",
   "version": "1.0.0",
+  "description": "RestroAstra — One platform. Every restaurant operation. Enterprise multi-tenant restaurant management & QR dining suite.",
   "private": true,
   "scripts": {
     "dev": "node server.js",

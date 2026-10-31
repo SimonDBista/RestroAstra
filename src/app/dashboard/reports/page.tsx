@@ -134,7 +134,7 @@ export default function HotelReportsPage() {
   const [recordPaymentFilter, setRecordPaymentFilter] = useState<'all' | 'cash' | 'online'>('all');
   const [selectedReceiptOrder, setSelectedReceiptOrder] = useState<OrderData | null>(null);
   const [isReceiptModalOpen, setIsReceiptModalOpen] = useState(false);
-  const [hotelName, setHotelName] = useState('digitalizemenu Restaurant');
+  const [hotelName, setHotelName] = useState('RestroAstra Restaurant');
 
   const parseOrderItems = (rawItems: any): Array<{ name: string; quantity: number; price?: number }> => {
     if (!rawItems) return [];
@@ -370,12 +370,12 @@ export default function HotelReportsPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 print:hidden">
         <div>
           <div className="flex items-center space-x-2">
-            <h1 className="text-3xl font-serif font-extrabold text-white">Sales & Financial Reports</h1>
-            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-gold-400/10 text-gold-400 border border-gold-400/20">
+            <h1 className="text-3xl font-serif font-extrabold text-stone-900">Sales & Financial Reports</h1>
+            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/15 text-amber-800 border border-amber-500/30">
               Register & Expenses
             </span>
           </div>
-          <p className="text-xs text-stone-400 mt-1">
+          <p className="text-xs text-stone-500 mt-1">
             Track daily revenue, expenses (meat, rice, salaries), opening/closing cash till, and net profit.
           </p>
         </div>
@@ -383,7 +383,7 @@ export default function HotelReportsPage() {
         <div className="flex items-center flex-wrap gap-2.5">
           <button
             onClick={() => setIsExpenseModalOpen(true)}
-            className="px-3.5 py-2 rounded-xl gold-btn text-xs font-bold flex items-center space-x-1.5 shadow-gold-glow text-black"
+            className="px-3.5 py-2 rounded-xl gold-btn text-xs font-bold flex items-center space-x-1.5 shadow-sm text-black"
           >
             <Plus className="w-3.5 h-3.5" />
             <span>Add Expense</span>
@@ -394,7 +394,7 @@ export default function HotelReportsPage() {
               fetchReports(selectedRange);
               fetchRegister();
             }}
-            className="px-3.5 py-2 rounded-xl dark-btn text-stone-300 text-xs font-semibold flex items-center space-x-1.5 hover:text-white"
+            className="px-3.5 py-2 rounded-xl bg-white border border-stone-200 text-stone-700 hover:bg-stone-50 text-xs font-semibold flex items-center space-x-1.5 shadow-sm transition"
           >
             <RefreshCw className="w-3.5 h-3.5" />
             <span>Refresh</span>
@@ -402,7 +402,7 @@ export default function HotelReportsPage() {
 
           <button
             onClick={handlePrintReport}
-            className="px-4 py-2 rounded-xl dark-btn text-gold-400 text-xs font-bold flex items-center space-x-1.5 hover:border-gold-400/40"
+            className="px-4 py-2 rounded-xl bg-white border border-amber-300 text-amber-700 hover:bg-amber-50 text-xs font-bold flex items-center space-x-1.5 shadow-sm transition"
           >
             <Printer className="w-3.5 h-3.5" />
             <span>Print Financial Statement</span>
@@ -411,7 +411,7 @@ export default function HotelReportsPage() {
       </div>
 
       {/* Time Period Filter Tabs */}
-      <div className="flex items-center space-x-2 border-b border-white/[0.08] pb-4 print:hidden overflow-x-auto">
+      <div className="flex items-center space-x-2 border-b border-stone-200 pb-4 print:hidden overflow-x-auto">
         {(['today', 'yesterday', '7days', 'month', 'all'] as const).map((range) => {
           const labels = {
             today: "Today's Ledger",
@@ -427,8 +427,8 @@ export default function HotelReportsPage() {
               onClick={() => setSelectedRange(range)}
               className={`px-4 py-2 rounded-xl text-xs font-bold transition whitespace-nowrap ${
                 isSelected
-                  ? 'bg-gold-500 text-black shadow-gold-glow'
-                  : 'bg-stone-900/80 text-stone-400 hover:text-white border border-white/5'
+                  ? 'bg-amber-500 text-black shadow-sm'
+                  : 'bg-white text-stone-700 hover:bg-stone-50 border border-stone-200 shadow-sm'
               }`}
             >
               {labels[range]}
@@ -442,70 +442,70 @@ export default function HotelReportsPage() {
       {/* ============================================================ */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         {/* Net Revenue */}
-        <div className="bg-[#111216] border border-white/[0.08] rounded-3xl p-5 relative overflow-hidden shadow-lg">
+        <div className="bg-white border border-stone-200 rounded-3xl p-5 relative overflow-hidden shadow-sm">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-stone-400 uppercase tracking-wider">Net Sales Revenue</span>
-            <div className="w-9 h-9 rounded-xl bg-gold-400/10 text-gold-400 flex items-center justify-center border border-gold-400/20">
+            <span className="text-xs font-bold text-stone-500 uppercase tracking-wider">Net Sales Revenue</span>
+            <div className="w-9 h-9 rounded-xl bg-amber-500/15 text-amber-700 flex items-center justify-center border border-amber-500/30">
               <DollarSign className="w-4 h-4" />
             </div>
           </div>
           <div className="mt-3">
-            <span className="text-2xl sm:text-3xl font-serif font-black text-white">
+            <span className="text-2xl sm:text-3xl font-serif font-black text-stone-900">
               {formatNPR(summary.totalRevenue)}
             </span>
           </div>
-          <div className="mt-2 text-[11px] text-stone-400 flex items-center space-x-1.5">
-            <span className="text-emerald-400 font-bold">{summary.completedCount} Settled Orders</span>
+          <div className="mt-2 text-[11px] text-stone-500 flex items-center space-x-1.5">
+            <span className="text-emerald-700 font-bold">{summary.completedCount} Settled Orders</span>
             <span>•</span>
             <span>AOV: {formatNPR(summary.averageOrderValue)}</span>
           </div>
         </div>
 
         {/* Discounts Given */}
-        <div className="bg-[#111216] border border-white/[0.08] rounded-3xl p-5 relative overflow-hidden shadow-lg">
+        <div className="bg-white border border-stone-200 rounded-3xl p-5 relative overflow-hidden shadow-sm">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-stone-400 uppercase tracking-wider">Discounts Given</span>
-            <div className="w-9 h-9 rounded-xl bg-amber-500/10 text-amber-400 flex items-center justify-center border border-amber-500/20">
+            <span className="text-xs font-bold text-stone-500 uppercase tracking-wider">Discounts Given</span>
+            <div className="w-9 h-9 rounded-xl bg-amber-500/15 text-amber-700 flex items-center justify-center border border-amber-500/30">
               <Percent className="w-4 h-4" />
             </div>
           </div>
           <div className="mt-3">
-            <span className="text-2xl sm:text-3xl font-serif font-black text-amber-400">
+            <span className="text-2xl sm:text-3xl font-serif font-black text-amber-700">
               {formatNPR(summary.totalDiscounts || 0)}
             </span>
           </div>
-          <div className="mt-2 text-[11px] text-stone-400 flex items-center space-x-1.5">
+          <div className="mt-2 text-[11px] text-stone-500 flex items-center space-x-1.5">
             <span>Gross: {formatNPR(summary.grossSales || summary.totalRevenue)}</span>
           </div>
         </div>
 
         {/* Total Expenses */}
-        <div className="bg-[#111216] border border-white/[0.08] rounded-3xl p-5 relative overflow-hidden shadow-lg">
+        <div className="bg-white border border-stone-200 rounded-3xl p-5 relative overflow-hidden shadow-sm">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-stone-400 uppercase tracking-wider">Total Expenses</span>
-            <div className="w-9 h-9 rounded-xl bg-rose-500/10 text-rose-400 flex items-center justify-center border border-rose-500/20">
+            <span className="text-xs font-bold text-stone-500 uppercase tracking-wider">Total Expenses</span>
+            <div className="w-9 h-9 rounded-xl bg-rose-500/15 text-rose-700 flex items-center justify-center border border-rose-500/30">
               <ArrowDownRight className="w-4 h-4" />
             </div>
           </div>
           <div className="mt-3">
-            <span className="text-2xl sm:text-3xl font-serif font-black text-rose-400">
+            <span className="text-2xl sm:text-3xl font-serif font-black text-rose-700">
               {formatNPR(summary.totalExpenses)}
             </span>
           </div>
-          <div className="mt-2 text-[11px] text-stone-400 flex items-center space-x-1.5">
+          <div className="mt-2 text-[11px] text-stone-500 flex items-center space-x-1.5">
             <span>Meat, Groceries, Wages & Utilities</span>
           </div>
         </div>
 
         {/* Net Profit */}
-        <div className="bg-[#111216] border border-white/[0.08] rounded-3xl p-5 relative overflow-hidden shadow-lg">
+        <div className="bg-white border border-stone-200 rounded-3xl p-5 relative overflow-hidden shadow-sm">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-stone-400 uppercase tracking-wider">Net Profit</span>
+            <span className="text-xs font-bold text-stone-500 uppercase tracking-wider">Net Profit</span>
             <div
               className={`w-9 h-9 rounded-xl flex items-center justify-center border ${
                 summary.netProfit >= 0
-                  ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20'
-                  : 'bg-red-500/10 text-red-400 border-red-500/20'
+                  ? 'bg-emerald-500/15 text-emerald-700 border-emerald-500/30'
+                  : 'bg-red-500/15 text-red-700 border-red-500/30'
               }`}
             >
               <ArrowUpRight className="w-4 h-4" />
@@ -514,13 +514,13 @@ export default function HotelReportsPage() {
           <div className="mt-3">
             <span
               className={`text-2xl sm:text-3xl font-serif font-black ${
-                summary.netProfit >= 0 ? 'text-emerald-400' : 'text-red-400'
+                summary.netProfit >= 0 ? 'text-emerald-700' : 'text-red-700'
               }`}
             >
               {formatNPR(summary.netProfit)}
             </span>
           </div>
-          <div className="mt-2 text-[11px] text-stone-400 flex items-center space-x-1">
+          <div className="mt-2 text-[11px] text-stone-500 flex items-center space-x-1">
             <span>Sales ({formatNPR(summary.totalRevenue)}) − Expenses ({formatNPR(summary.totalExpenses)})</span>
           </div>
         </div>
@@ -529,48 +529,48 @@ export default function HotelReportsPage() {
       {/* ============================================================ */}
       {/* 2. DAILY CASH REGISTER & AUTOMATIC CLOSING BALANCE          */}
       {/* ============================================================ */}
-      <div className="bg-[#111216] border border-gold-400/30 rounded-3xl p-6 shadow-2xl relative overflow-hidden">
+      <div className="bg-white border border-amber-400/50 rounded-3xl p-6 shadow-md relative overflow-hidden">
         {/* Subtle accent header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-white/[0.08] pb-4 mb-6">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 border-b border-stone-100 pb-4 mb-6">
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 rounded-2xl bg-gold-400/15 text-gold-400 flex items-center justify-center border border-gold-400/30 font-bold shadow-gold-glow">
+            <div className="w-10 h-10 rounded-2xl bg-amber-500/15 text-amber-700 flex items-center justify-center border border-amber-500/30 font-bold shadow-sm">
               <Calculator className="w-5 h-5" />
             </div>
             <div>
               <div className="flex items-center space-x-2">
-                <h3 className="text-lg font-serif font-bold text-white">Daily Cash Register & Till Reconciliation</h3>
-                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-gold-400/10 text-gold-400 border border-gold-400/20 flex items-center space-x-1">
-                  <Sparkles className="w-3 h-3 animate-pulse text-gold-400" />
+                <h3 className="text-lg font-serif font-bold text-stone-900">Daily Cash Register & Till Reconciliation</h3>
+                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/15 text-amber-800 border border-amber-500/30 flex items-center space-x-1">
+                  <Sparkles className="w-3 h-3 animate-pulse text-amber-600" />
                   <span>Auto-Calculated</span>
                 </span>
               </div>
-              <p className="text-[11px] text-stone-400 mt-0.5">
-                Staff only enters the Morning Opening Balance. The Closing Balance is automatically calculated in real-time as: <span className="text-gold-300 font-semibold">Opening Balance + Income − Expenses</span>.
+              <p className="text-[11px] text-stone-500 mt-0.5">
+                Staff only enters the Morning Opening Balance. The Closing Balance is automatically calculated in real-time as: <span className="text-amber-800 font-semibold">Opening Balance + Income − Expenses</span>.
               </p>
             </div>
           </div>
 
           <div className="flex items-center space-x-2">
-            <span className="text-xs font-mono font-bold text-stone-300 px-3 py-1 bg-stone-900 rounded-xl border border-white/5">
+            <span className="text-xs font-mono font-bold text-stone-700 px-3 py-1 bg-stone-100 rounded-xl border border-stone-200">
               Date: {register?.date || (selectedRange === 'yesterday' ? getYesterdayNepalString() : 'Today')}
             </span>
           </div>
         </div>
 
         {/* Live Equation Breakdown Flow Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-5 rounded-2xl bg-[#0a0b0d] border border-white/[0.06] mb-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-5 rounded-2xl bg-stone-50 border border-stone-200 mb-6">
           {/* 1. Opening Balance */}
-          <div className="p-4 rounded-xl bg-stone-900/40 border border-white/5 flex flex-col justify-between relative">
+          <div className="p-4 rounded-xl bg-white border border-stone-200 flex flex-col justify-between relative shadow-sm">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] uppercase font-bold text-stone-400">
+              <span className="text-[10px] uppercase font-bold text-stone-500">
                 ① Opening Balance
               </span>
-              <span className="text-[9px] font-bold px-2 py-0.5 rounded bg-stone-800 text-stone-300 border border-white/10">
+              <span className="text-[9px] font-bold px-2 py-0.5 rounded bg-stone-100 text-stone-700 border border-stone-200">
                 Staff Typed
               </span>
             </div>
             <div className="my-2">
-              <span className="text-xl sm:text-2xl font-serif font-black text-white">
+              <span className="text-xl sm:text-2xl font-serif font-black text-stone-900">
                 {formatNPR(currentOpening)}
               </span>
             </div>
@@ -578,17 +578,17 @@ export default function HotelReportsPage() {
           </div>
 
           {/* 2. Income (Sales) */}
-          <div className="p-4 rounded-xl bg-emerald-500/5 border border-emerald-500/20 flex flex-col justify-between relative">
+          <div className="p-4 rounded-xl bg-emerald-50/70 border border-emerald-200 flex flex-col justify-between relative">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] uppercase font-bold text-emerald-400">
+              <span className="text-[10px] uppercase font-bold text-emerald-800">
                 + ② Income (Sales)
               </span>
-              <span className="text-[9px] font-bold px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+              <span className="text-[9px] font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-200">
                 Auto
               </span>
             </div>
             <div className="my-2">
-              <span className="text-xl sm:text-2xl font-serif font-black text-emerald-400">
+              <span className="text-xl sm:text-2xl font-serif font-black text-emerald-700">
                 +{formatNPR(currentIncome)}
               </span>
             </div>
@@ -596,17 +596,17 @@ export default function HotelReportsPage() {
           </div>
 
           {/* 3. Expenses */}
-          <div className="p-4 rounded-xl bg-rose-500/5 border border-rose-500/20 flex flex-col justify-between relative">
+          <div className="p-4 rounded-xl bg-rose-50/70 border border-rose-200 flex flex-col justify-between relative">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] uppercase font-bold text-rose-400">
+              <span className="text-[10px] uppercase font-bold text-rose-800">
                 − ③ Expenses
               </span>
-              <span className="text-[9px] font-bold px-2 py-0.5 rounded bg-rose-500/10 text-rose-400 border border-rose-500/20">
+              <span className="text-[9px] font-bold px-2 py-0.5 rounded bg-rose-100 text-rose-800 border border-rose-200">
                 Auto
               </span>
             </div>
             <div className="my-2">
-              <span className="text-xl sm:text-2xl font-serif font-black text-rose-400">
+              <span className="text-xl sm:text-2xl font-serif font-black text-rose-700">
                 −{formatNPR(currentExpenses)}
               </span>
             </div>
@@ -614,42 +614,42 @@ export default function HotelReportsPage() {
           </div>
 
           {/* 4. Closing Balance */}
-          <div className="p-4 rounded-xl bg-gold-400/10 border-2 border-gold-400/50 shadow-gold-glow flex flex-col justify-between relative">
+          <div className="p-4 rounded-xl bg-amber-50 border-2 border-amber-400 shadow-sm flex flex-col justify-between relative">
             <div className="flex items-center justify-between">
-              <span className="text-[10px] uppercase font-bold text-gold-300">
+              <span className="text-[10px] uppercase font-bold text-amber-800">
                 = ④ Closing Balance
               </span>
-              <span className="text-[9px] font-bold px-2 py-0.5 rounded bg-gold-400/20 text-gold-300 border border-gold-400/30">
+              <span className="text-[9px] font-bold px-2 py-0.5 rounded bg-amber-100 text-amber-800 border border-amber-300">
                 Live Result
               </span>
             </div>
             <div className="my-2">
-              <span className="text-2xl sm:text-3xl font-serif font-black text-gold-300">
+              <span className="text-2xl sm:text-3xl font-serif font-black text-amber-800">
                 {formatNPR(calculatedClosing)}
               </span>
             </div>
-            <span className="text-[10px] text-stone-300 font-medium">Opening + Income − Expenses</span>
+            <span className="text-[10px] text-stone-600 font-medium">Opening + Income − Expenses</span>
           </div>
         </div>
 
         {/* Inputs & Live Calculation Details */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
           {/* Left: Set Opening Balance Input */}
-          <div className="space-y-4 p-5 rounded-2xl bg-[#0a0b0d] border border-white/10">
+          <div className="space-y-4 p-5 rounded-2xl bg-stone-50 border border-stone-200/80 shadow-sm">
             <div>
               <div className="flex items-center justify-between mb-1">
-                <label className="block text-xs font-bold text-stone-200">
-                  Morning Opening Balance (NPR) <span className="text-gold-400">*</span>
+                <label className="block text-xs font-bold text-stone-800">
+                  Morning Opening Balance (NPR) <span className="text-amber-600">*</span>
                 </label>
-                <span className="text-[10px] font-bold text-gold-400 bg-gold-400/10 px-2 py-0.5 rounded border border-gold-400/20">
+                <span className="text-[10px] font-bold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
                   Only Field To Type
                 </span>
               </div>
-              <p className="text-[11px] text-stone-400 mb-2">
+              <p className="text-[11px] text-stone-600 mb-2">
                 Type the cash amount placed in the drawer at the start of the day. Everything else is automatically computed from incoming sales and logged expenses.
               </p>
               <div className="relative">
-                <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400 font-bold text-xs">
+                <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-500 font-bold text-xs">
                   NPR
                 </span>
                 <input
@@ -659,13 +659,13 @@ export default function HotelReportsPage() {
                   placeholder="e.g. 5000"
                   value={openingInput}
                   onChange={(e) => setOpeningInput(e.target.value)}
-                  className="w-full pl-14 pr-3.5 py-2.5 bg-stone-900 border border-white/15 rounded-xl text-sm font-bold text-white focus:outline-none focus:border-gold-400"
+                  className="w-full pl-14 pr-3.5 py-2.5 bg-white border border-stone-200 rounded-xl text-sm font-bold text-stone-900 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-xs font-bold text-stone-300 mb-1">
+              <label className="block text-xs font-bold text-stone-700 mb-1">
                 Register Notes / Settlement Remarks (Optional)
               </label>
               <input
@@ -673,7 +673,7 @@ export default function HotelReportsPage() {
                 placeholder="e.g. Morning float verified by Manager."
                 value={registerNotes}
                 onChange={(e) => setRegisterNotes(e.target.value)}
-                className="w-full px-3.5 py-2.5 bg-stone-900 border border-white/10 rounded-xl text-xs text-white placeholder-stone-500 focus:outline-none focus:border-gold-400"
+                className="w-full px-3.5 py-2.5 bg-white border border-stone-200 rounded-xl text-xs text-stone-900 placeholder-stone-400 focus:outline-none focus:border-amber-500"
               />
             </div>
 
@@ -681,7 +681,7 @@ export default function HotelReportsPage() {
               <button
                 onClick={handleSaveRegister}
                 disabled={isSavingRegister}
-                className="px-5 py-2.5 rounded-xl gold-btn text-xs font-bold flex items-center space-x-2 shadow-gold-glow text-black disabled:opacity-50"
+                className="px-5 py-2.5 rounded-xl gold-btn text-xs font-bold flex items-center space-x-2 shadow-sm text-stone-950 disabled:opacity-50"
               >
                 {isSavingRegister ? (
                   <RefreshCw className="w-4 h-4 animate-spin" />
@@ -692,7 +692,7 @@ export default function HotelReportsPage() {
               </button>
 
               {saveSuccessMessage && (
-                <div className="flex items-center space-x-1.5 text-xs font-bold text-emerald-400 animate-fade-in">
+                <div className="flex items-center space-x-1.5 text-xs font-bold text-emerald-600 animate-fade-in">
                   <CheckCircle2 className="w-4 h-4" />
                   <span>Saved successfully!</span>
                 </div>
@@ -701,50 +701,50 @@ export default function HotelReportsPage() {
           </div>
 
           {/* Right: Live Automatic Closing Balance Summary */}
-          <div className="p-5 rounded-2xl bg-[#0a0b0d] border border-white/10 flex flex-col justify-between h-full">
+          <div className="p-5 rounded-2xl bg-stone-50 border border-stone-200/80 shadow-sm flex flex-col justify-between h-full">
             <div>
-              <div className="flex items-center justify-between mb-3 border-b border-white/5 pb-2">
-                <span className="text-xs font-bold text-white uppercase tracking-wider flex items-center space-x-1.5">
-                  <Calculator className="w-3.5 h-3.5 text-gold-400" />
+              <div className="flex items-center justify-between mb-3 border-b border-stone-200 pb-2">
+                <span className="text-xs font-bold text-stone-900 uppercase tracking-wider flex items-center space-x-1.5">
+                  <Calculator className="w-3.5 h-3.5 text-amber-600" />
                   <span>Automatic Closing Calculation</span>
                 </span>
-                <span className="text-[10px] text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
+                <span className="text-[10px] text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">
                   Live Sync Active
                 </span>
               </div>
 
               <div className="space-y-2.5 text-xs">
-                <div className="flex items-center justify-between text-stone-300">
+                <div className="flex items-center justify-between text-stone-700">
                   <span>Opening Starting Balance (Typed):</span>
-                  <span className="font-mono font-bold text-white">{formatNPR(currentOpening)}</span>
+                  <span className="font-mono font-bold text-stone-900">{formatNPR(currentOpening)}</span>
                 </div>
-                <div className="flex items-center justify-between text-emerald-400">
+                <div className="flex items-center justify-between text-emerald-700">
                   <span>+ Total Sales Income (Orders):</span>
                   <span className="font-mono font-bold">+{formatNPR(currentIncome)}</span>
                 </div>
-                <div className="flex items-center justify-between text-rose-400">
+                <div className="flex items-center justify-between text-rose-700">
                   <span>− Total Operational Expenses:</span>
                   <span className="font-mono font-bold">−{formatNPR(currentExpenses)}</span>
                 </div>
 
-                <div className="border-t border-white/10 pt-3 mt-2 flex items-center justify-between">
+                <div className="border-t border-stone-200 pt-3 mt-2 flex items-center justify-between">
                   <div>
-                    <span className="text-xs uppercase font-bold text-gold-300 block">
+                    <span className="text-xs uppercase font-bold text-amber-700 block">
                       Calculated Closing Balance
                     </span>
                     <span className="text-[10px] text-stone-500 block">
                       Formula: Opening + Income − Expenses
                     </span>
                   </div>
-                  <span className="text-2xl font-serif font-black text-gold-300">
+                  <span className="text-2xl font-serif font-black text-amber-700">
                     {formatNPR(calculatedClosing)}
                   </span>
                 </div>
               </div>
             </div>
 
-            <div className="mt-4 pt-3 border-t border-white/5 text-[11px] text-stone-400 flex items-center space-x-2">
-              <Sparkles className="w-4 h-4 text-gold-400 shrink-0" />
+            <div className="mt-4 pt-3 border-t border-stone-200 text-[11px] text-stone-600 flex items-center space-x-2">
+              <Sparkles className="w-4 h-4 text-amber-600 shrink-0" />
               <span>
                 Add food/drink orders or record expenses (meat, rice, wages) anytime; the closing balance updates instantly.
               </span>
@@ -756,19 +756,19 @@ export default function HotelReportsPage() {
       {/* ============================================================ */}
       {/* 3. DAILY ORDER RECORDS                                       */}
       {/* ============================================================ */}
-      <div className="bg-[#111216] border border-white/[0.08] rounded-3xl p-6 shadow-xl space-y-5">
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-white/[0.08] pb-4">
+      <div className="bg-white border border-stone-200/80 rounded-3xl p-6 shadow-sm space-y-5">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-stone-200 pb-4">
           <div>
             <div className="flex items-center space-x-2.5">
-              <div className="w-9 h-9 rounded-xl bg-gold-400/10 text-gold-400 flex items-center justify-center border border-gold-400/20 shadow-gold-glow">
+              <div className="w-9 h-9 rounded-xl bg-amber-500/10 text-amber-600 flex items-center justify-center border border-amber-500/20 shadow-sm">
                 <FileText className="w-4 h-4" />
               </div>
-              <h3 className="text-xl font-serif font-bold text-white">Order Records</h3>
-              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-gold-400/10 text-gold-400 border border-gold-400/20">
+              <h3 className="text-xl font-serif font-bold text-stone-900">Order Records</h3>
+              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/10 text-amber-700 border border-amber-500/20">
                 {filteredOrderRecords.length} of {orderRecords.length} Orders
               </span>
             </div>
-            <p className="text-xs text-stone-400 mt-1">
+            <p className="text-xs text-stone-600 mt-1">
               {selectedRange === 'yesterday'
                 ? "Yesterday's complete guest order records"
                 : selectedRange === 'today'
@@ -781,14 +781,14 @@ export default function HotelReportsPage() {
           {/* Quick Filters: Cash vs Online + Search */}
           <div className="flex flex-wrap items-center gap-2.5">
             {/* Payment Method Filter Pills */}
-            <div className="flex items-center p-1 bg-stone-900 border border-white/10 rounded-xl text-xs">
+            <div className="flex items-center p-1 bg-stone-100 border border-stone-200 rounded-xl text-xs">
               <button
                 type="button"
                 onClick={() => setRecordPaymentFilter('all')}
                 className={`px-3 py-1.5 rounded-lg font-bold transition ${
                   recordPaymentFilter === 'all'
-                    ? 'bg-gold-500/20 text-gold-300 shadow-sm'
-                    : 'text-stone-400 hover:text-white'
+                    ? 'bg-white text-stone-900 shadow-sm'
+                    : 'text-stone-600 hover:text-stone-900'
                 }`}
               >
                 All ({orderRecords.length})
@@ -798,8 +798,8 @@ export default function HotelReportsPage() {
                 onClick={() => setRecordPaymentFilter('cash')}
                 className={`px-3 py-1.5 rounded-lg font-bold flex items-center space-x-1.5 transition ${
                   recordPaymentFilter === 'cash'
-                    ? 'bg-emerald-500/20 text-emerald-300 shadow-sm'
-                    : 'text-stone-400 hover:text-emerald-300'
+                    ? 'bg-emerald-100 text-emerald-800 shadow-sm'
+                    : 'text-stone-600 hover:text-emerald-700'
                 }`}
               >
                 <Banknote className="w-3.5 h-3.5" />
@@ -810,8 +810,8 @@ export default function HotelReportsPage() {
                 onClick={() => setRecordPaymentFilter('online')}
                 className={`px-3 py-1.5 rounded-lg font-bold flex items-center space-x-1.5 transition ${
                   recordPaymentFilter === 'online'
-                    ? 'bg-cyan-500/20 text-cyan-300 shadow-sm'
-                    : 'text-stone-400 hover:text-cyan-300'
+                    ? 'bg-cyan-100 text-cyan-800 shadow-sm'
+                    : 'text-stone-600 hover:text-cyan-700'
                 }`}
               >
                 <Smartphone className="w-3.5 h-3.5" />
@@ -821,18 +821,18 @@ export default function HotelReportsPage() {
 
             {/* Quick Search Bar */}
             <div className="relative min-w-[220px]">
-              <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-stone-500" />
+              <Search className="w-3.5 h-3.5 absolute left-3 top-1/2 -translate-y-1/2 text-stone-400" />
               <input
                 type="text"
                 placeholder="Search table, guest, cash/online..."
                 value={orderSearchQuery}
                 onChange={(e) => setOrderSearchQuery(e.target.value)}
-                className="w-full pl-9 pr-8 py-2 bg-stone-900 border border-white/10 rounded-xl text-xs text-white placeholder-stone-500 focus:outline-none focus:border-gold-400"
+                className="w-full pl-9 pr-8 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 placeholder-stone-400 focus:outline-none focus:border-amber-500"
               />
               {orderSearchQuery && (
                 <button
                   onClick={() => setOrderSearchQuery('')}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-stone-500 hover:text-white"
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-700"
                 >
                   <X className="w-3.5 h-3.5" />
                 </button>
@@ -842,34 +842,34 @@ export default function HotelReportsPage() {
         </div>
 
         {/* Mini metric summary banner with Cash vs Online breakdown */}
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 p-3.5 rounded-2xl bg-[#0a0b0d] border border-white/[0.05]">
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-3 p-3.5 rounded-2xl bg-stone-50 border border-stone-200/80">
           <div className="px-3 py-1.5">
-            <span className="text-[10px] uppercase font-bold text-stone-400 block">Orders Shown</span>
-            <span className="text-base font-serif font-black text-white">{filteredOrderRecords.length}</span>
+            <span className="text-[10px] uppercase font-bold text-stone-500 block">Orders Shown</span>
+            <span className="text-base font-serif font-black text-stone-900">{filteredOrderRecords.length}</span>
           </div>
-          <div className="px-3 py-1.5 border-l border-white/5">
-            <span className="text-[10px] uppercase font-bold text-stone-400 block">Gross Value</span>
-            <span className="text-base font-serif font-bold text-stone-300">{formatNPR(totalRecordsGross)}</span>
+          <div className="px-3 py-1.5 border-l border-stone-200">
+            <span className="text-[10px] uppercase font-bold text-stone-500 block">Gross Value</span>
+            <span className="text-base font-serif font-bold text-stone-700">{formatNPR(totalRecordsGross)}</span>
           </div>
-          <div className="px-3 py-1.5 border-l border-white/5">
-            <span className="text-[10px] uppercase font-bold text-emerald-400 block">Cash Sales</span>
-            <span className="text-base font-serif font-bold text-emerald-400">{formatNPR(totalRecordsCash)}</span>
+          <div className="px-3 py-1.5 border-l border-stone-200">
+            <span className="text-[10px] uppercase font-bold text-emerald-700 block">Cash Sales</span>
+            <span className="text-base font-serif font-bold text-emerald-700">{formatNPR(totalRecordsCash)}</span>
           </div>
-          <div className="px-3 py-1.5 border-l border-white/5">
-            <span className="text-[10px] uppercase font-bold text-cyan-400 block">Online Payment Sales</span>
-            <span className="text-base font-serif font-bold text-cyan-400">{formatNPR(totalRecordsOnline)}</span>
+          <div className="px-3 py-1.5 border-l border-stone-200">
+            <span className="text-[10px] uppercase font-bold text-cyan-700 block">Online Payment Sales</span>
+            <span className="text-base font-serif font-bold text-cyan-700">{formatNPR(totalRecordsOnline)}</span>
           </div>
-          <div className="px-3 py-1.5 border-l border-white/5">
-            <span className="text-[10px] uppercase font-bold text-gold-400 block">Total Collected</span>
-            <span className="text-base font-serif font-black text-gold-300">{formatNPR(totalRecordsRevenue)}</span>
+          <div className="px-3 py-1.5 border-l border-stone-200">
+            <span className="text-[10px] uppercase font-bold text-amber-700 block">Total Collected</span>
+            <span className="text-base font-serif font-black text-amber-700">{formatNPR(totalRecordsRevenue)}</span>
           </div>
         </div>
 
         {/* Order Records Table */}
         {filteredOrderRecords.length === 0 ? (
-          <div className="py-12 text-center text-xs text-stone-500 bg-stone-900/20 rounded-2xl border border-white/5">
-            <ShoppingBag className="w-8 h-8 text-stone-600 mx-auto mb-2" />
-            <p className="font-semibold text-stone-400">
+          <div className="py-12 text-center text-xs text-stone-500 bg-stone-50 rounded-2xl border border-stone-200">
+            <ShoppingBag className="w-8 h-8 text-stone-400 mx-auto mb-2" />
+            <p className="font-semibold text-stone-600">
               {orderRecords.length === 0
                 ? 'No guest order records found for this time period.'
                 : 'No orders match your search filter.'}
@@ -877,7 +877,7 @@ export default function HotelReportsPage() {
             {orderSearchQuery && (
               <button
                 onClick={() => setOrderSearchQuery('')}
-                className="mt-2 text-gold-400 hover:underline text-xs"
+                className="mt-2 text-amber-700 hover:underline text-xs"
               >
                 Clear search filter
               </button>
@@ -885,49 +885,49 @@ export default function HotelReportsPage() {
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs text-stone-300">
+            <table className="w-full text-left text-xs text-stone-700">
               <thead>
-                <tr className="border-b border-white/[0.08] text-[10px] uppercase tracking-wider text-stone-500 font-bold">
-                  <th className="pb-3 px-3">Time & ID</th>
-                  <th className="pb-3 px-3">Table</th>
-                  <th className="pb-3 px-3">Guest / Contact</th>
-                  <th className="pb-3 px-3">Ordered Items Breakdown</th>
-                  <th className="pb-3 px-3 text-right">Subtotal</th>
-                  <th className="pb-3 px-3 text-right">Discount</th>
-                  <th className="pb-3 px-3 text-right">Total Paid</th>
-                  <th className="pb-3 px-3 text-center">Payment</th>
-                  <th className="pb-3 px-3 text-center">Status</th>
-                  <th className="pb-3 px-3 text-right print:hidden">Receipt</th>
+                <tr className="border-b border-stone-200 text-[10px] uppercase tracking-wider text-stone-500 font-bold bg-stone-50/50">
+                  <th className="py-3 px-3">Time & ID</th>
+                  <th className="py-3 px-3">Table</th>
+                  <th className="py-3 px-3">Guest / Contact</th>
+                  <th className="py-3 px-3">Ordered Items Breakdown</th>
+                  <th className="py-3 px-3 text-right">Subtotal</th>
+                  <th className="py-3 px-3 text-right">Discount</th>
+                  <th className="py-3 px-3 text-right">Total Paid</th>
+                  <th className="py-3 px-3 text-center">Payment</th>
+                  <th className="py-3 px-3 text-center">Status</th>
+                  <th className="py-3 px-3 text-right print:hidden">Receipt</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/[0.04]">
+              <tbody className="divide-y divide-stone-200/70">
                 {filteredOrderRecords.map((record) => {
                   const itemsList = parseOrderItems(record.items);
                   const orderSubtotal = (record.totalAmount || 0) + (record.discountAmount || 0);
                   const isOnlinePayment = String(record.paymentMethod || '').toLowerCase().includes('online');
 
                   return (
-                    <tr key={record.id} className="hover:bg-stone-900/40 transition">
+                    <tr key={record.id} className="hover:bg-amber-50/40 transition">
                       {/* Time & ID */}
-                      <td className="py-3.5 px-3 font-mono text-stone-400 whitespace-nowrap">
-                        <div className="font-bold text-white text-xs">{formatTime(record.createdAt)}</div>
+                      <td className="py-3.5 px-3 font-mono text-stone-600 whitespace-nowrap">
+                        <div className="font-bold text-stone-900 text-xs">{formatTime(record.createdAt)}</div>
                         <div className="text-[10px] text-stone-500 flex items-center space-x-1 mt-0.5">
                           <span>{formatDate(record.createdAt)}</span>
                           <span>•</span>
-                          <span className="text-gold-400/80">#{record.id.slice(-6).toUpperCase()}</span>
+                          <span className="text-amber-700 font-semibold">#{record.id.slice(-6).toUpperCase()}</span>
                         </div>
                       </td>
 
                       {/* Table */}
                       <td className="py-3.5 px-3 whitespace-nowrap">
-                        <span className="px-2.5 py-1 rounded-xl bg-gold-500/10 text-gold-300 border border-gold-500/20 font-bold text-xs inline-flex items-center space-x-1">
+                        <span className="px-2.5 py-1 rounded-xl bg-amber-50 text-amber-800 border border-amber-200 font-bold text-xs inline-flex items-center space-x-1">
                           <span>T-{record.tableNumber}</span>
                         </span>
                       </td>
 
                       {/* Guest */}
                       <td className="py-3.5 px-3">
-                        <div className="font-medium text-white">{record.customerName}</div>
+                        <div className="font-medium text-stone-900">{record.customerName}</div>
                         {record.customerPhone && (
                           <div className="text-[10px] font-mono text-stone-500">{record.customerPhone}</div>
                         )}
@@ -939,9 +939,9 @@ export default function HotelReportsPage() {
                           {itemsList.map((item, idx) => (
                             <span
                               key={idx}
-                              className="inline-flex items-center space-x-1 px-2 py-0.5 rounded-lg bg-stone-900 border border-white/10 text-[11px] text-stone-200"
+                              className="inline-flex items-center space-x-1 px-2 py-0.5 rounded-lg bg-stone-100 border border-stone-200 text-[11px] text-stone-800"
                             >
-                              <span className="font-bold text-gold-400 font-mono">{item.quantity}×</span>
+                              <span className="font-bold text-amber-700 font-mono">{item.quantity}×</span>
                               <span className="truncate max-w-[120px]">{item.name}</span>
                             </span>
                           ))}
@@ -954,36 +954,36 @@ export default function HotelReportsPage() {
                       </td>
 
                       {/* Subtotal */}
-                      <td className="py-3.5 px-3 text-right font-mono text-stone-400 whitespace-nowrap">
+                      <td className="py-3.5 px-3 text-right font-mono text-stone-600 whitespace-nowrap">
                         {formatNPR(orderSubtotal)}
                       </td>
 
                       {/* Discount */}
                       <td className="py-3.5 px-3 text-right whitespace-nowrap font-mono">
                         {record.discountAmount > 0 ? (
-                          <span className="text-amber-400 font-bold bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/20">
+                          <span className="text-amber-800 font-bold bg-amber-50 px-2 py-0.5 rounded border border-amber-200">
                             -{formatNPR(record.discountAmount)}
                           </span>
                         ) : (
-                          <span className="text-stone-600">—</span>
+                          <span className="text-stone-400">—</span>
                         )}
                       </td>
 
                       {/* Total Paid */}
-                      <td className="py-3.5 px-3 text-right font-serif font-black text-emerald-400 text-sm whitespace-nowrap">
+                      <td className="py-3.5 px-3 text-right font-serif font-black text-emerald-700 text-sm whitespace-nowrap">
                         {formatNPR(record.totalAmount)}
                       </td>
 
                       {/* Payment Method Badge */}
                       <td className="py-3.5 px-3 text-center whitespace-nowrap">
                         {isOnlinePayment ? (
-                          <span className="px-2.5 py-1 rounded-xl bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 font-bold text-[11px] inline-flex items-center space-x-1.5 shadow-sm">
-                            <Smartphone className="w-3 h-3 text-cyan-400" />
+                          <span className="px-2.5 py-1 rounded-xl bg-cyan-50 text-cyan-800 border border-cyan-200 font-bold text-[11px] inline-flex items-center space-x-1.5 shadow-sm">
+                            <Smartphone className="w-3 h-3 text-cyan-600" />
                             <span>Online Payment</span>
                           </span>
                         ) : (
-                          <span className="px-2.5 py-1 rounded-xl bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 font-bold text-[11px] inline-flex items-center space-x-1.5 shadow-sm">
-                            <Banknote className="w-3 h-3 text-emerald-400" />
+                          <span className="px-2.5 py-1 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-200 font-bold text-[11px] inline-flex items-center space-x-1.5 shadow-sm">
+                            <Banknote className="w-3 h-3 text-emerald-600" />
                             <span>Cash</span>
                           </span>
                         )}
@@ -991,7 +991,7 @@ export default function HotelReportsPage() {
 
                       {/* Status */}
                       <td className="py-3.5 px-3 text-center whitespace-nowrap">
-                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                        <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-50 text-emerald-800 border border-emerald-200">
                           {record.status}
                         </span>
                       </td>
@@ -1000,10 +1000,10 @@ export default function HotelReportsPage() {
                       <td className="py-3.5 px-3 text-right whitespace-nowrap print:hidden">
                         <button
                           onClick={() => handleOpenSlip(record)}
-                          className="px-2.5 py-1.5 rounded-xl dark-btn text-xs font-bold text-stone-300 hover:text-gold-400 border border-white/10 hover:border-gold-400/40 inline-flex items-center space-x-1.5 transition"
+                          className="px-2.5 py-1.5 rounded-xl dark-btn text-xs font-bold text-stone-700 hover:text-amber-700 border border-stone-200 hover:border-amber-400 inline-flex items-center space-x-1.5 transition"
                           title="View / Print Order Receipt Slip"
                         >
-                          <Printer className="w-3.5 h-3.5 text-gold-400" />
+                          <Printer className="w-3.5 h-3.5 text-amber-600" />
                           <span>Slip</span>
                         </button>
                       </td>
@@ -1019,23 +1019,23 @@ export default function HotelReportsPage() {
       {/* ============================================================ */}
       {/* 4. EXPENSES & INVENTORY PURCHASES LEDGER                     */}
       {/* ============================================================ */}
-      <div className="bg-[#111216] border border-white/[0.08] rounded-3xl p-6 shadow-xl space-y-5">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-white/[0.08] pb-4">
+      <div className="bg-white border border-stone-200/80 rounded-3xl p-6 shadow-sm space-y-5">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-stone-200 pb-4">
           <div>
             <div className="flex items-center space-x-2">
-              <h3 className="text-xl font-serif font-bold text-white">Daily Operational Expenses</h3>
-              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-rose-500/10 text-rose-400 border border-rose-500/20">
+              <h3 className="text-xl font-serif font-bold text-stone-900">Daily Operational Expenses</h3>
+              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-rose-50 text-rose-700 border border-rose-200">
                 {expenses.length} Entries
               </span>
             </div>
-            <p className="text-xs text-stone-400 mt-1">
+            <p className="text-xs text-stone-600 mt-1">
               Meat, rice, fresh produce, staff salaries, gas cylinders, and kitchen materials.
             </p>
           </div>
 
           <button
             onClick={() => setIsExpenseModalOpen(true)}
-            className="px-4 py-2.5 rounded-xl gold-btn text-xs font-bold flex items-center space-x-2 shadow-gold-glow text-black self-start sm:self-auto"
+            className="px-4 py-2.5 rounded-xl gold-btn text-xs font-bold flex items-center space-x-2 shadow-sm text-stone-950 self-start sm:self-auto"
           >
             <Plus className="w-4 h-4" />
             <span>Record New Expense</span>
@@ -1044,29 +1044,29 @@ export default function HotelReportsPage() {
 
         {/* Category Breakdown Progress Bars */}
         {categoryBreakdown.length > 0 && (
-          <div className="p-4 rounded-2xl bg-stone-900/60 border border-white/5 space-y-3">
-            <span className="text-[10px] uppercase tracking-wider font-bold text-stone-400 block">
+          <div className="p-4 rounded-2xl bg-stone-50 border border-stone-200/80 space-y-3">
+            <span className="text-[10px] uppercase tracking-wider font-bold text-stone-500 block">
               Expense Spending Breakdown
             </span>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
               {categoryBreakdown.map((cat) => {
                 const itemConfig = EXPENSE_CATEGORIES.find((c) => c.id === cat.category);
                 return (
-                  <div key={cat.category} className="p-3 bg-stone-950/70 rounded-xl border border-white/5">
-                    <div className="flex items-center justify-between text-xs font-bold text-white mb-1">
+                  <div key={cat.category} className="p-3 bg-white rounded-xl border border-stone-200/80 shadow-sm">
+                    <div className="flex items-center justify-between text-xs font-bold text-stone-900 mb-1">
                       <span className="flex items-center space-x-1.5 truncate">
                         <span>{itemConfig?.emoji || '🏷️'}</span>
                         <span className="truncate">{cat.category}</span>
                       </span>
-                      <span className="text-rose-400 font-mono text-[11px]">{cat.percentage}%</span>
+                      <span className="text-rose-600 font-mono text-[11px]">{cat.percentage}%</span>
                     </div>
-                    <div className="w-full h-1.5 bg-stone-800 rounded-full overflow-hidden my-1.5">
+                    <div className="w-full h-1.5 bg-stone-100 rounded-full overflow-hidden my-1.5">
                       <div
                         className="h-full bg-gradient-to-r from-rose-500 to-amber-500 rounded-full"
                         style={{ width: `${cat.percentage}%` }}
                       />
                     </div>
-                    <span className="text-[11px] text-stone-400 font-mono block">
+                    <span className="text-[11px] text-stone-600 font-mono block">
                       {formatNPR(cat.amount)}
                     </span>
                   </div>
@@ -1083,9 +1083,9 @@ export default function HotelReportsPage() {
           </div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs text-stone-300">
+            <table className="w-full text-left text-xs text-stone-700">
               <thead>
-                <tr className="border-b border-white/[0.08] text-[10px] uppercase tracking-wider text-stone-500 font-bold">
+                <tr className="border-b border-stone-200 text-[10px] uppercase tracking-wider text-stone-500 font-bold bg-stone-50/50">
                   <th className="pb-3 px-3">Date & Time</th>
                   <th className="pb-3 px-3">Category</th>
                   <th className="pb-3 px-3">Description / Item</th>
@@ -1094,39 +1094,39 @@ export default function HotelReportsPage() {
                   <th className="pb-3 px-3 text-right print:hidden">Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-white/[0.04]">
+              <tbody className="divide-y divide-stone-200/70">
                 {expenses.map((exp) => {
                   const catConfig = EXPENSE_CATEGORIES.find((c) => c.id === exp.category);
                   return (
-                    <tr key={exp.id} className="hover:bg-stone-900/40 transition">
-                      <td className="py-3 px-3 font-mono text-stone-400 whitespace-nowrap">
+                    <tr key={exp.id} className="hover:bg-amber-50/40 transition">
+                      <td className="py-3 px-3 font-mono text-stone-600 whitespace-nowrap">
                         {formatDate(exp.date)} <span className="text-[10px] opacity-75">{formatTime(exp.date)}</span>
                       </td>
                       <td className="py-3 px-3">
-                        <span className="px-2.5 py-1 rounded-lg bg-stone-900 border border-white/10 text-[11px] font-semibold text-stone-200 inline-flex items-center space-x-1.5">
+                        <span className="px-2.5 py-1 rounded-lg bg-stone-100 border border-stone-200 text-[11px] font-semibold text-stone-800 inline-flex items-center space-x-1.5">
                           <span>{catConfig?.emoji || '🏷️'}</span>
                           <span>{exp.category}</span>
                         </span>
                       </td>
-                      <td className="py-3 px-3 font-medium text-white">
+                      <td className="py-3 px-3 font-medium text-stone-900">
                         <div>{exp.title}</div>
                         {exp.notes && (
                           <div className="text-[10px] text-stone-500 italic mt-0.5">{exp.notes}</div>
                         )}
                       </td>
                       <td className="py-3 px-3">
-                        <span className="px-2 py-0.5 rounded-md bg-stone-900 text-[10px] uppercase font-mono text-stone-400 border border-white/5">
+                        <span className="px-2 py-0.5 rounded-md bg-stone-100 text-[10px] uppercase font-mono text-stone-600 border border-stone-200">
                           {exp.paymentMethod}
                         </span>
                       </td>
-                      <td className="py-3 px-3 text-right font-serif font-bold text-rose-400 text-sm whitespace-nowrap">
+                      <td className="py-3 px-3 text-right font-serif font-bold text-rose-600 text-sm whitespace-nowrap">
                         {formatNPR(exp.amount)}
                       </td>
                       <td className="py-3 px-3 text-right print:hidden">
                         <button
                           onClick={() => handleDeleteExpense(exp.id, exp.title)}
                           title="Delete expense entry"
-                          className="p-1.5 text-stone-500 hover:text-red-400 rounded-lg hover:bg-stone-800 transition"
+                          className="p-1.5 text-stone-400 hover:text-red-500 rounded-lg hover:bg-stone-100 transition"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
                         </button>
@@ -1145,29 +1145,29 @@ export default function HotelReportsPage() {
       {/* ============================================================ */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Daily Sales Bar Chart */}
-        <div className="lg:col-span-2 bg-[#111216] border border-white/[0.08] rounded-3xl p-6 shadow-xl">
+        <div className="lg:col-span-2 bg-white border border-stone-200/80 rounded-3xl p-6 shadow-sm">
           <div className="flex items-center justify-between mb-6">
             <div>
-              <h3 className="text-lg font-serif font-bold text-white">Daily Revenue Progression</h3>
-              <p className="text-xs text-stone-400">Order revenue trends for the selected timeframe</p>
+              <h3 className="text-lg font-serif font-bold text-stone-900">Daily Revenue Progression</h3>
+              <p className="text-xs text-stone-600">Order revenue trends for the selected timeframe</p>
             </div>
-            <BarChart3 className="w-5 h-5 text-gold-400" />
+            <BarChart3 className="w-5 h-5 text-amber-600" />
           </div>
 
-          <div className="h-48 flex items-end justify-between gap-2 pt-6 border-b border-white/10 px-2">
+          <div className="h-48 flex items-end justify-between gap-2 pt-6 border-b border-stone-200 px-2">
             {dailyTrends.map((trend, idx) => {
               const heightPercent = maxDailySale > 0 ? (trend.sales / maxDailySale) * 100 : 0;
               return (
                 <div key={idx} className="flex-1 flex flex-col items-center group h-full justify-end">
-                  <div className="text-[9px] font-mono text-gold-400 mb-1 opacity-0 group-hover:opacity-100 transition whitespace-nowrap">
+                  <div className="text-[9px] font-mono text-amber-700 mb-1 opacity-0 group-hover:opacity-100 transition whitespace-nowrap">
                     {trend.sales > 0 ? formatNPR(trend.sales) : ''}
                   </div>
                   <div
                     style={{ height: `${Math.max(heightPercent, 4)}%` }}
                     className={`w-full max-w-[36px] rounded-t-lg transition-all duration-300 ${
                       trend.sales > 0
-                        ? 'bg-gradient-to-t from-gold-500 to-amber-400 shadow-gold-glow group-hover:brightness-125'
-                        : 'bg-stone-800/60'
+                        ? 'bg-gradient-to-t from-amber-500 to-amber-400 shadow-sm group-hover:brightness-110'
+                        : 'bg-stone-200'
                     }`}
                   />
                   <span className="text-[10px] text-stone-500 mt-2 font-mono truncate w-full text-center">
@@ -1180,13 +1180,13 @@ export default function HotelReportsPage() {
         </div>
 
         {/* Top Performing Dishes */}
-        <div className="bg-[#111216] border border-white/[0.08] rounded-3xl p-6 shadow-xl">
+        <div className="bg-white border border-stone-200/80 rounded-3xl p-6 shadow-sm">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h3 className="text-lg font-serif font-bold text-white">Best Selling Dishes</h3>
-              <p className="text-xs text-stone-400">Top dishes ranked by order volume</p>
+              <h3 className="text-lg font-serif font-bold text-stone-900">Best Selling Dishes</h3>
+              <p className="text-xs text-stone-600">Top dishes ranked by order volume</p>
             </div>
-            <Award className="w-5 h-5 text-gold-400" />
+            <Award className="w-5 h-5 text-amber-600" />
           </div>
 
           <div className="space-y-3 mt-4">
@@ -1196,18 +1196,18 @@ export default function HotelReportsPage() {
               topItems.slice(0, 5).map((item, idx) => (
                 <div
                   key={idx}
-                  className="p-3 bg-stone-900/60 border border-white/5 rounded-2xl flex items-center justify-between"
+                  className="p-3 bg-stone-50 border border-stone-200/80 rounded-2xl flex items-center justify-between"
                 >
                   <div className="flex items-center space-x-3 min-w-0">
-                    <span className="w-6 h-6 rounded-lg bg-stone-800 text-gold-400 font-serif font-black text-xs flex items-center justify-center shrink-0">
+                    <span className="w-6 h-6 rounded-lg bg-white border border-stone-200 text-amber-700 font-serif font-black text-xs flex items-center justify-center shrink-0 shadow-sm">
                       {idx + 1}
                     </span>
                     <div className="min-w-0">
-                      <h4 className="text-xs font-bold text-white truncate">{item.name}</h4>
-                      <span className="text-[10px] text-stone-400">{item.quantity} orders sold</span>
+                      <h4 className="text-xs font-bold text-stone-900 truncate">{item.name}</h4>
+                      <span className="text-[10px] text-stone-500">{item.quantity} orders sold</span>
                     </div>
                   </div>
-                  <span className="text-xs font-serif font-bold text-gold-400 shrink-0">
+                  <span className="text-xs font-serif font-bold text-amber-700 shrink-0">
                     {formatNPR(item.revenue)}
                   </span>
                 </div>
@@ -1221,30 +1221,30 @@ export default function HotelReportsPage() {
       {/* MODAL: RECORD NEW EXPENSE                                    */}
       {/* ============================================================ */}
       {isExpenseModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-          <div className="w-full max-w-lg bg-[#121316] border border-white/10 rounded-3xl p-6 shadow-2xl relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
+          <div className="w-full max-w-lg bg-white border border-stone-200 rounded-3xl p-6 shadow-2xl relative">
             <button
               onClick={() => setIsExpenseModalOpen(false)}
-              className="absolute top-5 right-5 text-stone-400 hover:text-white p-1 rounded-lg hover:bg-stone-800 transition"
+              className="absolute top-5 right-5 text-stone-400 hover:text-stone-700 p-1 rounded-lg hover:bg-stone-100 transition"
             >
               <X className="w-5 h-5" />
             </button>
 
             <div className="flex items-center space-x-3 mb-5">
-              <div className="w-10 h-10 rounded-2xl bg-rose-500/20 border border-rose-500/30 text-rose-400 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-2xl bg-rose-50 border border-rose-200 text-rose-600 flex items-center justify-center">
                 <Receipt className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="text-lg font-serif font-bold text-white">Record Restaurant Expense</h3>
-                <p className="text-[11px] text-stone-400">Meat, rice, fresh produce, wages, or supplies.</p>
+                <h3 className="text-lg font-serif font-bold text-stone-900">Record Restaurant Expense</h3>
+                <p className="text-[11px] text-stone-600">Meat, rice, fresh produce, wages, or supplies.</p>
               </div>
             </div>
 
             <form onSubmit={handleAddExpense} className="space-y-4">
               {/* Category selector chips */}
               <div>
-                <label className="block text-xs font-bold text-stone-300 mb-2">
-                  Select Category <span className="text-gold-400">*</span>
+                <label className="block text-xs font-bold text-stone-800 mb-2">
+                  Select Category <span className="text-amber-600">*</span>
                 </label>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                   {EXPENSE_CATEGORIES.map((cat) => {
@@ -1256,8 +1256,8 @@ export default function HotelReportsPage() {
                         onClick={() => setExpenseCategory(cat.id)}
                         className={`p-2.5 rounded-xl border text-xs font-semibold flex flex-col items-center text-center space-y-1 transition ${
                           isSelected
-                            ? 'bg-gold-500 text-black border-gold-400 font-bold shadow-gold-glow'
-                            : 'bg-stone-900 border-white/10 text-stone-300 hover:border-gold-400/40 hover:text-white'
+                            ? 'bg-amber-500 text-stone-950 border-amber-500 font-bold shadow-sm'
+                            : 'bg-stone-50 border-stone-200 text-stone-700 hover:border-amber-400 hover:text-stone-900'
                         }`}
                       >
                         <span className="text-base">{cat.emoji}</span>
@@ -1271,8 +1271,8 @@ export default function HotelReportsPage() {
               {/* Title & Amount */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div className="sm:col-span-2">
-                  <label className="block text-xs font-bold text-stone-300 mb-1">
-                    Description / Item <span className="text-gold-400">*</span>
+                  <label className="block text-xs font-bold text-stone-800 mb-1">
+                    Description / Item <span className="text-amber-600">*</span>
                   </label>
                   <input
                     type="text"
@@ -1280,13 +1280,13 @@ export default function HotelReportsPage() {
                     placeholder="e.g. 5kg Mutton Sekuwa meat, 1 Sack Rice, Cook Wage"
                     value={expenseTitle}
                     onChange={(e) => setExpenseTitle(e.target.value)}
-                    className="w-full px-3.5 py-2.5 bg-stone-900 border border-white/10 rounded-xl text-xs text-white placeholder-stone-500 focus:outline-none focus:border-gold-400"
+                    className="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 placeholder-stone-400 focus:outline-none focus:border-amber-500"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-stone-300 mb-1">
-                    Amount (NPR) <span className="text-gold-400">*</span>
+                  <label className="block text-xs font-bold text-stone-800 mb-1">
+                    Amount (NPR) <span className="text-amber-600">*</span>
                   </label>
                   <input
                     type="number"
@@ -1296,7 +1296,7 @@ export default function HotelReportsPage() {
                     placeholder="e.g. 3500"
                     value={expenseAmount}
                     onChange={(e) => setExpenseAmount(e.target.value)}
-                    className="w-full px-3.5 py-2.5 bg-stone-900 border border-white/10 rounded-xl text-xs text-white placeholder-stone-500 focus:outline-none focus:border-gold-400 font-bold font-mono"
+                    className="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 placeholder-stone-400 focus:outline-none focus:border-amber-500 font-bold font-mono"
                   />
                 </div>
               </div>
@@ -1304,13 +1304,13 @@ export default function HotelReportsPage() {
               {/* Payment Method */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-bold text-stone-300 mb-1">
+                  <label className="block text-xs font-bold text-stone-800 mb-1">
                     Paid From / Method
                   </label>
                   <select
                     value={expensePaymentMethod}
                     onChange={(e) => setExpensePaymentMethod(e.target.value as any)}
-                    className="w-full px-3.5 py-2.5 bg-stone-900 border border-white/10 rounded-xl text-xs text-white focus:outline-none focus:border-gold-400"
+                    className="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 focus:outline-none focus:border-amber-500"
                   >
                     <option value="cash">Cash from Register / Till</option>
                     <option value="online">Online (Fonepay / eSewa / Khalti)</option>
@@ -1322,7 +1322,7 @@ export default function HotelReportsPage() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-stone-300 mb-1">
+                  <label className="block text-xs font-bold text-stone-800 mb-1">
                     Vendor / Note (Optional)
                   </label>
                   <input
@@ -1330,7 +1330,7 @@ export default function HotelReportsPage() {
                     placeholder="e.g. Local butcher Banasthali"
                     value={expenseNotes}
                     onChange={(e) => setExpenseNotes(e.target.value)}
-                    className="w-full px-3.5 py-2.5 bg-stone-900 border border-white/10 rounded-xl text-xs text-white placeholder-stone-500 focus:outline-none focus:border-gold-400"
+                    className="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 placeholder-stone-400 focus:outline-none focus:border-amber-500"
                   />
                 </div>
               </div>
@@ -1340,14 +1340,14 @@ export default function HotelReportsPage() {
                 <button
                   type="button"
                   onClick={() => setIsExpenseModalOpen(false)}
-                  className="px-4 py-2.5 rounded-xl dark-btn text-xs font-semibold text-stone-300"
+                  className="px-4 py-2.5 rounded-xl dark-btn text-xs font-semibold text-stone-700 hover:text-stone-900 border border-stone-200 hover:border-stone-300"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isSavingExpense}
-                  className="px-5 py-2.5 rounded-xl gold-btn text-xs font-bold flex items-center space-x-1.5 shadow-gold-glow text-black disabled:opacity-50"
+                  className="px-5 py-2.5 rounded-xl gold-btn text-xs font-bold flex items-center space-x-1.5 shadow-sm text-stone-950 disabled:opacity-50"
                 >
                   {isSavingExpense ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <Plus className="w-3.5 h-3.5" />}
                   <span>{isSavingExpense ? 'Recording...' : 'Record Expense'}</span>
@@ -1386,7 +1386,7 @@ export default function HotelReportsPage() {
               ? 'Yesterday Financial Settlement & Sales Report'
               : 'Daily Financial Settlement & Sales Report'}
           </h1>
-          <p className="text-xs text-gray-600 mt-1">digitalizemenu Multi-Tenant Restaurant Management</p>
+          <p className="text-xs text-gray-600 mt-1">RestroAstra Multi-Tenant Restaurant Operations</p>
           <div className="text-xs font-mono font-bold mt-2">
             Date: {register?.date || (selectedRange === 'yesterday' ? getYesterdayNepalString() : formatDate(new Date()))}
           </div>

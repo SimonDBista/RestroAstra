@@ -2,8 +2,11 @@ import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { NextRequest } from 'next/server';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'digitalize-nepal-super-secret-jwt-key-2026';
-const ADMIN_JWT_SECRET = process.env.ADMIN_JWT_SECRET || 'digitalize-nepal-super-admin-key-2026';
+const JWT_SECRET = process.env.JWT_SECRET || 'restroastra-platform-jwt-secret-2026';
+const ADMIN_JWT_SECRET = process.env.ADMIN_JWT_SECRET || 'restroastra-platform-admin-secret-2026';
+
+export const HOTEL_COOKIE_NAME = process.env.AUTH_COOKIE_HOTEL || 'restroastra_hotel_token';
+export const ADMIN_COOKIE_NAME = process.env.AUTH_COOKIE_ADMIN || 'restroastra_admin_token';
 
 export interface HotelTokenPayload {
   hotelId: string;
@@ -62,8 +65,8 @@ export function getHotelAuth(request: NextRequest): HotelTokenPayload | null {
     if (decoded) return decoded;
   }
 
-  // Check cookies
-  const cookie = request.cookies.get('hotel_token');
+  // Check isolated RestroAstra cookie (with fallback to hotel_token)
+  const cookie = request.cookies.get(HOTEL_COOKIE_NAME) || request.cookies.get('hotel_token');
   if (cookie?.value) {
     return verifyHotelToken(cookie.value);
   }
@@ -80,11 +83,12 @@ export function getAdminAuth(request: NextRequest): AdminTokenPayload | null {
     if (decoded) return decoded;
   }
 
-  // Check cookies
-  const cookie = request.cookies.get('admin_token');
+  // Check isolated RestroAstra admin cookie (with fallback to admin_token)
+  const cookie = request.cookies.get(ADMIN_COOKIE_NAME) || request.cookies.get('admin_token');
   if (cookie?.value) {
     return verifyAdminToken(cookie.value);
   }
 
   return null;
 }
+

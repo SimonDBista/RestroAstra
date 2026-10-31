@@ -32,6 +32,7 @@ export default function HotelLoginPage() {
 
       if (data.token) {
         try {
+          localStorage.setItem('restroastra_hotel_token', data.token);
           localStorage.setItem('hotel_token', data.token);
         } catch {}
       }
@@ -45,37 +46,37 @@ export default function HotelLoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#121316] text-stone-100 flex items-center justify-center p-4 relative overflow-hidden selection:bg-gold-500 selection:text-black">
+    <div className="min-h-screen bg-stone-50 text-stone-900 flex items-center justify-center p-4 relative overflow-hidden selection:bg-amber-500 selection:text-white">
       {/* Subtle atmospheric ambient glow */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-gold-500/5 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[550px] bg-amber-500/10 rounded-full blur-[140px] pointer-events-none" />
 
       {/* Back to home */}
       <Link
         href="/"
-        className="absolute top-6 right-6 z-20 flex items-center space-x-2 text-xs font-semibold tracking-wider text-stone-400 hover:text-white transition"
+        className="absolute top-6 right-6 z-20 flex items-center space-x-2 text-xs font-semibold tracking-wider text-stone-600 hover:text-stone-900 transition"
       >
-        <ArrowLeft className="w-4 h-4 text-gold-400" />
+        <ArrowLeft className="w-4 h-4 text-amber-600" />
         <span>Return to Home</span>
       </Link>
 
       {/* Main Login Card */}
-      <div className="relative z-10 w-full max-w-sm bg-[#16171B] border border-white/[0.08] rounded-3xl p-8 sm:p-9 shadow-2xl backdrop-blur-xl">
+      <div className="relative z-10 w-full max-w-sm bg-white border border-stone-200/90 rounded-3xl p-8 sm:p-9 shadow-2xl shadow-stone-900/10">
         {/* Header Title */}
         <div className="text-center mb-8">
-          <div className="w-11 h-11 rounded-2xl bg-gold-400/10 border border-gold-400/30 text-gold-400 flex items-center justify-center mx-auto mb-3">
+          <div className="w-11 h-11 rounded-2xl bg-amber-50 border border-amber-300 text-amber-600 flex items-center justify-center mx-auto mb-3">
             <Utensils className="w-5 h-5" />
           </div>
-          <span className="text-[10px] uppercase tracking-[0.3em] text-gold-400 font-serif font-semibold block mb-1">
+          <span className="text-[10px] uppercase tracking-[0.3em] text-amber-600 font-serif font-bold block mb-1">
             STAFF PORTAL
           </span>
-          <h1 className="text-3xl font-serif font-bold text-white tracking-wider uppercase">
+          <h1 className="text-3xl font-serif font-bold text-stone-900 tracking-wider uppercase">
             LOGIN
           </h1>
-          <p className="text-xs text-stone-400 mt-1 font-light">Hotel & Kitchen Operations Hub</p>
+          <p className="text-xs text-stone-500 mt-1 font-normal">Hotel & Kitchen Operations Hub</p>
         </div>
 
         {error && (
-          <div className="mb-5 p-3.5 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-400 text-xs flex items-center space-x-2.5 animate-slide-up">
+          <div className="mb-5 p-3.5 rounded-2xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center space-x-2.5 animate-slide-up">
             <AlertCircle className="w-4 h-4 flex-shrink-0" />
             <span>{error}</span>
           </div>
@@ -84,7 +85,7 @@ export default function HotelLoginPage() {
         <form onSubmit={handleSubmit} className="space-y-4">
           {/* Email / Username Input */}
           <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-stone-500">
+            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-stone-400">
               <User className="w-4 h-4" />
             </div>
             <input
@@ -93,13 +94,13 @@ export default function HotelLoginPage() {
               placeholder="Username / Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full pl-11 pr-4 py-3 bg-[#111216] border border-white/10 rounded-full text-xs sm:text-sm text-stone-100 placeholder-stone-500 focus:outline-none focus:border-gold-400 focus:ring-2 focus:ring-gold-400/20 transition shadow-inner font-normal"
+              className="w-full pl-11 pr-4 py-3 bg-stone-50 border border-stone-200/90 rounded-full text-xs sm:text-sm text-stone-900 placeholder-stone-400 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 transition shadow-inner font-normal"
             />
           </div>
 
           {/* Password Input */}
           <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-stone-500">
+            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-stone-400">
               <Lock className="w-4 h-4" />
             </div>
             <input
@@ -108,7 +109,7 @@ export default function HotelLoginPage() {
               placeholder="Password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className="w-full pl-11 pr-4 py-3 bg-[#111216] border border-white/10 rounded-full text-xs sm:text-sm text-stone-100 placeholder-stone-500 focus:outline-none focus:border-gold-400 focus:ring-2 focus:ring-gold-400/20 transition shadow-inner font-normal"
+              className="w-full pl-11 pr-4 py-3 bg-stone-50 border border-stone-200/90 rounded-full text-xs sm:text-sm text-stone-900 placeholder-stone-400 focus:outline-none focus:border-amber-500 focus:ring-2 focus:ring-amber-500/20 transition shadow-inner font-normal"
             />
           </div>
 
@@ -117,15 +118,15 @@ export default function HotelLoginPage() {
             <button
               type="button"
               onClick={() => setRememberMe(!rememberMe)}
-              className={`w-4 h-4 rounded-md border border-gold-400/60 flex items-center justify-center transition ${
-                rememberMe ? 'bg-gold-400' : 'bg-transparent'
+              className={`w-4 h-4 rounded-md border border-amber-500 flex items-center justify-center transition ${
+                rememberMe ? 'bg-amber-500' : 'bg-transparent'
               }`}
             >
-              {rememberMe && <Check className="w-3 h-3 text-black stroke-[3]" />}
+              {rememberMe && <Check className="w-3 h-3 text-white stroke-[3]" />}
             </button>
             <label
               onClick={() => setRememberMe(!rememberMe)}
-              className="text-xs text-stone-300 font-medium cursor-pointer select-none"
+              className="text-xs text-stone-700 font-medium cursor-pointer select-none"
             >
               Remember me
             </label>
@@ -144,21 +145,19 @@ export default function HotelLoginPage() {
 
           {/* Forget Password */}
           <div className="text-center pt-1">
-            <span className="text-xs text-stone-400 hover:text-stone-200 cursor-pointer transition">
+            <span className="text-xs text-stone-500 hover:text-stone-800 cursor-pointer transition">
               Forgot your password?
             </span>
           </div>
 
           {/* Footer Note */}
-          <div className="pt-4 border-t border-white/[0.08] text-center text-xs text-stone-400">
+          <div className="pt-4 border-t border-stone-200 text-center text-xs text-stone-500">
             <span>Don't have an account? </span>
-            <span className="text-gold-400 font-semibold hover:underline cursor-pointer">
+            <span className="text-amber-600 font-semibold hover:underline cursor-pointer">
               Contact Administrator
             </span>
           </div>
         </form>
-
-
       </div>
     </div>
   );

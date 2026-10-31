@@ -1,49 +1,61 @@
 param (
-    [string]$VpsHost = "169.58.213.137",
+    [string]$VpsHost = "YOUR_VPS_IP",
     [string]$VpsUser = "root",
-    [string]$RemotePath = "/var/www/digitalize-nepal"
+    [string]$RemotePath = "/var/www/restroastra"
 )
 
-Write-Host "================================================" -ForegroundColor Cyan
-Write-Host " Syncing Food Image Fix & VPS Updates to Server " -ForegroundColor Cyan
-Write-Host " Target: ${VpsUser}@${VpsHost}:${RemotePath}    " -ForegroundColor Cyan
-Write-Host "================================================" -ForegroundColor Cyan
+# ==============================================================================
+# RestroAstra VPS Sync & Deployment Script (Strictly Isolated)
+# Tagline: One platform. Every restaurant operation.
+# ==============================================================================
+
+Write-Host "==========================================================" -ForegroundColor Cyan
+Write-Host "   RestroAstra VPS Synchronization & Deployment           " -ForegroundColor Cyan
+Write-Host "   Target: ${VpsUser}@${VpsHost}:${RemotePath}            " -ForegroundColor Cyan
+Write-Host "==========================================================" -ForegroundColor Cyan
+
+# CRITICAL SAFETY GUARD: Prevent deployment to original live site path
+if ($RemotePath -like "*digitalize-nepal*" -or $RemotePath -like "*digitalizemenu*") {
+    Write-Host "`n[FATAL ERROR] Target path matches original live website!" -ForegroundColor Red
+    Write-Host "RestroAstra must be deployed exclusively to its own directory: /var/www/restroastra" -ForegroundColor Yellow
+    exit 1
+}
+
+if ($VpsHost -eq "YOUR_VPS_IP") {
+    Write-Host "`n[NOTICE] Please provide your target VPS host IP with -VpsHost <ip>" -ForegroundColor Yellow
+    Write-Host "Example: .\sync-to-vps.ps1 -VpsHost 169.58.213.137 -RemotePath /var/www/restroastra`n" -ForegroundColor Yellow
+    exit 1
+}
+
+$confirmation = Read-Host "Are you sure you want to deploy RestroAstra to ${VpsHost}:${RemotePath}? (y/N)"
+if ($confirmation -ne "y" -and $confirmation -ne "Y") {
+    Write-Host "Deployment aborted by user." -ForegroundColor Yellow
+    exit 0
+}
+
+# Create remote isolated directory structure on VPS if not exists
+Write-Host "`n>> Initializing remote directory: ${RemotePath}..." -ForegroundColor Yellow
+ssh "${VpsUser}@${VpsHost}" "mkdir -p ${RemotePath} ${RemotePath}/logs ${RemotePath}/public/uploads"
 
 $filesToSync = @(
-    "src/app/uploads",
-    "public/uploads",
+    "src",
+    "public",
+    "prisma",
     "server.js",
-    "prisma/schema.prisma",
-    "prisma/schema.postgresql.prisma",
-    "src/app/menu/[slug]/page.tsx",
-    "src/app/dashboard/qr/page.tsx",
-    "src/app/dashboard/chat/page.tsx",
-    "src/app/dashboard/reports/page.tsx",
-    "src/app/dashboard/page.tsx",
-    "src/components/ReceiptModal.tsx",
-    "src/components/OrderNotificationToast.tsx",
-    "src/lib/audio.ts",
-    "src/lib/types.ts",
-    "src/app/dashboard/layout.tsx",
-    "src/app/dashboard/menu/page.tsx",
-    "src/app/api/hotel/menu",
-    "src/app/api/hotel/orders",
-    "src/app/api/hotel/tables",
-    "src/app/api/hotel/chat",
-    "src/app/api/hotel/reports",
-    "src/app/api/hotel/expenses",
-    "src/app/api/hotel/register",
-    "src/app/api/public/chat",
-    "src/app/admin/login/page.tsx",
-    "src/app/dashboard/login/page.tsx",
-    "docker-compose.yml",
-    "Dockerfile",
-    ".gitignore",
-    "src/app/page.tsx",
-    "src/app/layout.tsx",
-    "src/app/admin/layout.tsx",
     "package.json",
-    "deploy-vps.sh"
+    "package-lock.json",
+    "tsconfig.json",
+    "tailwind.config.js",
+    "postcss.config.mjs",
+    "next.config.mjs",
+    "ecosystem.config.js",
+    "nginx-vps.conf",
+    "deploy-vps.sh",
+    ".env.example",
+    "Dockerfile",
+    "docker-compose.yml",
+    ".gitignore",
+    "README.md"
 )
 
 foreach ($file in $filesToSync) {
@@ -53,7 +65,7 @@ foreach ($file in $filesToSync) {
     }
 }
 
-Write-Host "`n>> Running remote deployment script..." -ForegroundColor Green
+Write-Host "`n>> Running remote isolated deployment script on VPS..." -ForegroundColor Green
 ssh "${VpsUser}@${VpsHost}" "cd $RemotePath && chmod +x deploy-vps.sh && ./deploy-vps.sh"
 
-Write-Host "`nAll updates deployed to VPS successfully!" -ForegroundColor Green
+Write-Host "`nRestroAstra successfully synchronized and deployed to VPS!" -ForegroundColor Green

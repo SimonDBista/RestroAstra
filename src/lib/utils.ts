@@ -129,5 +129,6 @@ export function getAppBaseUrl(request?: { headers: { get: (name: string) => stri
     return envUrl.replace(/\/+$/, '');
   }
 
-  return 'http://localhost:3000';
+  const defaultPort = process.env.PORT || '3005';
+  return `http://localhost:${defaultPort}`;
 }

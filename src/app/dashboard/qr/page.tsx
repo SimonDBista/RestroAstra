@@ -330,24 +330,24 @@ export default function HotelQRGeneratorPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 print:hidden">
         <div>
           <div className="flex items-center space-x-2">
-            <h1 className="text-3xl font-serif font-bold text-white">Menu QR Codes & Tables</h1>
-            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-gold-400/10 text-gold-400 border border-gold-400/20">
+            <h1 className="text-3xl font-serif font-bold text-stone-900">Menu QR Codes & Tables</h1>
+            <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-800 border border-amber-200">
               Per-Table QR
             </span>
           </div>
-          <p className="text-xs text-stone-400 mt-1">
+          <p className="text-xs text-stone-600 mt-1">
             Generate separate QR codes for each table. Guests scan their exact table stand to open the menu with verified table tracking.
           </p>
         </div>
 
         {/* Tab Switcher */}
-        <div className="flex items-center space-x-1 p-1 bg-stone-900/90 border border-white/10 rounded-2xl">
+        <div className="flex items-center space-x-1 p-1 bg-stone-100 border border-stone-200 rounded-2xl">
           <button
             onClick={() => setActiveTab('tables')}
             className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-2 ${
               activeTab === 'tables'
-                ? 'bg-gold-500 text-black shadow-gold-glow'
-                : 'text-stone-400 hover:text-white'
+                ? 'bg-amber-500 text-stone-950 shadow-sm'
+                : 'text-stone-600 hover:text-stone-900'
             }`}
           >
             <Layers className="w-3.5 h-3.5" />
@@ -357,8 +357,8 @@ export default function HotelQRGeneratorPage() {
             onClick={() => setActiveTab('master')}
             className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-2 ${
               activeTab === 'master'
-                ? 'bg-gold-500 text-black shadow-gold-glow'
-                : 'text-stone-400 hover:text-white'
+                ? 'bg-amber-500 text-stone-950 shadow-sm'
+                : 'text-stone-600 hover:text-stone-900'
             }`}
           >
             <QrCode className="w-3.5 h-3.5" />
@@ -373,20 +373,20 @@ export default function HotelQRGeneratorPage() {
       {activeTab === 'tables' && (
         <div className="space-y-6 print:hidden">
           {/* Action Bar & Quick Stats */}
-          <div className="p-4 bg-stone-900/70 border border-white/[0.08] rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div className="p-4 bg-white border border-stone-200/80 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-sm">
             {/* Search and Table Count */}
             <div className="flex items-center space-x-3 flex-1 max-w-md">
               <div className="relative w-full">
-                <Search className="w-4 h-4 text-stone-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
+                <Search className="w-4 h-4 text-stone-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
                 <input
                   type="text"
                   placeholder="Search table number or section..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 bg-stone-950/80 border border-white/10 rounded-xl text-xs text-white placeholder-stone-500 focus:outline-none focus:border-gold-400"
+                  className="w-full pl-10 pr-4 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 placeholder-stone-400 focus:outline-none focus:border-amber-500"
                 />
               </div>
-              <span className="text-[11px] font-semibold text-stone-400 whitespace-nowrap px-2.5 py-1.5 bg-stone-800 rounded-lg border border-white/5">
+              <span className="text-[11px] font-semibold text-stone-700 whitespace-nowrap px-2.5 py-1.5 bg-stone-100 rounded-lg border border-stone-200">
                 {filteredTables.length} {filteredTables.length === 1 ? 'Table' : 'Tables'}
               </span>
             </div>
@@ -398,9 +398,9 @@ export default function HotelQRGeneratorPage() {
                   setFormError(null);
                   setIsAddModalOpen(true);
                 }}
-                className="px-3.5 py-2 rounded-xl dark-btn text-stone-200 text-xs font-semibold flex items-center space-x-1.5 hover:text-white"
+                className="px-3.5 py-2 rounded-xl dark-btn text-stone-700 text-xs font-semibold flex items-center space-x-1.5 hover:text-stone-900 border border-stone-200"
               >
-                <Plus className="w-3.5 h-3.5 text-gold-400" />
+                <Plus className="w-3.5 h-3.5 text-amber-600" />
                 <span>Add QR</span>
               </button>
 
@@ -409,7 +409,7 @@ export default function HotelQRGeneratorPage() {
                   setFormError(null);
                   setIsBulkModalOpen(true);
                 }}
-                className="px-3.5 py-2 rounded-xl dark-btn text-gold-400 text-xs font-semibold flex items-center space-x-1.5 hover:border-gold-500/40"
+                className="px-3.5 py-2 rounded-xl dark-btn text-amber-700 text-xs font-semibold flex items-center space-x-1.5 hover:border-amber-400 border border-stone-200"
               >
                 <Sparkles className="w-3.5 h-3.5" />
                 <span>Bulk Generate</span>
@@ -418,7 +418,7 @@ export default function HotelQRGeneratorPage() {
               <button
                 onClick={triggerBulkPrint}
                 disabled={tables.length === 0}
-                className="px-4 py-2 rounded-xl gold-btn text-xs font-bold flex items-center space-x-2 shadow-gold-glow disabled:opacity-50"
+                className="px-4 py-2 rounded-xl gold-btn text-xs font-bold flex items-center space-x-2 shadow-sm text-stone-950 disabled:opacity-50"
               >
                 <Printer className="w-4 h-4" />
                 <span>Print All Table Stands</span>
@@ -427,14 +427,14 @@ export default function HotelQRGeneratorPage() {
           </div>
 
           {/* Quick Notice Banner */}
-          <div className="p-4 bg-gradient-to-r from-gold-500/10 via-stone-900 to-stone-900 border border-gold-500/20 rounded-2xl flex items-center justify-between text-xs text-stone-300">
+          <div className="p-4 bg-gradient-to-r from-amber-500/10 via-amber-50/50 to-stone-50 border border-amber-200 rounded-2xl flex items-center justify-between text-xs text-stone-700">
             <div className="flex items-center space-x-3">
-              <div className="w-9 h-9 rounded-xl bg-gold-400/20 border border-gold-400/30 flex items-center justify-center text-gold-400 flex-shrink-0">
+              <div className="w-9 h-9 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-700 flex-shrink-0">
                 <Compass className="w-4 h-4" />
               </div>
               <div>
-                <span className="font-bold text-white block">Unique Table QR Isolation</span>
-                <span className="text-stone-400 text-[11px]">
+                <span className="font-bold text-stone-900 block">Unique Table QR Isolation</span>
+                <span className="text-stone-600 text-[11px]">
                   Each table stand has its own unique QR code. When diners scan it, the system automatically detects their table number and locks it during ordering.
                 </span>
               </div>
@@ -442,9 +442,9 @@ export default function HotelQRGeneratorPage() {
             <button
               onClick={fetchTables}
               disabled={loading}
-              className="px-3 py-1.5 rounded-lg bg-stone-800 hover:bg-stone-700 text-stone-300 text-xs font-semibold flex items-center space-x-1.5 transition"
+              className="px-3 py-1.5 rounded-lg bg-white border border-stone-200 hover:bg-stone-50 text-stone-700 text-xs font-semibold flex items-center space-x-1.5 transition shadow-sm"
             >
-              <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin text-gold-400' : ''}`} />
+              <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin text-amber-600' : ''}`} />
               <span className="hidden sm:inline">Refresh</span>
             </button>
           </div>
@@ -452,21 +452,21 @@ export default function HotelQRGeneratorPage() {
           {/* Table QR Cards Grid */}
           {loading ? (
             <div className="py-24 text-center">
-              <RefreshCw className="w-8 h-8 text-gold-400 animate-spin mx-auto mb-3" />
-              <p className="text-xs font-semibold text-stone-400">Loading tables & generating QR codes...</p>
+              <RefreshCw className="w-8 h-8 text-amber-600 animate-spin mx-auto mb-3" />
+              <p className="text-xs font-semibold text-stone-600">Loading tables & generating QR codes...</p>
             </div>
           ) : filteredTables.length === 0 ? (
-            <div className="p-12 text-center bg-stone-900/40 border border-dashed border-white/10 rounded-3xl">
-              <QrCode className="w-12 h-12 text-stone-600 mx-auto mb-3" />
-              <h3 className="text-base font-bold text-white mb-1">No Tables Found</h3>
-              <p className="text-xs text-stone-400 max-w-sm mx-auto mb-4">
+            <div className="p-12 text-center bg-stone-50 border border-dashed border-stone-200 rounded-3xl">
+              <QrCode className="w-12 h-12 text-stone-400 mx-auto mb-3" />
+              <h3 className="text-base font-bold text-stone-900 mb-1">No Tables Found</h3>
+              <p className="text-xs text-stone-600 max-w-sm mx-auto mb-4">
                 {searchQuery
                   ? `No tables match your search "${searchQuery}".`
                   : 'Start by adding your dining tables or click Bulk Generate to create tables 1 to 10 in seconds.'}
               </p>
               <button
                 onClick={() => setIsBulkModalOpen(true)}
-                className="px-4 py-2 rounded-xl gold-btn text-xs font-bold inline-flex items-center space-x-2"
+                className="px-4 py-2 rounded-xl gold-btn text-xs font-bold inline-flex items-center space-x-2 text-stone-950 shadow-sm"
               >
                 <Sparkles className="w-4 h-4" />
                 <span>Bulk Generate Tables</span>
@@ -477,33 +477,33 @@ export default function HotelQRGeneratorPage() {
               {filteredTables.map((table) => (
                 <div
                   key={table.id}
-                  className="bg-[#111216] border border-white/[0.08] hover:border-gold-500/40 rounded-3xl p-5 flex flex-col justify-between transition-all duration-200 group shadow-lg hover:shadow-gold-500/5 relative overflow-hidden"
+                  className="bg-white border border-stone-200/80 hover:border-amber-400/50 rounded-3xl p-5 flex flex-col justify-between transition-all duration-200 group shadow-sm hover:shadow-md relative overflow-hidden"
                 >
                   {/* Decorative top accent line */}
-                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-gold-400/40 to-transparent opacity-0 group-hover:opacity-100 transition" />
+                  <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-amber-400/50 to-transparent opacity-0 group-hover:opacity-100 transition" />
 
                   {/* Header: Table Number, Section & Capacity */}
                   <div>
                     <div className="flex items-start justify-between gap-2 mb-3">
                       <div>
                         {getQRCardDisplay(table.tableNumber, table.name).sectionLabel && (
-                          <span className="text-[10px] uppercase tracking-wider font-bold text-gold-400 block">
+                          <span className="text-[10px] uppercase tracking-wider font-bold text-amber-700 block">
                             {getQRCardDisplay(table.tableNumber, table.name).sectionLabel}
                           </span>
                         )}
-                        <h3 className="text-xl font-serif font-black text-white">
+                        <h3 className="text-xl font-serif font-black text-stone-900">
                           {getQRCardDisplay(table.tableNumber, table.name).mainTitle}
                         </h3>
                       </div>
                       <div className="flex items-center space-x-1.5">
-                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-stone-800 text-stone-300 border border-white/5 flex items-center space-x-1">
-                          <Users className="w-2.5 h-2.5 text-gold-400" />
+                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-stone-100 text-stone-700 border border-stone-200 flex items-center space-x-1">
+                          <Users className="w-2.5 h-2.5 text-amber-600" />
                           <span>{table.capacity}</span>
                         </span>
                         <button
                           onClick={() => handleDeleteTable(table.id, table.tableNumber)}
                           title="Delete Table"
-                          className="p-1.5 text-stone-600 hover:text-red-400 rounded-lg hover:bg-stone-800/60 transition"
+                          className="p-1.5 text-stone-400 hover:text-red-500 rounded-lg hover:bg-stone-100 transition"
                         >
                           <Trash2 className="w-3.5 h-3.5" />
                         </button>
@@ -511,7 +511,7 @@ export default function HotelQRGeneratorPage() {
                     </div>
 
                     {/* QR Code Container */}
-                    <div className="bg-white p-3.5 rounded-2xl shadow-inner border border-gold-400/30 flex justify-center my-2 group-hover:border-gold-400 transition">
+                    <div className="bg-stone-50 p-3.5 rounded-2xl shadow-inner border border-amber-200/60 flex justify-center my-2 group-hover:border-amber-400 transition">
                       <img
                         src={table.qrDataUrl}
                         alt={`QR Code ${formatQRBadge(table.tableNumber, table.name)}`}
@@ -520,14 +520,14 @@ export default function HotelQRGeneratorPage() {
                     </div>
 
                     {/* Direct URL preview */}
-                    <div className="mt-3 px-2.5 py-1.5 rounded-lg bg-stone-950/70 border border-white/5 flex items-center justify-between text-[11px] font-mono text-stone-400">
+                    <div className="mt-3 px-2.5 py-1.5 rounded-lg bg-stone-50 border border-stone-200 flex items-center justify-between text-[11px] font-mono text-stone-600">
                       <span className="truncate max-w-[170px]">{table.targetUrl.replace(/^https?:\/\//, '')}</span>
                       <a
                         href={table.targetUrl}
                         target="_blank"
                         rel="noopener noreferrer"
                         title="Test Guest Menu"
-                        className="text-gold-400 hover:text-gold-300 ml-1 flex-shrink-0"
+                        className="text-amber-700 hover:text-amber-600 ml-1 flex-shrink-0"
                       >
                         <ExternalLink className="w-3 h-3" />
                       </a>
@@ -535,19 +535,19 @@ export default function HotelQRGeneratorPage() {
                   </div>
 
                   {/* Actions Bar */}
-                  <div className="mt-4 pt-3.5 border-t border-white/[0.08] flex items-center justify-between gap-1.5">
+                  <div className="mt-4 pt-3.5 border-t border-stone-100 flex items-center justify-between gap-1.5">
                     <button
                       onClick={() => handleCopy(table.targetUrl, table.id)}
                       title="Copy Direct Link"
-                      className="p-2 rounded-xl bg-stone-900 border border-white/5 text-stone-300 hover:text-white hover:border-gold-400/30 transition text-xs flex items-center justify-center flex-1"
+                      className="p-2 rounded-xl bg-stone-50 border border-stone-200 text-stone-700 hover:text-stone-900 hover:border-amber-300 transition text-xs flex items-center justify-center flex-1 shadow-sm"
                     >
                       {copiedId === table.id ? (
-                        <span className="text-[10px] font-bold text-emerald-400 flex items-center space-x-1">
+                        <span className="text-[10px] font-bold text-emerald-600 flex items-center space-x-1">
                           <Check className="w-3 h-3" />
                           <span>Copied!</span>
                         </span>
                       ) : (
-                        <span className="text-[10px] font-semibold text-stone-300 flex items-center space-x-1">
+                        <span className="text-[10px] font-semibold text-stone-700 flex items-center space-x-1">
                           <Copy className="w-3 h-3" />
                           <span>Link</span>
                         </span>
@@ -562,7 +562,7 @@ export default function HotelQRGeneratorPage() {
                         )
                       }
                       title="Download PNG QR"
-                      className="p-2 rounded-xl bg-stone-900 border border-white/5 text-gold-400 hover:text-gold-300 hover:border-gold-400/40 transition text-xs flex items-center justify-center space-x-1 flex-1 font-semibold"
+                      className="p-2 rounded-xl bg-stone-50 border border-stone-200 text-amber-800 hover:text-amber-700 hover:border-amber-300 transition text-xs flex items-center justify-center space-x-1 flex-1 font-semibold shadow-sm"
                     >
                       <Download className="w-3 h-3" />
                       <span className="text-[10px]">PNG</span>
@@ -571,7 +571,7 @@ export default function HotelQRGeneratorPage() {
                     <button
                       onClick={() => triggerSinglePrint(table)}
                       title="Print Luxury Stand Card"
-                      className="p-2 rounded-xl gold-btn text-xs font-bold flex items-center justify-center space-x-1 flex-1 shadow-gold-glow"
+                      className="p-2 rounded-xl gold-btn text-xs font-bold flex items-center justify-center space-x-1 flex-1 shadow-sm text-stone-950"
                     >
                       <Printer className="w-3 h-3" />
                       <span className="text-[10px]">Print</span>
@@ -589,14 +589,14 @@ export default function HotelQRGeneratorPage() {
       {/* ============================================================ */}
       {activeTab === 'master' && (
         <div className="space-y-6 print:hidden">
-          <div className="p-4 bg-stone-900/60 border border-white/[0.08] rounded-2xl flex items-center justify-between text-xs text-stone-300">
+          <div className="p-4 bg-amber-50/60 border border-amber-200 rounded-2xl flex items-center justify-between text-xs text-stone-700">
             <div className="flex items-center space-x-3">
-              <div className="w-9 h-9 rounded-xl bg-gold-400/15 border border-gold-400/30 flex items-center justify-center text-gold-400 flex-shrink-0">
+              <div className="w-9 h-9 rounded-xl bg-amber-100 border border-amber-200 flex items-center justify-center text-amber-700 flex-shrink-0">
                 <QrCode className="w-4 h-4" />
               </div>
               <div>
-                <span className="font-semibold text-white block">Universal Counter & Marketing QR</span>
-                <span className="text-stone-400 text-[11px]">
+                <span className="font-semibold text-stone-900 block">Universal Counter & Marketing QR</span>
+                <span className="text-stone-600 text-[11px]">
                   Does not specify any table. Ideal for reception counters, takeout flyers, social media, or door stands. Diners enter their table manually.
                 </span>
               </div>
@@ -606,7 +606,7 @@ export default function HotelQRGeneratorPage() {
                 href={masterQR.targetUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-stone-800 hover:bg-stone-700 text-gold-400 text-xs font-semibold transition"
+                className="inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-lg bg-white border border-stone-200 hover:bg-stone-50 text-amber-700 text-xs font-semibold transition shadow-sm"
               >
                 <span>Preview</span>
                 <ExternalLink className="w-3.5 h-3.5" />
@@ -615,23 +615,23 @@ export default function HotelQRGeneratorPage() {
           </div>
 
           <div className="flex justify-center">
-            <div className="w-full max-w-sm bg-gradient-to-b from-[#0e0f12] via-[#16171B] to-[#121316] border-2 border-gold-400/40 rounded-3xl p-8 text-center shadow-2xl relative overflow-hidden">
-              <div className="border border-gold-400/25 rounded-2xl p-6">
-                <span className="text-[10px] uppercase tracking-[0.3em] text-gold-400 font-serif font-bold">
+            <div className="w-full max-w-sm bg-white border-2 border-amber-300 rounded-3xl p-8 text-center shadow-xl relative overflow-hidden">
+              <div className="border border-amber-200 rounded-2xl p-6 bg-stone-50/40">
+                <span className="text-[10px] uppercase tracking-[0.3em] text-amber-700 font-serif font-bold">
                   SCAN • BROWSE • ORDER
                 </span>
-                <h2 className="text-2xl font-serif font-bold text-white mt-1.5 uppercase tracking-wide">
+                <h2 className="text-2xl font-serif font-bold text-stone-900 mt-1.5 uppercase tracking-wide">
                   {masterQR?.hotelName || hotelName}
                 </h2>
 
-                <div className="inline-block my-3 px-4 py-1 rounded-full bg-stone-900 border border-gold-400/40 text-gold-400 font-bold text-xs shadow-gold-glow">
+                <div className="inline-block my-3 px-4 py-1 rounded-full bg-amber-50 border border-amber-300 text-amber-800 font-bold text-xs shadow-sm">
                   UNIVERSAL DIGITAL MENU
                 </div>
 
-                <div className="my-4 p-3.5 bg-white rounded-2xl shadow-2xl inline-block border-2 border-gold-400/40">
+                <div className="my-4 p-3.5 bg-white rounded-2xl shadow-sm inline-block border-2 border-amber-200">
                   {masterLoading ? (
                     <div className="w-56 h-56 flex items-center justify-center">
-                      <RefreshCw className="w-8 h-8 text-gold-400 animate-spin" />
+                      <RefreshCw className="w-8 h-8 text-amber-600 animate-spin" />
                     </div>
                   ) : masterQR?.qrDataUrl ? (
                     <img
@@ -646,11 +646,11 @@ export default function HotelQRGeneratorPage() {
                   )}
                 </div>
 
-                <p className="text-xs font-medium text-stone-200 mt-2">
+                <p className="text-xs font-medium text-stone-700 mt-2">
                   Scan to browse our digital menu, 3D dishes, and place your order.
                 </p>
 
-                <div className="mt-5 pt-4 border-t border-white/10 flex items-center justify-center space-x-3">
+                <div className="mt-5 pt-4 border-t border-stone-200 flex items-center justify-center space-x-3">
                   <button
                     onClick={() => {
                       if (!masterQR?.targetUrl) return;
@@ -658,9 +658,9 @@ export default function HotelQRGeneratorPage() {
                       setMasterCopied(true);
                       setTimeout(() => setMasterCopied(false), 2000);
                     }}
-                    className="px-3.5 py-2 rounded-xl dark-btn text-xs font-semibold text-stone-300 flex items-center space-x-1.5"
+                    className="px-3.5 py-2 rounded-xl dark-btn text-xs font-semibold text-stone-700 flex items-center space-x-1.5 border border-stone-200"
                   >
-                    {masterCopied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                    {masterCopied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
                     <span>{masterCopied ? 'Copied!' : 'Copy Link'}</span>
                   </button>
 
@@ -669,7 +669,7 @@ export default function HotelQRGeneratorPage() {
                       if (!masterQR?.qrDataUrl) return;
                       handleDownload(masterQR.qrDataUrl, `${hotelSlug || 'restaurant'}-universal-qr.png`);
                     }}
-                    className="px-3.5 py-2 rounded-xl gold-btn text-xs font-bold flex items-center space-x-1.5"
+                    className="px-3.5 py-2 rounded-xl gold-btn text-xs font-bold flex items-center space-x-1.5 text-stone-950 shadow-sm"
                   >
                     <Download className="w-3.5 h-3.5" />
                     <span>Download PNG</span>
@@ -685,27 +685,27 @@ export default function HotelQRGeneratorPage() {
       {/* MODAL 1: ADD SINGLE QR                                       */}
       {/* ============================================================ */}
       {isAddModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-          <div className="w-full max-w-md bg-[#121316] border border-white/10 rounded-3xl p-6 shadow-2xl relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
+          <div className="w-full max-w-md bg-white border border-stone-200 rounded-3xl p-6 shadow-2xl relative">
             <button
               onClick={() => setIsAddModalOpen(false)}
-              className="absolute top-5 right-5 text-stone-400 hover:text-white p-1 rounded-lg hover:bg-stone-800 transition"
+              className="absolute top-5 right-5 text-stone-400 hover:text-stone-700 p-1 rounded-lg hover:bg-stone-100 transition"
             >
               <X className="w-5 h-5" />
             </button>
 
             <div className="flex items-center space-x-2.5 mb-5">
-              <div className="w-9 h-9 rounded-xl bg-gold-400/20 border border-gold-400/30 flex items-center justify-center text-gold-400">
+              <div className="w-9 h-9 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-700">
                 <Plus className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="text-lg font-serif font-bold text-white">Add New QR</h3>
-                <p className="text-[11px] text-stone-400">Creates a QR stand and generates its unique menu link.</p>
+                <h3 className="text-lg font-serif font-bold text-stone-900">Add New QR</h3>
+                <p className="text-[11px] text-stone-600">Creates a QR stand and generates its unique menu link.</p>
               </div>
             </div>
 
             {formError && (
-              <div className="mb-4 p-3 bg-red-500/10 border border-red-500/30 rounded-xl text-xs text-red-400 flex items-center space-x-2">
+              <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl text-xs text-red-700 flex items-center space-x-2">
                 <AlertCircle className="w-4 h-4 flex-shrink-0" />
                 <span>{formError}</span>
               </div>
@@ -713,8 +713,8 @@ export default function HotelQRGeneratorPage() {
 
             <form onSubmit={handleAddTable} className="space-y-4">
               <div>
-                <label className="block text-xs font-bold text-stone-300 mb-1">
-                  QR Number or Label <span className="text-gold-400">*</span>
+                <label className="block text-xs font-bold text-stone-800 mb-1">
+                  QR Number or Label <span className="text-amber-600">*</span>
                 </label>
                 <input
                   type="text"
@@ -722,7 +722,7 @@ export default function HotelQRGeneratorPage() {
                   placeholder="e.g. 2, room 2, VIP-1"
                   value={newTableNumber}
                   onChange={(e) => setNewTableNumber(e.target.value)}
-                  className="w-full px-3.5 py-2.5 bg-stone-900 border border-white/10 rounded-xl text-xs text-white placeholder-stone-500 focus:outline-none focus:border-gold-400"
+                  className="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 placeholder-stone-400 focus:outline-none focus:border-amber-500"
                 />
                 <span className="text-[10px] text-stone-500 mt-1 block">
                   This exact label will be printed on the stand and linked to guest orders (e.g. #2, #room2).
@@ -731,7 +731,7 @@ export default function HotelQRGeneratorPage() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-bold text-stone-300 mb-1">
+                  <label className="block text-xs font-bold text-stone-800 mb-1">
                     Section / Area Name
                   </label>
                   <input
@@ -739,7 +739,7 @@ export default function HotelQRGeneratorPage() {
                     placeholder="e.g. Rooms, Main Dining"
                     value={newTableName}
                     onChange={(e) => setNewTableName(e.target.value)}
-                    className="w-full px-3.5 py-2.5 bg-stone-900 border border-white/10 rounded-xl text-xs text-white placeholder-stone-500 focus:outline-none focus:border-gold-400"
+                    className="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 placeholder-stone-400 focus:outline-none focus:border-amber-500"
                   />
                   <div className="flex flex-wrap gap-1 mt-1.5">
                     {['Main Dining', 'Rooms', 'Terrace', 'VIP'].map((sec) => (
@@ -749,8 +749,8 @@ export default function HotelQRGeneratorPage() {
                         onClick={() => setNewTableName(sec)}
                         className={`px-2 py-0.5 rounded-lg text-[10px] font-semibold border transition ${
                           newTableName.toLowerCase() === sec.toLowerCase()
-                            ? 'bg-gold-400/20 text-gold-300 border-gold-400/40'
-                            : 'bg-stone-900 text-stone-400 border-white/5 hover:text-white'
+                            ? 'bg-amber-100 text-amber-800 border-amber-300'
+                            : 'bg-stone-100 text-stone-600 border-stone-200 hover:text-stone-900'
                         }`}
                       >
                         {sec}
@@ -760,7 +760,7 @@ export default function HotelQRGeneratorPage() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-stone-300 mb-1">
+                  <label className="block text-xs font-bold text-stone-800 mb-1">
                     Seating Capacity
                   </label>
                   <input
@@ -770,24 +770,24 @@ export default function HotelQRGeneratorPage() {
                     placeholder="4"
                     value={newTableCapacity}
                     onChange={(e) => setNewTableCapacity(e.target.value)}
-                    className="w-full px-3.5 py-2.5 bg-stone-900 border border-white/10 rounded-xl text-xs text-white placeholder-stone-500 focus:outline-none focus:border-gold-400"
+                    className="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 placeholder-stone-400 focus:outline-none focus:border-amber-500"
                   />
                 </div>
               </div>
 
               {/* Dynamic Live QR Badge Preview */}
               {newTableNumber.trim() && (
-                <div className="p-3 bg-stone-950/80 border border-gold-400/25 rounded-2xl flex items-center justify-between">
+                <div className="p-3 bg-amber-50/50 border border-amber-200 rounded-2xl flex items-center justify-between">
                   <div>
-                    <span className="text-[10px] uppercase tracking-wider font-bold text-stone-400 block">
+                    <span className="text-[10px] uppercase tracking-wider font-bold text-stone-500 block">
                       QR Stand Preview
                     </span>
-                    <span className="text-[11px] text-stone-300">
+                    <span className="text-[11px] text-stone-700">
                       {newTableName.trim() ? `Section: ${newTableName.trim()}` : 'Dining Area'}
                     </span>
                   </div>
                   <div className="text-right">
-                    <span className="text-sm font-serif font-black text-gold-400 bg-gold-400/10 border border-gold-400/30 px-3 py-1 rounded-xl shadow-gold-glow inline-block">
+                    <span className="text-sm font-serif font-black text-amber-800 bg-white border border-amber-300 px-3 py-1 rounded-xl shadow-sm inline-block">
                       {formatQRBadge(newTableNumber, newTableName)}
                     </span>
                   </div>
@@ -798,14 +798,14 @@ export default function HotelQRGeneratorPage() {
                 <button
                   type="button"
                   onClick={() => setIsAddModalOpen(false)}
-                  className="px-4 py-2.5 rounded-xl dark-btn text-xs font-semibold text-stone-300"
+                  className="px-4 py-2.5 rounded-xl dark-btn text-xs font-semibold text-stone-700 hover:text-stone-900 border border-stone-200"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isSavingTable}
-                  className="px-5 py-2.5 rounded-xl gold-btn text-xs font-bold flex items-center space-x-1.5 shadow-gold-glow disabled:opacity-50"
+                  className="px-5 py-2.5 rounded-xl gold-btn text-xs font-bold flex items-center space-x-1.5 shadow-sm text-stone-950 disabled:opacity-50"
                 >
                   {isSavingTable && <RefreshCw className="w-3.5 h-3.5 animate-spin" />}
                   <span>{isSavingTable ? 'Creating...' : 'Add QR'}</span>
@@ -820,27 +820,27 @@ export default function HotelQRGeneratorPage() {
       {/* MODAL 2: BULK TABLE GENERATOR                                */}
       {/* ============================================================ */}
       {isBulkModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-          <div className="w-full max-w-md bg-[#121316] border border-white/10 rounded-3xl p-6 shadow-2xl relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-sm">
+          <div className="w-full max-w-md bg-white border border-stone-200 rounded-3xl p-6 shadow-2xl relative">
             <button
               onClick={() => setIsBulkModalOpen(false)}
-              className="absolute top-5 right-5 text-stone-400 hover:text-white p-1 rounded-lg hover:bg-stone-800 transition"
+              className="absolute top-5 right-5 text-stone-400 hover:text-stone-700 p-1 rounded-lg hover:bg-stone-100 transition"
             >
               <X className="w-5 h-5" />
             </button>
 
             <div className="flex items-center space-x-2.5 mb-5">
-              <div className="w-9 h-9 rounded-xl bg-gold-400/20 border border-gold-400/30 flex items-center justify-center text-gold-400">
+              <div className="w-9 h-9 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-700">
                 <Sparkles className="w-5 h-5" />
               </div>
               <div>
-                <h3 className="text-lg font-serif font-bold text-white">Bulk Table Generator</h3>
-                <p className="text-[11px] text-stone-400">Generate a series of tables with 1 click.</p>
+                <h3 className="text-lg font-serif font-bold text-stone-900">Bulk Table Generator</h3>
+                <p className="text-[11px] text-stone-600">Generate a series of tables with 1 click.</p>
               </div>
             </div>
 
             {formError && (
-              <div className="mb-4 p-3 bg-red-500/10 border border-red-500/30 rounded-xl text-xs text-red-400 flex items-center space-x-2">
+              <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded-xl text-xs text-red-700 flex items-center space-x-2">
                 <AlertCircle className="w-4 h-4 flex-shrink-0" />
                 <span>{formError}</span>
               </div>
@@ -849,7 +849,7 @@ export default function HotelQRGeneratorPage() {
             <form onSubmit={handleBulkGenerate} className="space-y-4">
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-bold text-stone-300 mb-1">
+                  <label className="block text-xs font-bold text-stone-800 mb-1">
                     Start Number
                   </label>
                   <input
@@ -857,11 +857,11 @@ export default function HotelQRGeneratorPage() {
                     min="1"
                     value={bulkStart}
                     onChange={(e) => setBulkStart(e.target.value)}
-                    className="w-full px-3.5 py-2.5 bg-stone-900 border border-white/10 rounded-xl text-xs text-white focus:outline-none focus:border-gold-400"
+                    className="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 focus:outline-none focus:border-amber-500"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-stone-300 mb-1">
+                  <label className="block text-xs font-bold text-stone-800 mb-1">
                     How Many Tables?
                   </label>
                   <input
@@ -870,13 +870,13 @@ export default function HotelQRGeneratorPage() {
                     max="50"
                     value={bulkCount}
                     onChange={(e) => setBulkCount(e.target.value)}
-                    className="w-full px-3.5 py-2.5 bg-stone-900 border border-white/10 rounded-xl text-xs text-white focus:outline-none focus:border-gold-400"
+                    className="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 focus:outline-none focus:border-amber-500"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-stone-300 mb-1">
+                <label className="block text-xs font-bold text-stone-800 mb-1">
                   Prefix (Optional)
                 </label>
                 <input
@@ -884,7 +884,7 @@ export default function HotelQRGeneratorPage() {
                   placeholder={bulkSection && /room/i.test(bulkSection) ? "Default: 'room'" : "e.g. 'T-' or 'room'"}
                   value={bulkPrefix}
                   onChange={(e) => setBulkPrefix(e.target.value)}
-                  className="w-full px-3.5 py-2.5 bg-stone-900 border border-white/10 rounded-xl text-xs text-white placeholder-stone-500 focus:outline-none focus:border-gold-400"
+                  className="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 placeholder-stone-400 focus:outline-none focus:border-amber-500"
                 />
                 <span className="text-[10px] text-stone-500 mt-1 block">
                   Preview: #{bulkPrefix || (bulkSection && /room/i.test(bulkSection) ? 'room' : '')}{bulkStart}, #{bulkPrefix || (bulkSection && /room/i.test(bulkSection) ? 'room' : '')}{parseInt(bulkStart, 10) + 1} ...
@@ -893,7 +893,7 @@ export default function HotelQRGeneratorPage() {
 
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block text-xs font-bold text-stone-300 mb-1">
+                  <label className="block text-xs font-bold text-stone-800 mb-1">
                     Section Name
                   </label>
                   <input
@@ -901,7 +901,7 @@ export default function HotelQRGeneratorPage() {
                     placeholder="e.g. Main Dining, Rooms"
                     value={bulkSection}
                     onChange={(e) => setBulkSection(e.target.value)}
-                    className="w-full px-3.5 py-2.5 bg-stone-900 border border-white/10 rounded-xl text-xs text-white placeholder-stone-500 focus:outline-none focus:border-gold-400"
+                    className="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 placeholder-stone-400 focus:outline-none focus:border-amber-500"
                   />
                   <div className="flex flex-wrap gap-1 mt-1.5">
                     {['Main Dining', 'Rooms', 'Terrace', 'VIP'].map((sec) => (
@@ -916,8 +916,8 @@ export default function HotelQRGeneratorPage() {
                         }}
                         className={`px-2 py-0.5 rounded-lg text-[10px] font-semibold border transition ${
                           bulkSection.toLowerCase() === sec.toLowerCase()
-                            ? 'bg-gold-400/20 text-gold-300 border-gold-400/40'
-                            : 'bg-stone-900 text-stone-400 border-white/5 hover:text-white'
+                            ? 'bg-amber-100 text-amber-800 border-amber-300'
+                            : 'bg-stone-100 text-stone-600 border-stone-200 hover:text-stone-900'
                         }`}
                       >
                         {sec}
@@ -926,7 +926,7 @@ export default function HotelQRGeneratorPage() {
                   </div>
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-stone-300 mb-1">
+                  <label className="block text-xs font-bold text-stone-800 mb-1">
                     Capacity
                   </label>
                   <input
@@ -935,7 +935,7 @@ export default function HotelQRGeneratorPage() {
                     max="50"
                     value={bulkCapacity}
                     onChange={(e) => setBulkCapacity(e.target.value)}
-                    className="w-full px-3.5 py-2.5 bg-stone-900 border border-white/10 rounded-xl text-xs text-white focus:outline-none focus:border-gold-400"
+                    className="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 focus:outline-none focus:border-amber-500"
                   />
                 </div>
               </div>
@@ -944,14 +944,14 @@ export default function HotelQRGeneratorPage() {
                 <button
                   type="button"
                   onClick={() => setIsBulkModalOpen(false)}
-                  className="px-4 py-2.5 rounded-xl dark-btn text-xs font-semibold text-stone-300"
+                  className="px-4 py-2.5 rounded-xl dark-btn text-xs font-semibold text-stone-700 hover:text-stone-900 border border-stone-200"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isBulkSaving}
-                  className="px-5 py-2.5 rounded-xl gold-btn text-xs font-bold flex items-center space-x-1.5 shadow-gold-glow disabled:opacity-50"
+                  className="px-5 py-2.5 rounded-xl gold-btn text-xs font-bold flex items-center space-x-1.5 shadow-sm text-stone-950 disabled:opacity-50"
                 >
                   {isBulkSaving && <RefreshCw className="w-3.5 h-3.5 animate-spin" />}
                   <span>{isBulkSaving ? 'Generating...' : `Generate ${bulkCount} Tables`}</span>
@@ -997,7 +997,7 @@ export default function HotelQRGeneratorPage() {
                 Scan with your phone camera to view the menu, 3D dishes, and place your order.
               </p>
               <p className="text-[10px] font-bold text-gray-500 mt-3 uppercase tracking-wider">
-                digitalizemenu
+                RestroAstra • One platform. Every restaurant operation.
               </p>
             </div>
           </div>
@@ -1045,7 +1045,7 @@ export default function HotelQRGeneratorPage() {
                     Scan with phone camera to order directly.
                   </p>
                   <p className="text-[9px] font-bold text-gray-500 mt-1 uppercase tracking-wider">
-                    digitalizemenu
+                    RestroAstra
                   </p>
                 </div>
               </div>

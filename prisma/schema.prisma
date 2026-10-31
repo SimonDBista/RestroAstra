@@ -1,4 +1,4 @@
-// Prisma Schema for Digitalize Nepal Multi-Tenant Platform
+// Prisma Schema for RestroAstra Multi-Tenant Platform
 
 generator client {
   provider = "prisma-client-js"

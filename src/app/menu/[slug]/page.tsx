@@ -686,9 +686,9 @@ function CustomerMenuContent() {
       <div className="min-h-screen bg-background flex flex-col items-center justify-center p-6 text-center">
         <div className="w-14 h-14 rounded-full border-4 border-gold-500/20 border-t-gold-500 animate-spin mb-4 shadow-gold-glow" />
         <h2 className="font-serif text-xl font-bold text-white mb-1">
-          Loading Five-Star Menu...
+          Loading RestroAstra Menu...
         </h2>
-        <p className="text-xs text-gold-400 font-semibold tracking-widest uppercase">Digitalize Nepal</p>
+        <p className="text-xs text-gold-400 font-semibold tracking-widest uppercase">RestroAstra</p>
       </div>
     );
   }
@@ -714,11 +714,11 @@ function CustomerMenuContent() {
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground pb-32 selection:bg-gold-500 selection:text-black">
+    <div className="min-h-screen bg-background text-foreground pb-32 selection:bg-amber-500 selection:text-white">
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed top-5 left-1/2 -translate-x-1/2 z-50 px-5 py-2.5 bg-dark-900/95 border border-gold-500/40 text-gold-300 text-xs font-bold rounded-full shadow-gold-glow backdrop-blur-xl flex items-center space-x-2 animate-slide-up">
-          <Sparkles className="w-4 h-4 text-gold-400" />
+        <div className="fixed top-5 left-1/2 -translate-x-1/2 z-50 px-5 py-2.5 bg-white/95 border border-amber-400 text-amber-900 text-xs font-bold rounded-full shadow-lg backdrop-blur-xl flex items-center space-x-2 animate-slide-up">
+          <Sparkles className="w-4 h-4 text-amber-600" />
           <span>{toastMessage}</span>
         </div>
       )}
@@ -726,37 +726,37 @@ function CustomerMenuContent() {
       {/* Floating Incoming Staff Message Notification Toast */}
       {incomingStaffMessage && !isChatOpen && (
         <div className="fixed top-5 left-4 right-4 max-w-md mx-auto z-50 animate-slide-up">
-          <div className="bg-[#14151a]/95 border-2 border-gold-400/80 rounded-3xl p-4 shadow-2xl backdrop-blur-xl flex flex-col gap-2.5">
+          <div className="bg-white/95 border-2 border-amber-400 rounded-3xl p-4 shadow-2xl backdrop-blur-xl flex flex-col gap-2.5">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 rounded-xl bg-gold-400/20 text-gold-400 border border-gold-400/40 flex items-center justify-center">
+                <div className="w-8 h-8 rounded-xl bg-amber-50 text-amber-700 border border-amber-300 flex items-center justify-center">
                   <MessageCircle className="w-4 h-4 animate-bounce" />
                 </div>
                 <div>
-                  <span className="text-xs font-serif font-bold text-white block">
+                  <span className="text-xs font-serif font-bold text-stone-900 block">
                     {lang === 'en' ? 'Staff Desk • Reception Reply' : 'होटल कर्मचारीको सन्देश'}
                   </span>
-                  <span className="text-[10px] text-gold-400 font-semibold">
+                  <span className="text-[10px] text-amber-700 font-semibold">
                     {formatTime(incomingStaffMessage.createdAt)}
                   </span>
                 </div>
               </div>
               <button
                 onClick={() => setIncomingStaffMessage(null)}
-                className="text-stone-400 hover:text-white p-1 rounded-lg"
+                className="text-stone-400 hover:text-stone-800 p-1 rounded-lg"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
-            <p className="text-xs text-stone-200 bg-black/40 rounded-xl p-2.5 border border-white/5 line-clamp-2 leading-relaxed font-medium">
+            <p className="text-xs text-stone-800 bg-stone-50 rounded-xl p-2.5 border border-stone-200 line-clamp-2 leading-relaxed font-medium">
               &ldquo;{incomingStaffMessage.message}&rdquo;
             </p>
 
             <div className="flex items-center justify-end space-x-2 pt-0.5">
               <button
                 onClick={() => setIncomingStaffMessage(null)}
-                className="px-3 py-1.5 rounded-xl dark-btn text-xs font-semibold text-stone-400 hover:text-white"
+                className="px-3 py-1.5 rounded-xl dark-btn text-xs font-semibold text-stone-600 hover:text-stone-900"
               >
                 {lang === 'en' ? 'Dismiss' : 'हटाउनुहोस्'}
               </button>
@@ -765,7 +765,7 @@ function CustomerMenuContent() {
                   setIncomingStaffMessage(null);
                   setIsChatOpen(true);
                 }}
-                className="px-4 py-1.5 rounded-xl gold-btn text-xs font-bold text-black flex items-center space-x-1 shadow-gold-glow"
+                className="px-4 py-1.5 rounded-xl bronze-btn text-xs font-bold text-white flex items-center space-x-1 shadow-sm"
               >
                 <span>{lang === 'en' ? 'Open Chat' : 'च्याट खोल्नुहोस्'}</span>
                 <ChevronRight className="w-3.5 h-3.5" />
@@ -779,57 +779,57 @@ function CustomerMenuContent() {
       <div className="fixed top-4 right-4 z-40">
         <button
           onClick={() => setLang(lang === 'en' ? 'ne' : 'en')}
-          className="px-3.5 py-1.5 rounded-full bg-dark-900/90 border border-gold-500/30 text-xs font-bold text-gold-400 shadow-xl backdrop-blur-xl flex items-center space-x-1.5 hover:border-gold-400 transition"
+          className="px-3.5 py-1.5 rounded-full bg-white/95 border border-stone-200 text-xs font-bold text-amber-700 shadow-md backdrop-blur-xl flex items-center space-x-1.5 hover:border-amber-400 transition"
         >
-          <Globe className="w-3.5 h-3.5" />
+          <Globe className="w-3.5 h-3.5 text-amber-600" />
           <span>{lang === 'en' ? 'नेपाली' : 'English'}</span>
         </button>
       </div>
 
       {/* Hero Header Banner (Luxury Five-Star Styling) */}
-      <header className="relative w-full bg-gradient-to-b from-dark-950 via-dark-900 to-dark-950 border-b border-white/[0.08] px-4 pt-12 pb-10 text-center overflow-hidden">
+      <header className="relative w-full bg-gradient-to-b from-amber-500/10 via-stone-50 to-[#FAFAF7] border-b border-stone-200 px-4 pt-12 pb-10 text-center overflow-hidden">
         {/* Subtle decorative crest watermark */}
-        <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-80 h-80 bg-gradient-to-b from-gold-500/15 via-gold-500/5 to-transparent rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-80 h-80 bg-amber-500/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 max-w-xl mx-auto">
           {/* Welcome Tag */}
-          <div className="inline-flex items-center space-x-2 text-[10px] uppercase tracking-[0.35em] text-gold-400 font-serif font-semibold mb-2">
+          <div className="inline-flex items-center space-x-2 text-[10px] uppercase tracking-[0.35em] text-amber-700 font-serif font-bold mb-2">
             <span>✦</span>
             <span>{t.welcome}</span>
             <span>✦</span>
           </div>
 
           {/* Hotel Name */}
-          <h1 className="text-3xl sm:text-4xl font-serif font-extrabold text-white uppercase tracking-wide leading-tight drop-shadow-md">
+          <h1 className="text-3xl sm:text-4xl font-serif font-extrabold text-stone-900 uppercase tracking-wide leading-tight drop-shadow-xs">
             {hotel.name}
           </h1>
 
           {/* Gold Decorative Ribbon Divider */}
           <div className="flex items-center justify-center space-x-3 my-3.5">
-            <div className="h-[1px] w-14 bg-gradient-to-r from-transparent via-gold-500/60 to-gold-500" />
-            <div className="px-3.5 py-0.5 rounded-full bg-gold-500/10 border border-gold-500/30 text-[10px] font-serif uppercase tracking-[0.25em] text-gold-400">
+            <div className="h-[1px] w-14 bg-gradient-to-r from-transparent via-amber-500/60 to-amber-500" />
+            <div className="px-3.5 py-0.5 rounded-full bg-amber-50 border border-amber-300 text-[10px] font-serif uppercase tracking-[0.25em] text-amber-800 font-bold">
               FINE DINING & SEKUWA
             </div>
-            <div className="h-[1px] w-14 bg-gradient-to-l from-transparent via-gold-500/60 to-gold-500" />
+            <div className="h-[1px] w-14 bg-gradient-to-l from-transparent via-amber-500/60 to-amber-500" />
           </div>
 
           {/* Active Table Indicator (Verified or Scan Prompt) */}
-          <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-dark-950 border border-gold-400/40 shadow-gold-glow mb-4">
+          <div className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-full bg-white border border-stone-200 shadow-xs mb-4">
             <span
               className={`w-2 h-2 rounded-full ${
-                tableNumber && !isSessionEnded ? 'bg-emerald-400' : 'bg-amber-400'
+                tableNumber && !isSessionEnded ? 'bg-emerald-500' : 'bg-amber-500'
               } animate-pulse`}
             />
-            <div className="text-xs font-bold text-white flex items-center space-x-1.5">
+            <div className="text-xs font-bold text-stone-800 flex items-center space-x-1.5">
               <span>{t.table}:</span>
               {tableNumber && !isSessionEnded ? (
-                <span className="text-gold-300 font-extrabold flex items-center space-x-1.5">
+                <span className="text-amber-800 font-extrabold flex items-center space-x-1.5">
                   <span>
                     {tableNumber.toLowerCase().startsWith('room')
                       ? `Rooms #${tableNumber.replace(/^room\s*#?/i, '')}`
                       : `#${tableNumber.replace(/^#/, '')}`}
                   </span>
-                  <span className="text-[9px] text-emerald-400 bg-emerald-500/15 border border-emerald-500/30 px-1.5 py-0.5 rounded font-mono">
+                  <span className="text-[9px] text-emerald-700 bg-emerald-50 border border-emerald-300 px-1.5 py-0.5 rounded font-mono font-bold">
                     Verified QR
                   </span>
                 </span>
@@ -837,10 +837,10 @@ function CustomerMenuContent() {
                 <button
                   type="button"
                   onClick={() => setIsQRScannerOpen(true)}
-                  className="text-xs font-bold text-gold-400 hover:text-gold-300 underline flex items-center space-x-1"
+                  className="text-xs font-bold text-amber-700 hover:text-amber-800 underline flex items-center space-x-1"
                 >
                   <span>Not Scanned</span>
-                  <span className="text-[10px] bg-gold-500/20 text-gold-300 px-1.5 py-0.5 rounded font-semibold ml-0.5">
+                  <span className="text-[10px] bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded font-semibold ml-0.5">
                     Scan QR
                   </span>
                 </button>
@@ -875,19 +875,19 @@ function CustomerMenuContent() {
       {/* Edit Order Banner */}
       {editingOrder && (
         <div className="max-w-4xl mx-auto px-4 mt-5">
-          <div className="p-4 rounded-2xl bg-amber-500/15 border border-amber-500/40 text-amber-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-xl backdrop-blur-xl animate-fade-in">
+          <div className="p-4 rounded-2xl bg-amber-50 border border-amber-300 text-amber-900 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-md animate-fade-in">
             <div className="flex items-center space-x-3">
-              <div className="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center border border-amber-500/30 shrink-0">
+              <div className="w-9 h-9 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center border border-amber-300 shrink-0">
                 <Sparkles className="w-5 h-5" />
               </div>
               <div>
-                <h4 className="font-bold text-xs sm:text-sm text-white flex items-center space-x-2">
+                <h4 className="font-bold text-xs sm:text-sm text-stone-900 flex items-center space-x-2">
                   <span>Editing Order #{editingOrder.id.slice(-6).toUpperCase()}</span>
-                  <span className="px-2 py-0.5 rounded-full bg-dark-900 text-amber-400 text-[10px] font-mono border border-amber-500/30">
+                  <span className="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 text-[10px] font-mono border border-amber-300">
                     Table #{editingOrder.tableNumber}
                   </span>
                 </h4>
-                <p className="text-[11px] text-amber-200/80 mt-0.5">
+                <p className="text-[11px] text-amber-800 mt-0.5">
                   Add, remove, or adjust dishes. When ready, open your cart and tap Save Changes.
                 </p>
               </div>
@@ -895,7 +895,7 @@ function CustomerMenuContent() {
             <div className="flex items-center space-x-2 self-end sm:self-auto">
               <button
                 onClick={() => setIsCartOpen(true)}
-                className="px-3.5 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-black text-xs font-bold shadow-md transition"
+                className="px-3.5 py-1.5 rounded-xl gold-btn text-xs font-bold shadow-sm transition"
               >
                 Review Cart ({cartItemCount})
               </button>
@@ -905,7 +905,7 @@ function CustomerMenuContent() {
                   setCart([]);
                   router.push(`/menu/${slug}?table=${tableNumber}`);
                 }}
-                className="px-3 py-1.5 rounded-xl bg-dark-900/80 hover:bg-dark-900 text-slate-300 text-xs font-semibold border border-white/10 transition"
+                className="px-3 py-1.5 rounded-xl bg-white hover:bg-stone-100 text-stone-700 text-xs font-semibold border border-stone-200 transition shadow-sm"
               >
                 Cancel Edit
               </button>
@@ -951,19 +951,19 @@ function CustomerMenuContent() {
       {/* Active Table Session Banner (Continuity for same table) */}
       {!editingOrder && !isSessionEnded && activeTableSession?.hasActiveOrder && (
         <div className="max-w-4xl mx-auto px-4 mt-5">
-          <div className="p-4 rounded-2xl bg-gradient-to-r from-dark-850 via-dark-900 to-dark-850 border border-gold-500/50 shadow-gold-glow flex flex-col sm:flex-row sm:items-center justify-between gap-3 animate-fade-in">
+          <div className="p-4 rounded-2xl bg-white border border-amber-400/60 shadow-md flex flex-col sm:flex-row sm:items-center justify-between gap-3 animate-fade-in">
             <div className="flex items-center space-x-3">
-              <div className="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/30 shrink-0">
-                <span className="w-3 h-3 rounded-full bg-emerald-400 animate-pulse" />
+              <div className="w-9 h-9 rounded-xl bg-emerald-500/15 text-emerald-600 flex items-center justify-center border border-emerald-500/30 shrink-0">
+                <span className="w-3 h-3 rounded-full bg-emerald-500 animate-pulse" />
               </div>
               <div>
-                <h4 className="font-bold text-xs sm:text-sm text-white font-serif flex items-center space-x-2">
+                <h4 className="font-bold text-xs sm:text-sm text-stone-900 font-serif flex items-center space-x-2">
                   <span>Table #{tableNumber} has an active dining session</span>
-                  <span className="px-2 py-0.5 rounded-full bg-gold-500/20 text-gold-300 text-[10px] font-bold border border-gold-500/30">
+                  <span className="px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-800 text-[10px] font-bold border border-amber-500/30">
                     {activeTableSession.count} {activeTableSession.count === 1 ? 'Order' : 'Rounds'} Active
                   </span>
                 </h4>
-                <p className="text-[11px] text-slate-300 mt-0.5">
+                <p className="text-[11px] text-stone-500 mt-0.5">
                   Track kitchen status, chat with receptionist, or add more dishes to this table.
                 </p>
               </div>
@@ -987,7 +987,7 @@ function CustomerMenuContent() {
       <main className="max-w-4xl mx-auto px-4 mt-6">
         {/* Search Input */}
         <div className="relative mb-5">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
           <input
             type="text"
             placeholder={
@@ -997,12 +997,12 @@ function CustomerMenuContent() {
             }
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-11 pr-10 py-3 bg-dark-850/80 backdrop-blur-md border border-white/[0.08] rounded-2xl text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-gold-500/60 shadow-inner transition"
+            className="w-full pl-11 pr-10 py-3 bg-white border border-stone-200 rounded-2xl text-xs sm:text-sm text-stone-900 placeholder-stone-400 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/30 shadow-sm transition"
           />
           {searchQuery && (
             <button
               onClick={() => setSearchQuery('')}
-              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-white"
+              className="absolute right-3.5 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-700"
             >
               <X className="w-4 h-4" />
             </button>
@@ -1020,14 +1020,14 @@ function CustomerMenuContent() {
                 </div>
                 <div>
                   <div className="flex items-center space-x-2">
-                    <h3 className="font-serif font-bold text-white text-sm sm:text-base tracking-wide flex items-center gap-1.5">
+                    <h3 className="font-serif font-bold text-stone-900 text-sm sm:text-base tracking-wide flex items-center gap-1.5">
                       <span>{t.guestFavorites}</span>
                     </h3>
-                    <span className="px-2 py-0.5 rounded-full text-[9px] font-black bg-amber-500/20 text-amber-300 border border-amber-500/30 uppercase tracking-wider">
+                    <span className="px-2 py-0.5 rounded-full text-[9px] font-black bg-amber-500/15 text-amber-800 border border-amber-500/30 uppercase tracking-wider">
                       Hot
                     </span>
                   </div>
-                  <p className="text-[11px] text-slate-400 mt-0.5 font-light">
+                  <p className="text-[11px] text-stone-500 mt-0.5 font-light">
                     {t.guestFavoritesDesc}
                   </p>
                 </div>
@@ -1035,7 +1035,7 @@ function CustomerMenuContent() {
 
               <button
                 onClick={() => setActiveCategory('most_ordered')}
-                className="text-xs font-bold text-gold-400 hover:text-gold-300 flex items-center space-x-1 transition px-2.5 py-1 rounded-lg hover:bg-white/[0.04]"
+                className="text-xs font-bold text-amber-600 hover:text-amber-700 flex items-center space-x-1 transition px-2.5 py-1 rounded-lg hover:bg-amber-50"
               >
                 <span>{t.all} ({mostOrderedItems.length})</span>
                 <ChevronRight className="w-3.5 h-3.5" />
@@ -1050,7 +1050,7 @@ function CustomerMenuContent() {
                 return (
                   <div
                     key={`spotlight-${item.id}`}
-                    className="snap-start shrink-0 w-[180px] sm:w-[200px] bg-dark-850/90 backdrop-blur-md border border-white/[0.08] hover:border-gold-500/40 rounded-2xl overflow-hidden shadow-premium-card flex flex-col justify-between group transition-all duration-300"
+                    className="snap-start shrink-0 w-[180px] sm:w-[200px] bg-white border border-stone-200 hover:border-amber-400 rounded-2xl overflow-hidden shadow-sm hover:shadow-md flex flex-col justify-between group transition-all duration-300"
                   >
                     {/* Photo with badges */}
                     <div
@@ -1067,7 +1067,7 @@ function CustomerMenuContent() {
                           });
                         }
                       }}
-                      className={`relative w-full h-28 sm:h-30 bg-dark-900 overflow-hidden ${
+                      className={`relative w-full h-28 sm:h-30 bg-stone-100 overflow-hidden ${
                         item.imageUrl && !failedImages[item.id] ? 'cursor-zoom-in group/photo' : ''
                       }`}
                     >
@@ -1082,10 +1082,10 @@ function CustomerMenuContent() {
                               setFailedImages((prev) => ({ ...prev, [item.id]: true }));
                             }}
                           />
-                          <div className="absolute inset-0 bg-gradient-to-t from-dark-850 via-transparent to-transparent opacity-80" />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-70" />
                         </>
                       ) : (
-                        <div className="w-full h-full flex flex-col items-center justify-center text-slate-600 bg-dark-900">
+                        <div className="w-full h-full flex flex-col items-center justify-center text-stone-400 bg-stone-100">
                           <Utensils className="w-7 h-7 mb-1 opacity-40" />
                           <span className="text-[9px]">Freshly Prepared</span>
                         </div>
@@ -1107,8 +1107,8 @@ function CustomerMenuContent() {
                             <span>🥉 #3</span>
                           </span>
                         ) : (
-                          <span className="px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-black/80 text-amber-300 border border-amber-500/30 backdrop-blur flex items-center space-x-1">
-                            <Flame className="w-2 h-2 text-amber-400" />
+                          <span className="px-1.5 py-0.5 rounded-full text-[9px] font-bold bg-white/90 text-amber-800 border border-amber-300 shadow-sm flex items-center space-x-1">
+                            <Flame className="w-2 h-2 text-amber-600" />
                             <span>#{rank}</span>
                           </span>
                         )}
@@ -1126,7 +1126,7 @@ function CustomerMenuContent() {
                               imageUrl: item.imageUrl,
                             });
                           }}
-                          className="absolute top-2 right-2 px-1.5 py-0.5 rounded-full bg-gold-500/90 hover:bg-gold-500 text-black text-[8px] font-bold shadow-gold-glow backdrop-blur flex items-center space-x-0.5 transition z-10"
+                          className="absolute top-2 right-2 px-1.5 py-0.5 rounded-full bg-amber-500/90 hover:bg-amber-500 text-black text-[8px] font-bold shadow-sm backdrop-blur flex items-center space-x-0.5 transition z-10"
                         >
                           <Box className="w-2 h-2" />
                           <span>3D</span>
@@ -1135,8 +1135,8 @@ function CustomerMenuContent() {
 
                       {/* Social proof order count */}
                       {item.totalOrdered && item.totalOrdered > 0 && (
-                        <div className="absolute bottom-1.5 left-2 px-1.5 py-0.5 rounded-md bg-black/80 backdrop-blur-md border border-white/10 text-[8px] font-bold text-amber-300 flex items-center space-x-1">
-                          <Flame className="w-2 h-2 text-amber-400" />
+                        <div className="absolute bottom-1.5 left-2 px-1.5 py-0.5 rounded-md bg-white/90 backdrop-blur-md border border-stone-200 text-[8px] font-bold text-amber-800 flex items-center space-x-1 shadow-sm">
+                          <Flame className="w-2 h-2 text-amber-600" />
                           <span>{item.totalOrdered} ordered</span>
                         </div>
                       )}
@@ -1145,36 +1145,36 @@ function CustomerMenuContent() {
                     {/* Content */}
                     <div className="p-3 flex flex-col justify-between flex-1">
                       <div>
-                        <h4 className="font-serif font-bold text-white text-xs sm:text-sm line-clamp-1 group-hover:text-gold-300 transition-colors">
+                        <h4 className="font-serif font-bold text-stone-900 text-xs sm:text-sm line-clamp-1 group-hover:text-amber-700 transition-colors">
                           {item.name}
                         </h4>
                         {item.description && (
-                          <p className="text-[10px] text-slate-400 mt-0.5 line-clamp-1 leading-normal">
+                          <p className="text-[10px] text-stone-500 mt-0.5 line-clamp-1 leading-normal">
                             {item.description}
                           </p>
                         )}
                       </div>
 
-                      <div className="mt-2.5 pt-2 border-t border-white/[0.08] flex items-center justify-between">
-                        <span className="text-sm sm:text-base font-serif font-black text-gold-400">
+                      <div className="mt-2.5 pt-2 border-t border-stone-100 flex items-center justify-between">
+                        <span className="text-sm sm:text-base font-serif font-black text-amber-600">
                           {formatNPR(item.price, lang === 'ne')}
                         </span>
 
                         {item.isAvailable ? (
                           inCartItem ? (
-                            <div className="flex items-center space-x-1 bg-dark-900 border border-gold-500/40 rounded-lg p-0.5 shadow-gold-glow">
+                            <div className="flex items-center space-x-1 bg-stone-50 border border-amber-300 rounded-lg p-0.5 shadow-sm">
                               <button
                                 onClick={() => updateQuantity(item.id, -1)}
-                                className="w-5 h-5 rounded-md bg-dark-800 text-gold-400 flex items-center justify-center hover:bg-gold-500 hover:text-black transition"
+                                className="w-5 h-5 rounded-md bg-stone-200 text-stone-700 flex items-center justify-center hover:bg-amber-500 hover:text-white transition"
                               >
                                 <Minus className="w-2.5 h-2.5" />
                               </button>
-                              <span className="text-[11px] font-bold text-white px-1">
+                              <span className="text-[11px] font-bold text-stone-900 px-1">
                                 {inCartItem.quantity}
                               </span>
                               <button
                                 onClick={() => updateQuantity(item.id, 1)}
-                                className="w-5 h-5 rounded-md bg-gold-500 text-black flex items-center justify-center hover:bg-gold-400 transition"
+                                className="w-5 h-5 rounded-md bg-amber-500 text-black flex items-center justify-center hover:bg-amber-400 transition"
                               >
                                 <Plus className="w-2.5 h-2.5" />
                               </button>
@@ -1189,7 +1189,7 @@ function CustomerMenuContent() {
                             </button>
                           )
                         ) : (
-                          <span className="text-[9px] text-red-400 bg-red-500/10 px-1.5 py-0.5 rounded border border-red-500/20">
+                          <span className="text-[9px] text-red-500 bg-red-50 px-1.5 py-0.5 rounded border border-red-200">
                             {t.outOfStock}
                           </span>
                         )}
@@ -1209,7 +1209,7 @@ function CustomerMenuContent() {
             className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all flex items-center space-x-1.5 ${
               activeCategory === 'all'
                 ? 'gold-btn text-black shadow-gold-glow'
-                : 'dark-btn text-slate-300 hover:text-white'
+                : 'bg-white border border-stone-200 text-stone-700 hover:bg-stone-50 hover:border-amber-400 shadow-sm'
             }`}
           >
             <span>🍽️</span>
@@ -1226,14 +1226,14 @@ function CustomerMenuContent() {
               className={`px-4 py-2 rounded-xl text-xs font-black whitespace-nowrap transition-all flex items-center space-x-1.5 shadow-sm ${
                 activeCategory === 'most_ordered'
                   ? 'bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 text-white shadow-orange-500/30 border border-amber-300 ring-2 ring-amber-400/40'
-                  : 'dark-btn text-amber-400 hover:text-amber-300 hover:border-amber-500/40'
+                  : 'bg-white border border-amber-200 text-amber-700 hover:bg-amber-50 shadow-sm'
               }`}
             >
               <Flame
                 className={`w-3.5 h-3.5 ${
                   activeCategory === 'most_ordered'
                     ? 'animate-bounce text-yellow-200'
-                    : 'text-amber-400'
+                    : 'text-amber-500'
                 }`}
               />
               <span>{t.mostOrdered}</span>
@@ -1241,7 +1241,7 @@ function CustomerMenuContent() {
                 className={`text-[10px] px-1.5 py-0.5 rounded-full font-bold ${
                   activeCategory === 'most_ordered'
                     ? 'bg-black/40 text-yellow-200'
-                    : 'bg-amber-500/20 text-amber-300'
+                    : 'bg-amber-500/15 text-amber-800'
                 }`}
               >
                 {mostOrderedItems.length}
@@ -1261,7 +1261,7 @@ function CustomerMenuContent() {
                 className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all flex items-center space-x-1.5 ${
                   activeCategory === cat
                     ? 'gold-btn text-black shadow-gold-glow'
-                    : 'dark-btn text-slate-300 hover:text-white'
+                    : 'bg-white border border-stone-200 text-stone-700 hover:bg-stone-50 hover:border-amber-400 shadow-sm'
                 }`}
               >
                 <span>{info.icon}</span>
@@ -1276,28 +1276,28 @@ function CustomerMenuContent() {
 
         {/* Most Ordered Active Banner */}
         {activeCategory === 'most_ordered' && (
-          <div className="mb-6 p-4 rounded-2xl bg-gradient-to-r from-amber-500/10 via-orange-500/10 to-gold-500/10 border border-amber-500/30 flex items-center justify-between gap-3 text-xs shadow-lg animate-fade-in">
+          <div className="mb-6 p-4 rounded-2xl bg-amber-50/80 border border-amber-200 flex items-center justify-between gap-3 text-xs shadow-sm animate-fade-in">
             <div className="flex items-center space-x-3">
-              <div className="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-300 flex items-center justify-center border border-amber-500/30 shrink-0">
-                <Flame className="w-5 h-5 animate-pulse text-amber-400" />
+              <div className="w-9 h-9 rounded-xl bg-amber-500/15 text-amber-700 flex items-center justify-center border border-amber-500/30 shrink-0">
+                <Flame className="w-5 h-5 animate-pulse text-amber-600" />
               </div>
               <div>
                 <div className="flex items-center space-x-2">
-                  <span className="font-serif font-black text-white text-sm">
+                  <span className="font-serif font-black text-stone-900 text-sm">
                     {t.guestFavorites}
                   </span>
-                  <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-500/15 text-amber-800 border border-amber-500/30">
                     {filteredItems.length} {t.ordersCount}
                   </span>
                 </div>
-                <p className="text-stone-400 text-[11px] mt-0.5">
+                <p className="text-stone-600 text-[11px] mt-0.5">
                   {t.guestFavoritesDesc}
                 </p>
               </div>
             </div>
             <button
               onClick={() => setActiveCategory('all')}
-              className="text-[11px] font-bold text-amber-400 hover:text-white px-3 py-1.5 rounded-xl bg-black/40 border border-white/10 hover:border-amber-400/40 whitespace-nowrap transition"
+              className="text-[11px] font-bold text-amber-800 hover:text-amber-900 px-3 py-1.5 rounded-xl bg-white border border-amber-200 shadow-sm whitespace-nowrap transition"
             >
               {t.all}
             </button>
@@ -1306,7 +1306,7 @@ function CustomerMenuContent() {
 
         {/* Menu Cards Bento Grid */}
         {filteredItems.length === 0 ? (
-          <div className="p-12 text-center bg-dark-850/50 border border-white/[0.06] rounded-3xl backdrop-blur">
+          <div className="p-12 text-center bg-white border border-stone-200 rounded-3xl shadow-sm">
             <div className="text-4xl mb-3">
               {activeCategory === 'most_ordered'
                 ? '🔥'
@@ -1314,14 +1314,14 @@ function CustomerMenuContent() {
                 ? getCategoryDetails(activeCategory, lang).icon
                 : '🍽️'}
             </div>
-            <p className="text-sm font-bold text-slate-200">
+            <p className="text-sm font-bold text-stone-800">
               {activeCategory === 'most_ordered'
                 ? t.mostOrdered
                 : activeCategory !== 'all'
                 ? `No dishes in ${getCategoryDetails(activeCategory, lang).label} right now`
                 : 'No dishes found'}
             </p>
-            <p className="text-xs text-slate-400 mt-1 mb-4">
+            <p className="text-xs text-stone-500 mt-1 mb-4">
               Explore our other delicious freshly-prepared items!
             </p>
             <button
@@ -1329,7 +1329,7 @@ function CustomerMenuContent() {
                 setActiveCategory('all');
                 setSearchQuery('');
               }}
-              className="px-5 py-2 rounded-xl gold-btn text-xs font-bold shadow-gold-glow"
+              className="px-5 py-2 rounded-xl gold-btn text-xs font-bold shadow-sm"
             >
               Browse All Items ({items.length})
             </button>
@@ -1341,7 +1341,7 @@ function CustomerMenuContent() {
               return (
                 <div
                   key={item.id}
-                  className="group relative bg-dark-850/90 backdrop-blur-md border border-white/[0.08] hover:border-gold-500/40 rounded-2xl sm:rounded-3xl overflow-hidden shadow-premium-card transition-all duration-300 flex flex-col justify-between"
+                  className="group relative bg-white border border-stone-200 hover:border-amber-400 rounded-2xl sm:rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between"
                 >
                   {/* Photo Container - Click to Zoom & Look Around */}
                   <div
@@ -1358,7 +1358,7 @@ function CustomerMenuContent() {
                         });
                       }
                     }}
-                    className={`relative w-full h-28 sm:h-36 md:h-40 bg-dark-900 overflow-hidden ${
+                    className={`relative w-full h-28 sm:h-36 md:h-40 bg-stone-100 overflow-hidden ${
                       item.imageUrl && !failedImages[item.id] ? 'cursor-zoom-in group/photo' : ''
                     }`}
                     title={
@@ -1379,23 +1379,23 @@ function CustomerMenuContent() {
                           }}
                         />
                         {/* Hover / Tap Zoom badge */}
-                        <div className="absolute bottom-2 right-2 px-2 py-0.5 rounded-full bg-black/75 backdrop-blur-md border border-white/10 text-white text-[9px] font-bold opacity-80 sm:opacity-0 sm:group-hover/photo:opacity-100 transition-opacity flex items-center space-x-1 shadow-lg pointer-events-none">
-                          <ZoomIn className="w-2.5 h-2.5 text-gold-400" />
+                        <div className="absolute bottom-2 right-2 px-2 py-0.5 rounded-full bg-white/90 backdrop-blur-md border border-stone-200 text-stone-800 text-[9px] font-bold opacity-80 sm:opacity-0 sm:group-hover/photo:opacity-100 transition-opacity flex items-center space-x-1 shadow-sm pointer-events-none">
+                          <ZoomIn className="w-2.5 h-2.5 text-amber-600" />
                           <span>Zoom</span>
                         </div>
                       </>
                     ) : (
-                      <div className="w-full h-full flex flex-col items-center justify-center text-slate-600 bg-dark-900">
+                      <div className="w-full h-full flex flex-col items-center justify-center text-stone-400 bg-stone-100">
                         <Utensils className="w-8 h-8 mb-1 opacity-40" />
                         <span className="text-[9px]">Freshly Prepared</span>
                       </div>
                     )}
 
                     {/* Gradient shade */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-dark-850 via-transparent to-transparent opacity-80" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-70" />
 
                     {/* Category Glass Tag */}
-                    <div className="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-black/75 backdrop-blur-md border border-white/10 text-[9px] font-bold text-gold-400 flex items-center space-x-1 z-10">
+                    <div className="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-white/90 backdrop-blur-md border border-stone-200 text-[9px] font-bold text-amber-800 flex items-center space-x-1 z-10 shadow-sm">
                       <span>{getCategoryDetails(item.category, lang).icon}</span>
                       <span className="hidden xs:inline">{getCategoryDetails(item.category, lang).label}</span>
                     </div>
@@ -1428,8 +1428,8 @@ function CustomerMenuContent() {
                         }
                         if (rank && rank <= 5) {
                           return (
-                            <span className="px-1.5 py-0.5 rounded-full text-[8px] font-bold bg-black/80 text-amber-300 border border-amber-500/30 backdrop-blur flex items-center space-x-0.5">
-                              <Flame className="w-2 h-2 text-amber-400" />
+                            <span className="px-1.5 py-0.5 rounded-full text-[8px] font-bold bg-white/90 text-amber-800 border border-amber-300 shadow-sm flex items-center space-x-0.5">
+                              <Flame className="w-2 h-2 text-amber-600" />
                               <span>#{rank}</span>
                             </span>
                           );
@@ -1448,7 +1448,7 @@ function CustomerMenuContent() {
                               imageUrl: item.imageUrl,
                             });
                           }}
-                          className="px-2 py-0.5 rounded-full bg-gold-500/90 hover:bg-gold-500 text-black text-[8px] font-bold shadow-gold-glow backdrop-blur flex items-center space-x-0.5 transition"
+                          className="px-2 py-0.5 rounded-full bg-amber-500/90 hover:bg-amber-500 text-black text-[8px] font-bold shadow-sm backdrop-blur flex items-center space-x-0.5 transition"
                         >
                           <Box className="w-2.5 h-2.5" />
                           <span>3D</span>
@@ -1458,8 +1458,8 @@ function CustomerMenuContent() {
 
                     {/* Social proof order tag if ordered */}
                     {item.totalOrdered && item.totalOrdered > 0 && (
-                      <div className="absolute bottom-2 left-2 px-1.5 py-0.5 rounded-md bg-black/80 backdrop-blur-md border border-white/10 text-[8px] font-bold text-amber-300 flex items-center space-x-0.5 pointer-events-none z-10">
-                        <Flame className="w-2 h-2 text-amber-400" />
+                      <div className="absolute bottom-2 left-2 px-1.5 py-0.5 rounded-md bg-white/90 backdrop-blur-md border border-stone-200 text-[8px] font-bold text-amber-800 flex items-center space-x-0.5 pointer-events-none z-10 shadow-sm">
+                        <Flame className="w-2 h-2 text-amber-600" />
                         <span>{item.totalOrdered} ordered</span>
                       </div>
                     )}
@@ -1468,24 +1468,24 @@ function CustomerMenuContent() {
                   {/* Card Content Body */}
                   <div className="p-3 sm:p-3.5 flex flex-col flex-1 justify-between">
                     <div>
-                      <h3 className="font-serif font-bold text-white text-xs sm:text-sm md:text-base leading-snug line-clamp-1 group-hover:text-gold-300 transition-colors">
+                      <h3 className="font-serif font-bold text-stone-900 text-xs sm:text-sm md:text-base leading-snug line-clamp-1 group-hover:text-amber-700 transition-colors">
                         {item.name}
                       </h3>
 
                       {item.description && (
-                        <p className="text-[10px] sm:text-[11px] text-slate-400 mt-1 line-clamp-1 sm:line-clamp-2 leading-relaxed font-normal">
+                        <p className="text-[10px] sm:text-[11px] text-stone-500 mt-1 line-clamp-1 sm:line-clamp-2 leading-relaxed font-normal">
                           {item.description}
                         </p>
                       )}
                     </div>
 
                     {/* Price & Add to Cart Row */}
-                    <div className="mt-2.5 sm:mt-3 pt-2 border-t border-white/[0.08] flex items-center justify-between gap-1">
+                    <div className="mt-2.5 sm:mt-3 pt-2 border-t border-stone-100 flex items-center justify-between gap-1">
                       <div>
-                        <span className="text-[8px] uppercase font-bold text-slate-500 tracking-wider block">
+                        <span className="text-[8px] uppercase font-bold text-stone-400 tracking-wider block">
                           Price
                         </span>
-                        <span className="text-xs sm:text-sm md:text-base font-serif font-black text-gold-400">
+                        <span className="text-xs sm:text-sm md:text-base font-serif font-black text-amber-600">
                           {formatNPR(item.price, lang === 'ne')}
                         </span>
                       </div>
@@ -1493,19 +1493,19 @@ function CustomerMenuContent() {
                       {/* Quantity Controls or Order Now Button */}
                       {item.isAvailable ? (
                         inCartItem ? (
-                          <div className="flex items-center space-x-1 bg-dark-900 border border-gold-500/40 rounded-lg p-0.5 shadow-gold-glow">
+                          <div className="flex items-center space-x-1 bg-stone-50 border border-amber-300 rounded-lg p-0.5 shadow-sm">
                             <button
                               onClick={() => updateQuantity(item.id, -1)}
-                              className="w-5 h-5 sm:w-6 sm:h-6 rounded bg-dark-800 text-gold-400 flex items-center justify-center hover:bg-gold-500 hover:text-black transition"
+                              className="w-5 h-5 sm:w-6 sm:h-6 rounded bg-stone-200 text-stone-700 flex items-center justify-center hover:bg-amber-500 hover:text-white transition"
                             >
                               <Minus className="w-2.5 h-2.5" />
                             </button>
-                            <span className="text-[11px] sm:text-xs font-bold text-white px-1">
+                            <span className="text-[11px] sm:text-xs font-bold text-stone-900 px-1">
                               {inCartItem.quantity}
                             </span>
                             <button
                               onClick={() => updateQuantity(item.id, 1)}
-                              className="w-5 h-5 sm:w-6 sm:h-6 rounded bg-gold-500 text-black flex items-center justify-center hover:bg-gold-400 transition"
+                              className="w-5 h-5 sm:w-6 sm:h-6 rounded bg-amber-500 text-black flex items-center justify-center hover:bg-amber-400 transition"
                             >
                               <Plus className="w-2.5 h-2.5" />
                             </button>
@@ -1520,7 +1520,7 @@ function CustomerMenuContent() {
                           </button>
                         )
                       ) : (
-                        <span className="text-[9px] font-semibold text-red-400 bg-red-500/10 px-1.5 py-0.5 rounded border border-red-500/20">
+                        <span className="text-[9px] font-semibold text-red-500 bg-red-50 px-1.5 py-0.5 rounded border border-red-200">
                           {t.outOfStock}
                         </span>
                       )}
@@ -1567,18 +1567,18 @@ function CustomerMenuContent() {
         <div className="fixed bottom-5 left-4 right-4 max-w-md mx-auto z-40 animate-slide-up">
           <Link
             href={`/order/${activeTableSession.latestOrderId}`}
-            className="w-full p-3.5 sm:p-4 rounded-2xl bg-[#16171B]/95 border border-gold-500/60 text-white flex items-center justify-between shadow-gold-glow backdrop-blur-xl group hover:border-gold-400 transition"
+            className="w-full p-3.5 sm:p-4 rounded-2xl bg-white/95 border border-amber-400 text-stone-900 flex items-center justify-between shadow-xl backdrop-blur-xl group hover:border-amber-500 transition"
           >
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 rounded-xl bg-gold-500/20 text-gold-400 flex items-center justify-center border border-gold-500/30 relative">
+              <div className="w-10 h-10 rounded-xl bg-amber-500/15 text-amber-700 flex items-center justify-center border border-amber-500/30 relative">
                 <ChefHat className="w-5 h-5 animate-pulse" />
-                <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 absolute -top-0.5 -right-0.5 border-2 border-[#16171B]" />
+                <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 absolute -top-0.5 -right-0.5 border-2 border-white" />
               </div>
               <div className="text-left">
-                <div className="text-[10px] uppercase font-bold text-gold-400 tracking-wider">
+                <div className="text-[10px] uppercase font-bold text-amber-700 tracking-wider">
                   Table #{tableNumber} • {activeTableSession.count} {activeTableSession.count === 1 ? 'Order' : 'Rounds'} Active
                 </div>
-                <div className="text-xs sm:text-sm font-serif font-bold text-white flex items-center space-x-1.5">
+                <div className="text-xs sm:text-sm font-serif font-bold text-stone-900 flex items-center space-x-1.5">
                   <span>Tracking Live Kitchen Status</span>
                 </div>
               </div>
@@ -1594,56 +1594,56 @@ function CustomerMenuContent() {
 
       {/* Cart Slide-Over Modal / Drawer */}
       {isCartOpen && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/85 backdrop-blur-md animate-fade-in">
-          <div className="relative w-full max-w-lg max-h-[92vh] bg-surface border border-white/[0.1] rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden">
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/60 backdrop-blur-sm animate-fade-in">
+          <div className="relative w-full max-w-lg max-h-[92vh] bg-white border border-stone-200 rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden">
             {/* Header */}
-            <div className="px-6 py-4 border-b border-surface-border bg-dark-900 flex items-center justify-between">
+            <div className="px-6 py-4 border-b border-stone-200 bg-stone-50 flex items-center justify-between">
               <div className="flex items-center space-x-2.5">
-                <div className="w-8 h-8 rounded-lg bg-gold-500/20 text-gold-400 flex items-center justify-center border border-gold-500/30">
+                <div className="w-8 h-8 rounded-lg bg-amber-500/15 text-amber-700 flex items-center justify-center border border-amber-500/30">
                   <ShoppingBag className="w-4 h-4" />
                 </div>
-                <h2 className="font-serif font-extrabold text-white text-lg">
+                <h2 className="font-serif font-extrabold text-stone-900 text-lg">
                   {t.cart}
                 </h2>
               </div>
               <button
                 onClick={() => setIsCartOpen(false)}
-                className="p-1.5 rounded-lg text-slate-400 hover:text-white"
+                className="p-1.5 rounded-lg text-stone-400 hover:text-stone-800"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {/* Cart Items List */}
-            <div className="p-6 overflow-y-auto flex-1 space-y-3">
+            <div className="p-6 overflow-y-auto flex-1 space-y-3 bg-white">
               {cart.map((item) => (
                 <div
                   key={item.id}
-                  className="p-3.5 bg-dark-850 border border-surface-border rounded-2xl flex items-center justify-between gap-3 shadow-sm"
+                  className="p-3.5 bg-stone-50 border border-stone-200 rounded-2xl flex items-center justify-between gap-3 shadow-sm"
                 >
                   <div className="flex-1 min-w-0">
-                    <h4 className="font-bold text-xs sm:text-sm text-white truncate">
+                    <h4 className="font-bold text-xs sm:text-sm text-stone-900 truncate">
                       {item.name}
                     </h4>
-                    <p className="text-xs text-gold-400 font-serif font-bold mt-0.5">
+                    <p className="text-xs text-amber-600 font-serif font-bold mt-0.5">
                       {formatNPR(item.price * item.quantity, lang === 'ne')}
                     </p>
                   </div>
 
                   <div className="flex items-center space-x-2">
-                    <div className="flex items-center space-x-1.5 bg-dark-900 border border-surface-border rounded-xl p-1">
+                    <div className="flex items-center space-x-1.5 bg-white border border-stone-200 rounded-xl p-1">
                       <button
                         onClick={() => updateQuantity(item.id, -1)}
-                        className="w-6 h-6 rounded-lg bg-dark-800 text-slate-300 flex items-center justify-center hover:bg-gold-500 hover:text-black transition"
+                        className="w-6 h-6 rounded-lg bg-stone-100 text-stone-700 flex items-center justify-center hover:bg-amber-500 hover:text-white transition"
                       >
                         <Minus className="w-3 h-3" />
                       </button>
-                      <span className="text-xs font-bold text-white px-1.5">
+                      <span className="text-xs font-bold text-stone-900 px-1.5">
                         {item.quantity}
                       </span>
                       <button
                         onClick={() => updateQuantity(item.id, 1)}
-                        className="w-6 h-6 rounded-lg bg-gold-500 text-black flex items-center justify-center hover:bg-gold-400 transition"
+                        className="w-6 h-6 rounded-lg bg-amber-500 text-black flex items-center justify-center hover:bg-amber-400 transition"
                       >
                         <Plus className="w-3 h-3" />
                       </button>
@@ -1651,7 +1651,7 @@ function CustomerMenuContent() {
 
                     <button
                       onClick={() => removeFromCart(item.id)}
-                      className="p-1.5 text-slate-500 hover:text-red-400 transition"
+                      className="p-1.5 text-stone-400 hover:text-red-500 transition"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
@@ -1662,20 +1662,20 @@ function CustomerMenuContent() {
               {/* Order Form Inputs */}
               <form onSubmit={handlePlaceOrder} className="pt-4 space-y-3.5">
                 {editingOrder ? (
-                  <div className="p-3 bg-amber-500/10 border border-amber-500/30 rounded-xl text-xs text-amber-300 flex items-center justify-between">
+                  <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-800 flex items-center justify-between">
                     <span className="font-bold">
                       ✏️ Editing Order #{editingOrder.id.slice(-6).toUpperCase()}
                     </span>
-                    <span className="text-[10px] bg-dark-900 px-2 py-0.5 rounded text-amber-400 font-mono">
+                    <span className="text-[10px] bg-amber-100 px-2 py-0.5 rounded text-amber-900 font-mono">
                       Table #{editingOrder.tableNumber}
                     </span>
                   </div>
                 ) : activeTableSession?.hasActiveOrder ? (
-                  <div className="p-3 bg-gold-500/10 border border-gold-500/30 rounded-xl text-xs text-gold-300 flex items-center justify-between">
+                  <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl text-xs text-amber-800 flex items-center justify-between">
                     <span className="font-bold">
                       ➕ Adding Round #{activeTableSession.count + 1}
                     </span>
-                    <span className="text-[10px] bg-dark-900 px-2 py-0.5 rounded text-gold-400 font-mono">
+                    <span className="text-[10px] bg-amber-100 px-2 py-0.5 rounded text-amber-900 font-mono">
                       Table #{tableNumber}
                     </span>
                   </div>
@@ -1684,20 +1684,20 @@ function CustomerMenuContent() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <div className="flex items-center justify-between mb-1">
-                      <label className="block text-xs font-bold text-slate-300">
-                        {t.tableNumber} <span className="text-gold-400 font-bold">*</span>
+                      <label className="block text-xs font-bold text-stone-700">
+                        {t.tableNumber} <span className="text-amber-600 font-bold">*</span>
                       </label>
                       {tableNumber && !isSessionEnded && (
-                        <span className="text-[10px] font-bold text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-md border border-emerald-500/20 flex items-center space-x-1">
+                        <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-md border border-emerald-200 flex items-center space-x-1">
                           <Check className="w-2.5 h-2.5" />
                           <span>Verified Table QR</span>
                         </span>
                       )}
                     </div>
                     {tableNumber && !isSessionEnded ? (
-                      <div className="flex items-center justify-between px-3.5 py-2.5 rounded-xl border border-emerald-500/40 bg-emerald-950/20 text-emerald-300 text-xs font-bold">
+                      <div className="flex items-center justify-between px-3.5 py-2.5 rounded-xl border border-emerald-400 bg-emerald-50/50 text-emerald-800 text-xs font-bold">
                         <div className="flex items-center space-x-2">
-                          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                           <span>
                             {tableNumber.toLowerCase().startsWith('room')
                               ? `Rooms #${tableNumber.replace(/^room\s*#?/i, '')}`
@@ -1707,7 +1707,7 @@ function CustomerMenuContent() {
                         <button
                           type="button"
                           onClick={() => setIsQRScannerOpen(true)}
-                          className="text-[11px] text-gold-400 hover:text-gold-300 underline font-semibold ml-2"
+                          className="text-[11px] text-amber-600 hover:text-amber-700 underline font-semibold ml-2"
                         >
                           Change Table
                         </button>
@@ -1716,24 +1716,24 @@ function CustomerMenuContent() {
                       <button
                         type="button"
                         onClick={() => setIsQRScannerOpen(true)}
-                        className="w-full px-3.5 py-2.5 rounded-xl border-2 border-dashed border-gold-500/50 bg-gold-500/10 hover:bg-gold-500/20 text-gold-300 text-xs font-bold flex items-center justify-center space-x-2 transition"
+                        className="w-full px-3.5 py-2.5 rounded-xl border-2 border-dashed border-amber-400 bg-amber-50 hover:bg-amber-100 text-amber-800 text-xs font-bold flex items-center justify-center space-x-2 transition"
                       >
-                        <QrCode className="w-4 h-4 text-gold-400 animate-pulse" />
+                        <QrCode className="w-4 h-4 text-amber-600 animate-pulse" />
                         <span>Scan Table QR Code (Required)</span>
                       </button>
                     )}
                     {tableNumber && !isSessionEnded ? (
-                      <span className="text-[10px] text-emerald-400/80 mt-1 block">
+                      <span className="text-[10px] text-emerald-600 mt-1 block">
                         Locked to Table #{tableNumber} from your scanned table stand.
                       </span>
                     ) : (
-                      <span className="text-[10px] text-amber-400/90 mt-1 block">
+                      <span className="text-[10px] text-amber-700 mt-1 block">
                         Orders must be placed from a verified table stand.
                       </span>
                     )}
                   </div>
                   <div>
-                    <label className="block text-xs font-bold text-slate-300 mb-1">
+                    <label className="block text-xs font-bold text-stone-700 mb-1">
                       {t.yourName}
                     </label>
                     <input
@@ -1741,13 +1741,13 @@ function CustomerMenuContent() {
                       placeholder="e.g. Aarav"
                       value={customerName}
                       onChange={(e) => setCustomerName(e.target.value)}
-                      className="w-full px-3.5 py-2.5 bg-dark-900 border border-surface-border rounded-xl text-xs text-white focus:outline-none focus:border-gold-500"
+                      className="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 placeholder-stone-400 focus:outline-none focus:border-amber-500 focus:bg-white transition"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 mb-1">
+                  <label className="block text-xs font-bold text-stone-700 mb-1">
                     {t.specialInstructions}
                   </label>
                   <textarea
@@ -1755,17 +1755,17 @@ function CustomerMenuContent() {
                     placeholder="e.g. Extra spicy timur, less salt, please serve drinks first..."
                     value={orderNotes}
                     onChange={(e) => setOrderNotes(e.target.value)}
-                    className="w-full px-3.5 py-2 bg-dark-900 border border-surface-border rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-gold-500"
+                    className="w-full px-3.5 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 placeholder-stone-400 focus:outline-none focus:border-amber-500 focus:bg-white transition"
                   />
                 </div>
               </form>
             </div>
 
             {/* Footer Total & Place Order */}
-            <div className="p-6 bg-dark-900 border-t border-surface-border">
-              <div className="flex items-center justify-between text-base font-extrabold text-white mb-4">
+            <div className="p-6 bg-stone-50 border-t border-stone-200">
+              <div className="flex items-center justify-between text-base font-extrabold text-stone-900 mb-4">
                 <span>{t.total}:</span>
-                <span className="text-gold-400 font-serif text-xl">
+                <span className="text-amber-600 font-serif text-xl">
                   {formatNPR(cartTotal, lang === 'ne')}
                 </span>
               </div>
@@ -1843,10 +1843,10 @@ function CustomerMenuContent() {
               setIsChatOpen(true);
               setUnreadChatCount(0);
             }}
-            className="group px-4 py-2.5 rounded-full bg-[#121316]/95 border border-gold-400/50 shadow-2xl backdrop-blur-xl flex items-center space-x-2.5 hover:border-gold-400 hover:scale-105 transition-all text-xs font-bold text-white relative shadow-gold-glow"
+            className="group px-4 py-2.5 rounded-full bg-white/95 border border-amber-400/70 shadow-xl backdrop-blur-xl flex items-center space-x-2.5 hover:border-amber-500 hover:scale-105 transition-all text-xs font-bold text-stone-900 relative"
           >
             <div className="relative">
-              <MessageCircle className="w-4 h-4 text-gold-400" />
+              <MessageCircle className="w-4 h-4 text-amber-600" />
               {unreadChatCount > 0 && (
                 <span className="absolute -top-2 -right-2 w-4 h-4 rounded-full bg-red-500 text-white text-[9px] font-black flex items-center justify-center animate-bounce">
                   {unreadChatCount}
@@ -1854,7 +1854,7 @@ function CustomerMenuContent() {
               )}
             </div>
             <span className="hidden sm:inline">Staff Desk</span>
-            <span className="px-1.5 py-0.5 rounded-md bg-stone-800 text-[10px] text-gold-300 font-mono">
+            <span className="px-1.5 py-0.5 rounded-md bg-amber-50 text-[10px] text-amber-800 font-mono border border-amber-200">
               #{tableNumber}
             </span>
           </button>
@@ -1863,43 +1863,43 @@ function CustomerMenuContent() {
 
       {/* Table Live Chat Slide-Over Drawer */}
       {isChatOpen && (
-        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/85 backdrop-blur-md animate-fade-in p-0 sm:p-4">
-          <div className="relative w-full max-w-lg h-[80vh] sm:h-[650px] bg-[#0e0f12] border border-white/10 rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden">
+        <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center bg-black/60 backdrop-blur-sm animate-fade-in p-0 sm:p-4">
+          <div className="relative w-full max-w-lg h-[80vh] sm:h-[650px] bg-white border border-stone-200 rounded-t-3xl sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden">
             {/* Drawer Header */}
-            <div className="p-4 px-5 bg-[#121316] border-b border-white/10 flex items-center justify-between">
+            <div className="p-4 px-5 bg-stone-50 border-b border-stone-200 flex items-center justify-between">
               <div className="flex items-center space-x-3">
-                <div className="w-9 h-9 rounded-xl bg-gold-400/20 border border-gold-400/30 flex items-center justify-center text-gold-400">
+                <div className="w-9 h-9 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-700">
                   <MessageCircle className="w-5 h-5" />
                 </div>
                 <div>
-                  <h3 className="font-serif font-bold text-sm text-white flex items-center space-x-2">
+                  <h3 className="font-serif font-bold text-sm text-stone-900 flex items-center space-x-2">
                     <span>Receptionist & Staff Desk</span>
-                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                   </h3>
-                  <span className="text-[10px] text-stone-400">
+                  <span className="text-[10px] text-stone-500">
                     Live Chat connected to Table #{tableNumber}
                   </span>
                 </div>
               </div>
               <button
                 onClick={() => setIsChatOpen(false)}
-                className="p-1.5 rounded-lg text-stone-400 hover:text-white hover:bg-stone-800 transition"
+                className="p-1.5 rounded-lg text-stone-400 hover:text-stone-800 hover:bg-stone-100 transition"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {/* Messages Scroll Body */}
-            <div className="flex-1 p-5 overflow-y-auto space-y-3 bg-[#0a0b0d]">
+            <div className="flex-1 p-5 overflow-y-auto space-y-3 bg-stone-50">
               {tableMessages.length === 0 ? (
                 <div className="py-16 text-center max-w-xs mx-auto">
-                  <div className="w-12 h-12 rounded-2xl bg-gold-400/10 border border-gold-400/20 text-gold-400 flex items-center justify-center mx-auto mb-3">
+                  <div className="w-12 h-12 rounded-2xl bg-amber-500/15 border border-amber-500/25 text-amber-700 flex items-center justify-center mx-auto mb-3">
                     <Sparkles className="w-6 h-6" />
                   </div>
-                  <h4 className="text-sm font-bold text-white mb-1">
+                  <h4 className="text-sm font-bold text-stone-900 mb-1">
                     Direct Line to Hotel Staff
                   </h4>
-                  <p className="text-xs text-stone-400 leading-relaxed">
+                  <p className="text-xs text-stone-600 leading-relaxed">
                     Have a question about a dish, need napkins, or want water? Send a message directly from Table #{tableNumber} and staff will respond promptly!
                   </p>
                 </div>
@@ -1914,8 +1914,8 @@ function CustomerMenuContent() {
                       <div
                         className={`max-w-[80%] rounded-2xl p-3 text-xs sm:text-sm ${
                           isCustomer
-                            ? 'bg-gradient-to-r from-gold-500 to-gold-400 text-black font-semibold rounded-tr-sm shadow-md'
-                            : 'bg-stone-900 border border-white/10 text-stone-100 rounded-tl-sm'
+                            ? 'bg-gradient-to-r from-amber-500 to-amber-400 text-stone-950 font-semibold rounded-tr-sm shadow-sm'
+                            : 'bg-white border border-stone-200 text-stone-900 rounded-tl-sm shadow-sm'
                         }`}
                       >
                         <span className="text-[9px] font-bold uppercase tracking-wider block mb-1 opacity-75">
@@ -1923,7 +1923,7 @@ function CustomerMenuContent() {
                         </span>
                         <p className="whitespace-pre-wrap leading-relaxed">{m.message}</p>
                       </div>
-                      <span className="text-[9px] text-stone-500 font-mono mt-1 px-1">
+                      <span className="text-[9px] text-stone-400 font-mono mt-1 px-1">
                         {formatTime(m.createdAt)}
                       </span>
                     </div>
@@ -1934,7 +1934,7 @@ function CustomerMenuContent() {
             </div>
 
             {/* Chat Input Bar */}
-            <div className="p-3.5 px-4 bg-[#121316] border-t border-white/10">
+            <div className="p-3.5 px-4 bg-white border-t border-stone-200">
               <form onSubmit={handleSendCustomerMessage} className="flex items-center space-x-2">
                 <input
                   type="text"
@@ -1942,7 +1942,7 @@ function CustomerMenuContent() {
                   value={chatInput}
                   onChange={(e) => setChatInput(e.target.value)}
                   disabled={isSendingChat}
-                  className="flex-1 px-3.5 py-2.5 bg-stone-900 border border-white/10 rounded-xl text-xs text-white placeholder-stone-500 focus:outline-none focus:border-gold-400"
+                  className="flex-1 px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 placeholder-stone-400 focus:outline-none focus:border-amber-500 focus:bg-white transition"
                 />
                 <button
                   type="submit"

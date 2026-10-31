@@ -1,57 +1,59 @@
 version: '3.8'
 
 services:
-  # Next.js Application + Socket.io Server
+  # RestroAstra Next.js Application + Socket.io Server
   web:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: digitalize_nepal_web
+    container_name: restroastra_web
     restart: always
     environment:
       - NODE_ENV=production
       - PORT=3000
-      - DATABASE_URL=postgresql://postgres:${POSTGRES_PASSWORD:-postgres_password}@db:5432/digitalizenepal?schema=public
-      - JWT_SECRET=${JWT_SECRET:-digitalize_nepal_production_jwt_secret_2026}
-      - ADMIN_JWT_SECRET=${ADMIN_JWT_SECRET:-digitalize_nepal_production_admin_secret_2026}
-      - NEXT_PUBLIC_APP_URL=${NEXT_PUBLIC_APP_URL:-https://app.digitalizenepal.com}
+      - DATABASE_URL=postgresql://postgres:${POSTGRES_PASSWORD:-restroastra_secure_pass}@db:5432/restroastra_prod?schema=public
+      - JWT_SECRET=${JWT_SECRET:-restroastra_production_jwt_secret_2026}
+      - ADMIN_JWT_SECRET=${ADMIN_JWT_SECRET:-restroastra_production_admin_secret_2026}
+      - AUTH_COOKIE_HOTEL=${AUTH_COOKIE_HOTEL:-restroastra_hotel_token}
+      - AUTH_COOKIE_ADMIN=${AUTH_COOKIE_ADMIN:-restroastra_admin_token}
+      - NEXT_PUBLIC_APP_URL=${NEXT_PUBLIC_APP_URL:-https://NEW_APP_DOMAIN}
     depends_on:
       db:
         condition: service_healthy
     networks:
-      - internal_net
+      - restroastra_net
     expose:
       - "3000"
     volumes:
       - ./public/uploads:/app/public/uploads
 
-  # PostgreSQL Database
+  # RestroAstra Dedicated PostgreSQL Database
   db:
     image: postgres:16-alpine
-    container_name: digitalize_nepal_db
+    container_name: restroastra_db
     restart: always
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres_password}
-      POSTGRES_DB: digitalizenepal
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-restroastra_secure_pass}
+      POSTGRES_DB: restroastra_prod
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - restroastra_postgres_data:/var/lib/postgresql/data
     networks:
-      - internal_net
+      - restroastra_net
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 5s
       timeout: 5s
       retries: 5
 
-  # Nginx Reverse Proxy with SSL and WebSocket Upgrade
+  # RestroAstra Nginx Reverse Proxy with SSL & WebSocket Upgrade
   nginx:
     image: nginx:alpine
-    container_name: digitalize_nepal_nginx
+    container_name: restroastra_nginx
     restart: always
     ports:
-      - "80:80"
-      - "443:443"
+      - "${RESTROASTRA_HTTP_PORT:-8085}:80"
+      - "${RESTROASTRA_HTTPS_PORT:-8445}:443"
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
       - ./certbot/conf:/etc/letsencrypt:ro
@@ -59,12 +61,12 @@ services:
     depends_on:
       - web
     networks:
-      - internal_net
+      - restroastra_net
 
 networks:
-  internal_net:
+  restroastra_net:
     driver: bridge
 
 volumes:
-  postgres_data:
+  restroastra_postgres_data:
     driver: local

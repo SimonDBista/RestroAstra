@@ -2,10 +2,29 @@ import type { Metadata, Viewport } from 'next';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'digitalizemenu | Smart QR Menu & Hotel Management Platform',
-  description: 'Multi-tenant QR menu, live table ordering, realtime receptionist chat, and restaurant management platform.',
+  title: 'RestroAstra | One platform. Every restaurant operation.',
+  description:
+    'RestroAstra is an enterprise multi-tenant restaurant operating system — contactless tabletop QR ordering, real-time kitchen display (KOT), POS billing, live staff chat, and intelligent inventory tracking.',
+  manifest: '/manifest.json',
+  applicationName: 'RestroAstra',
   icons: {
-    icon: '/favicon.ico',
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/icon.svg', type: 'image/svg+xml' },
+    ],
+    apple: '/icon.svg',
+  },
+  openGraph: {
+    title: 'RestroAstra — One platform. Every restaurant operation.',
+    description:
+      'Contactless tabletop QR ordering, real-time kitchen display, POS billing, live staff chat, and inventory operations in one unified suite.',
+    siteName: 'RestroAstra',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'RestroAstra — One platform. Every restaurant operation.',
+    description: 'Enterprise luxury restaurant management suite and contactless digital dining.',
   },
 };
 
@@ -14,7 +33,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
-  themeColor: '#0a0b0e',
+  themeColor: '#ffffff',
 };
 
 export default function RootLayout({
@@ -23,7 +42,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="dark">
+    <html lang="en" className="light">
       <head>
         {/* Google Model Viewer for 3D food preview */}
         <script
@@ -32,7 +51,7 @@ export default function RootLayout({
           async
         />
       </head>
-      <body className="min-h-screen bg-background text-foreground antialiased selection:bg-brandPink-500 selection:text-white">
+      <body className="min-h-screen bg-background text-foreground antialiased selection:bg-amber-500 selection:text-white">
         {children}
       </body>
     </html>

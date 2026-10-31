@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
-import { comparePassword, signHotelToken } from '@/lib/auth';
+import { comparePassword, signHotelToken, HOTEL_COOKIE_NAME } from '@/lib/auth';
 
 export async function POST(request: NextRequest) {
   try {
@@ -57,9 +57,9 @@ export async function POST(request: NextRequest) {
 
     const isHttps = request.nextUrl.protocol === 'https:' || request.headers.get('x-forwarded-proto') === 'https';
 
-    // Set HTTP-only cookie
+    // Set isolated HTTP-only cookie
     response.cookies.set({
-      name: 'hotel_token',
+      name: HOTEL_COOKIE_NAME,
       value: token,
       httpOnly: true,
       path: '/',

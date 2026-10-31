@@ -169,39 +169,39 @@ export default function TableQRScannerModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fade-in">
-      <div className="relative w-full max-w-sm bg-dark-900 border border-white/10 rounded-3xl p-6 text-center shadow-2xl space-y-4 overflow-hidden">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-900/60 backdrop-blur-md animate-fade-in">
+      <div className="relative w-full max-w-sm bg-white border border-stone-200 rounded-3xl p-6 text-center shadow-2xl space-y-4 overflow-hidden">
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 rounded-xl bg-white/[0.06] hover:bg-white/[0.12] text-slate-400 hover:text-white transition"
+          className="absolute top-4 right-4 p-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-500 hover:text-stone-800 transition"
         >
           <X className="w-5 h-5" />
         </button>
 
-        <div className="w-12 h-12 rounded-2xl bg-gold-500/20 text-gold-400 flex items-center justify-center mx-auto border border-gold-500/30">
+        <div className="w-12 h-12 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center mx-auto border border-amber-300">
           <QrCode className="w-6 h-6 animate-pulse" />
         </div>
 
         <div>
-          <h3 className="text-lg font-serif font-bold text-white">Scan Table QR Code</h3>
-          <p className="text-xs text-slate-400 mt-1 leading-relaxed">
+          <h3 className="text-lg font-serif font-bold text-stone-900">Scan Table QR Code</h3>
+          <p className="text-xs text-stone-600 mt-1 leading-relaxed">
             Point your camera at the physical QR code on your table to start a new dining session.
           </p>
         </div>
 
         {/* Viewfinder / Camera Window */}
-        <div className="relative w-full aspect-square max-w-[260px] mx-auto rounded-2xl overflow-hidden bg-black border-2 border-gold-500/50 shadow-inner flex items-center justify-center">
+        <div className="relative w-full aspect-square max-w-[260px] mx-auto rounded-2xl overflow-hidden bg-black border-2 border-amber-500 shadow-inner flex items-center justify-center">
           {cameraError ? (
             <div className="p-4 text-center space-y-2">
               <AlertCircle className="w-8 h-8 text-amber-400 mx-auto" />
-              <p className="text-[11px] text-slate-300 leading-tight">{cameraError}</p>
+              <p className="text-[11px] text-stone-300 leading-tight">{cameraError}</p>
             </div>
           ) : scannedResult ? (
             <div className="p-4 text-center space-y-2 animate-fade-in">
               <CheckCircle2 className="w-12 h-12 text-emerald-400 mx-auto animate-bounce" />
               <p className="text-sm font-bold text-white">Verified!</p>
-              <p className="text-xs text-gold-300">Table #{scannedResult}</p>
+              <p className="text-xs text-amber-300">Table #{scannedResult}</p>
             </div>
           ) : (
             <>
@@ -212,16 +212,16 @@ export default function TableQRScannerModal({
                 className="w-full h-full object-cover"
               />
               {/* Animated laser scan bar */}
-              <div className="absolute inset-x-4 h-0.5 bg-gradient-to-r from-transparent via-gold-400 to-transparent shadow-[0_0_12px_#e5b044] animate-bounce" />
-              <div className="absolute inset-3 border-2 border-white/20 border-dashed rounded-xl pointer-events-none" />
+              <div className="absolute inset-x-4 h-0.5 bg-gradient-to-r from-transparent via-amber-400 to-transparent shadow-[0_0_12px_#f59e0b] animate-bounce" />
+              <div className="absolute inset-3 border-2 border-white/30 border-dashed rounded-xl pointer-events-none" />
             </>
           )}
         </div>
 
         {/* Instructions / Alternative */}
-        <div className="pt-2 text-left space-y-2 bg-dark-950 p-3.5 rounded-2xl border border-white/[0.06]">
-          <div className="flex items-start space-x-2 text-[11px] text-slate-300">
-            <Sparkles className="w-3.5 h-3.5 text-gold-400 shrink-0 mt-0.5" />
+        <div className="pt-2 text-left space-y-2 bg-stone-50 p-3.5 rounded-2xl border border-stone-200">
+          <div className="flex items-start space-x-2 text-[11px] text-stone-700">
+            <Sparkles className="w-3.5 h-3.5 text-amber-600 shrink-0 mt-0.5" />
             <span>
               You can also open your phone camera app and point it at the table stand to refresh your session directly.
             </span>
@@ -229,7 +229,7 @@ export default function TableQRScannerModal({
         </div>
 
         {/* Helper Note */}
-        <p className="text-[11px] text-slate-500">
+        <p className="text-[11px] text-stone-500">
           Digital Table Verification • Restro Smart QR
         </p>
       </div>

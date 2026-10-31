@@ -1,0 +1,17 @@
+{
+  "name": "RestroAstra — One platform. Every restaurant operation.",
+  "short_name": "RestroAstra",
+  "description": "Enterprise multi-tenant restaurant operating system — contactless tabletop QR ordering, real-time kitchen display (KOT), POS billing, live staff chat, and intelligent inventory tracking.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#121316",
+  "theme_color": "#c5a880",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

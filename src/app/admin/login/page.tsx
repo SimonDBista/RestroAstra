@@ -31,6 +31,7 @@ export default function AdminLoginPage() {
 
       if (data.token) {
         try {
+          localStorage.setItem('restroastra_admin_token', data.token);
           localStorage.setItem('admin_token', data.token);
         } catch {}
       }
@@ -44,38 +45,38 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center p-4 relative overflow-hidden selection:bg-brandPink-500 selection:text-white">
+    <div className="min-h-screen bg-stone-50 flex items-center justify-center p-4 relative overflow-hidden selection:bg-amber-500 selection:text-white">
       {/* Ambient background light */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-gold-500/10 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-amber-500/10 rounded-full blur-[140px] pointer-events-none" />
 
       {/* Back link */}
       <Link
         href="/"
-        className="absolute top-6 right-6 z-20 flex items-center space-x-2 text-xs font-bold text-slate-400 hover:text-white transition"
+        className="absolute top-6 right-6 z-20 flex items-center space-x-2 text-xs font-bold text-stone-600 hover:text-stone-900 transition"
       >
-        <ArrowLeft className="w-4 h-4" />
+        <ArrowLeft className="w-4 h-4 text-amber-600" />
         <span>Return to Home</span>
       </Link>
 
-      <div className="relative z-10 w-full max-w-md bg-dark-850/90 backdrop-blur-xl border border-gold-500/30 rounded-3xl p-8 sm:p-9 shadow-premium-card">
+      <div className="relative z-10 w-full max-w-md bg-white border border-stone-200/90 rounded-3xl p-8 sm:p-9 shadow-2xl shadow-stone-900/10">
         {/* Header */}
         <div className="text-center mb-7">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-gold-400 to-amber-600 flex items-center justify-center text-black mx-auto mb-3.5 shadow-gold-glow border border-white/20">
+          <div className="w-14 h-14 rounded-2xl bg-amber-500 flex items-center justify-center text-white mx-auto mb-3.5 shadow-md">
             <Shield className="w-7 h-7" />
           </div>
-          <span className="text-[10px] uppercase tracking-[0.35em] text-gold-400 font-serif font-bold">
+          <span className="text-[10px] uppercase tracking-[0.35em] text-amber-600 font-serif font-bold">
             PLATFORM SUPER ADMIN
           </span>
-          <h1 className="text-2xl font-serif font-extrabold text-white mt-1">
-            digitalizemenu
+          <h1 className="text-2xl font-serif font-extrabold text-stone-900 mt-1">
+            RestroAstra
           </h1>
-          <p className="text-xs text-slate-400 mt-1 font-normal">
-            Platform administration and restaurant management
+          <p className="text-xs text-stone-500 mt-1 font-normal">
+            Platform administration & multi-tenant control
           </p>
         </div>
 
         {error && (
-          <div className="mb-5 p-3.5 rounded-2xl bg-red-500/10 border border-red-500/30 text-red-400 text-xs flex items-center space-x-2.5 animate-slide-up">
+          <div className="mb-5 p-3.5 rounded-2xl bg-red-50 border border-red-200 text-red-700 text-xs flex items-center space-x-2.5 animate-slide-up">
             <AlertCircle className="w-4 h-4 flex-shrink-0" />
             <span>{error}</span>
           </div>
@@ -83,35 +84,35 @@ export default function AdminLoginPage() {
 
         <form onSubmit={handleLogin} className="space-y-4">
           <div>
-            <label className="block text-xs font-bold text-slate-300 mb-1.5">
+            <label className="block text-xs font-bold text-stone-700 mb-1.5">
               Admin Email
             </label>
             <div className="relative">
-              <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+              <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
               <input
                 type="email"
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="admin@example.com"
-                className="w-full pl-10 pr-4 py-2.5 bg-dark-900 border border-white/[0.08] rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-gold-500 shadow-inner font-medium"
+                className="w-full pl-10 pr-4 py-2.5 bg-stone-50 border border-stone-200/90 rounded-xl text-xs text-stone-900 placeholder-stone-400 focus:outline-none focus:border-amber-500 shadow-inner font-medium"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-300 mb-1.5">
+            <label className="block text-xs font-bold text-stone-700 mb-1.5">
               Secret Master Password
             </label>
             <div className="relative">
-              <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
+              <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-stone-400" />
               <input
                 type="password"
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••••••"
-                className="w-full pl-10 pr-4 py-2.5 bg-dark-900 border border-white/[0.08] rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-gold-500 shadow-inner font-medium"
+                className="w-full pl-10 pr-4 py-2.5 bg-stone-50 border border-stone-200/90 rounded-xl text-xs text-stone-900 placeholder-stone-400 focus:outline-none focus:border-amber-500 shadow-inner font-medium"
               />
             </div>
           </div>
@@ -125,8 +126,6 @@ export default function AdminLoginPage() {
             <ArrowRight className="w-4 h-4" />
           </button>
         </form>
-
-
       </div>
     </div>
   );

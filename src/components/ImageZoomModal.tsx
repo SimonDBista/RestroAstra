@@ -203,24 +203,24 @@ export default function ImageZoomModal({
   const categoryInfo = category ? getCategoryDetails(category) : null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/90 backdrop-blur-xl animate-fade-in select-none">
-      <div className="relative w-full max-w-2xl bg-[#121316] border border-white/10 rounded-3xl shadow-2xl overflow-hidden text-stone-100 flex flex-col max-h-[92vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-stone-900/60 backdrop-blur-md animate-fade-in select-none">
+      <div className="relative w-full max-w-2xl bg-white border border-stone-200 rounded-3xl shadow-2xl overflow-hidden text-stone-800 flex flex-col max-h-[92vh]">
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-3.5 border-b border-white/[0.08] bg-[#16171B] shrink-0">
+        <div className="flex items-center justify-between px-5 py-3.5 border-b border-stone-200 bg-stone-50 shrink-0">
           <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 rounded-xl bg-gold-500/10 text-gold-400 flex items-center justify-center border border-gold-500/30 shrink-0">
+            <div className="w-8 h-8 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center border border-amber-300 shrink-0">
               <Maximize2 className="w-4 h-4" />
             </div>
             <div className="min-w-0">
-              <h3 className="font-serif font-bold text-white text-sm sm:text-base leading-tight truncate">
+              <h3 className="font-serif font-bold text-stone-900 text-sm sm:text-base leading-tight truncate">
                 {itemName}
               </h3>
               <div className="flex items-center space-x-2 text-xs">
                 {price !== undefined && (
-                  <span className="text-gold-400 font-bold">{formatNPR(price)}</span>
+                  <span className="text-amber-700 font-bold">{formatNPR(price)}</span>
                 )}
                 {categoryInfo && (
-                  <span className="text-slate-400 text-[11px] flex items-center space-x-1">
+                  <span className="text-stone-500 text-[11px] flex items-center space-x-1">
                     <span>•</span>
                     <span>{categoryInfo.icon}</span>
                     <span>{categoryInfo.label}</span>
@@ -232,7 +232,7 @@ export default function ImageZoomModal({
 
           <button
             onClick={onClose}
-            className="p-1.5 rounded-xl bg-dark-800 hover:bg-dark-700 text-stone-400 hover:text-white transition"
+            className="p-1.5 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-500 hover:text-stone-800 transition"
             aria-label="Close"
           >
             <X className="w-5 h-5" />
@@ -250,7 +250,7 @@ export default function ImageZoomModal({
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
-          className={`relative w-full h-80 sm:h-[420px] bg-[#0A0B0D] overflow-hidden flex items-center justify-center ${
+          className={`relative w-full h-80 sm:h-[420px] bg-stone-100 overflow-hidden flex items-center justify-center ${
             isDragging ? 'cursor-grabbing' : scale > 1 ? 'cursor-grab' : 'cursor-zoom-in'
           }`}
         >
@@ -266,45 +266,45 @@ export default function ImageZoomModal({
               src={imageUrl}
               alt={itemName}
               draggable={false}
-              className="max-h-72 sm:max-h-[380px] max-w-full object-contain rounded-xl shadow-2xl drop-shadow-[0_15px_30px_rgba(0,0,0,0.8)]"
+              className="max-h-72 sm:max-h-[380px] max-w-full object-contain rounded-xl shadow-xl drop-shadow-[0_10px_25px_rgba(0,0,0,0.15)]"
             />
           </div>
 
           {/* Floating Instructions Banner */}
-          <div className="absolute top-3 left-1/2 -translate-x-1/2 px-3.5 py-1 bg-black/80 backdrop-blur-md border border-white/10 rounded-full flex items-center space-x-1.5 text-[11px] text-stone-300 pointer-events-none shadow-lg">
-            <Hand className="w-3.5 h-3.5 text-gold-400" />
+          <div className="absolute top-3 left-1/2 -translate-x-1/2 px-3.5 py-1 bg-white/90 backdrop-blur-md border border-stone-200 rounded-full flex items-center space-x-1.5 text-[11px] text-stone-700 pointer-events-none shadow-md">
+            <Hand className="w-3.5 h-3.5 text-amber-600" />
             <span>Pinch / Scroll to zoom • Drag to look around</span>
           </div>
 
           {/* Zoom Control Bar (Bottom Overlay) */}
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-3 py-1.5 bg-black/85 backdrop-blur-xl border border-white/15 rounded-2xl flex items-center space-x-3 shadow-2xl text-xs z-10">
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 px-3 py-1.5 bg-white/95 backdrop-blur-xl border border-stone-200 rounded-2xl flex items-center space-x-3 shadow-xl text-xs z-10">
             <button
               onClick={handleZoomOut}
               disabled={scale <= 1}
-              className="p-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-white/10 disabled:opacity-30 disabled:hover:bg-transparent transition"
+              className="p-1.5 rounded-lg text-stone-600 hover:text-stone-900 hover:bg-stone-100 disabled:opacity-30 disabled:hover:bg-transparent transition"
               title="Zoom Out (-)"
             >
               <ZoomOut className="w-4 h-4" />
             </button>
 
-            <span className="font-mono text-gold-400 font-bold min-w-[45px] text-center text-[11px]">
+            <span className="font-mono text-amber-700 font-bold min-w-[45px] text-center text-[11px]">
               {Math.round(scale * 100)}%
             </span>
 
             <button
               onClick={handleZoomIn}
               disabled={scale >= 5}
-              className="p-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-white/10 disabled:opacity-30 disabled:hover:bg-transparent transition"
+              className="p-1.5 rounded-lg text-stone-600 hover:text-stone-900 hover:bg-stone-100 disabled:opacity-30 disabled:hover:bg-transparent transition"
               title="Zoom In (+)"
             >
               <ZoomIn className="w-4 h-4" />
             </button>
 
-            <div className="h-4 w-px bg-white/20" />
+            <div className="h-4 w-px bg-stone-300" />
 
             <button
               onClick={handleReset}
-              className="p-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-white/10 transition flex items-center space-x-1 text-[11px]"
+              className="p-1.5 rounded-lg text-stone-600 hover:text-stone-900 hover:bg-stone-100 transition flex items-center space-x-1 text-[11px]"
               title="Reset Zoom (Double tap / 0)"
             >
               <RotateCcw className="w-3.5 h-3.5" />
@@ -314,15 +314,15 @@ export default function ImageZoomModal({
         </div>
 
         {/* Footer & Actions */}
-        <div className="p-4 bg-[#16171B] border-t border-white/[0.08] flex flex-col sm:flex-row sm:items-center justify-between gap-3 shrink-0">
+        <div className="p-4 bg-stone-50 border-t border-stone-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shrink-0">
           <div className="min-w-0 flex-1">
             {description ? (
-              <p className="text-xs text-slate-400 line-clamp-2 leading-relaxed">
+              <p className="text-xs text-stone-600 line-clamp-2 leading-relaxed">
                 {description}
               </p>
             ) : (
-              <p className="text-[11px] text-slate-500 uppercase tracking-wider flex items-center space-x-1.5">
-                <Sparkles className="w-3 h-3 text-gold-400" />
+              <p className="text-[11px] text-stone-500 uppercase tracking-wider flex items-center space-x-1.5">
+                <Sparkles className="w-3 h-3 text-amber-600" />
                 <span>High-Definition Digital Culinary View</span>
               </p>
             )}
@@ -343,7 +343,7 @@ export default function ImageZoomModal({
             )}
             <button
               onClick={onClose}
-              className="px-4 py-2 rounded-xl bg-dark-800 hover:bg-dark-700 text-slate-300 text-xs font-semibold transition"
+              className="px-4 py-2 rounded-xl dark-btn text-stone-700 border border-stone-200 text-xs font-semibold transition"
             >
               Close
             </button>

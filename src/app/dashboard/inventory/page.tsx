@@ -289,14 +289,14 @@ export default function IngredientInventoryPage() {
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center space-x-2.5">
-            <div className="w-10 h-10 rounded-xl bg-gold-500/15 border border-gold-500/30 flex items-center justify-center text-gold-400">
+            <div className="w-10 h-10 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-700">
               <Boxes className="w-5 h-5" />
             </div>
             <div>
-              <h1 className="text-3xl font-serif font-extrabold text-white">
+              <h1 className="text-3xl font-serif font-extrabold text-stone-900">
                 Ingredient & Raw Material Inventory
               </h1>
-              <p className="text-xs text-stone-400 mt-0.5">
+              <p className="text-xs text-stone-600 mt-0.5">
                 Monitor ingredient quantities left, log kitchen usage, and avoid 86ing dishes during peak hours
               </p>
             </div>
@@ -308,9 +308,9 @@ export default function IngredientInventoryPage() {
             <button
               onClick={handleSeedEssentials}
               disabled={isSubmitting}
-              className="px-4 py-2.5 rounded-xl bg-gold-500/15 border border-gold-500/30 text-gold-300 hover:bg-gold-500/25 text-xs font-bold flex items-center space-x-1.5 transition"
+              className="px-4 py-2.5 rounded-xl bg-amber-50 border border-amber-300 text-amber-800 hover:bg-amber-100 text-xs font-bold flex items-center space-x-1.5 transition shadow-sm"
             >
-              <Sparkles className="w-3.5 h-3.5 text-gold-400" />
+              <Sparkles className="w-3.5 h-3.5 text-amber-600" />
               <span>Load Kitchen Essentials</span>
             </button>
           )}
@@ -318,10 +318,10 @@ export default function IngredientInventoryPage() {
           <button
             onClick={fetchInventory}
             disabled={loading}
-            className="p-2.5 rounded-xl dark-btn text-stone-300 hover:text-white transition"
+            className="p-2.5 rounded-xl dark-btn text-stone-700 hover:text-stone-900 border border-stone-200 transition shadow-sm"
             title="Refresh Stock"
           >
-            <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin text-gold-400' : ''}`} />
+            <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin text-amber-600' : ''}`} />
           </button>
 
           <button
@@ -330,7 +330,7 @@ export default function IngredientInventoryPage() {
               resetForm();
               setIsAddModalOpen(true);
             }}
-            className="px-4 py-2.5 rounded-xl gold-btn text-black text-xs font-bold flex items-center space-x-2 shadow-gold-glow hover:scale-105 transition"
+            className="px-4 py-2.5 rounded-xl gold-btn text-stone-950 text-xs font-bold flex items-center space-x-2 shadow-sm hover:scale-105 transition"
           >
             <Plus className="w-4 h-4" />
             <span>Add Ingredient</span>
@@ -341,53 +341,53 @@ export default function IngredientInventoryPage() {
       {/* Top Stat Cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         {/* Total Items */}
-        <div className="p-5 rounded-3xl bg-[#16171B] border border-white/[0.08] shadow-premium-card flex items-center justify-between">
+        <div className="p-5 rounded-3xl bg-white border border-stone-200/80 shadow-sm flex items-center justify-between">
           <div>
-            <span className="text-xs text-stone-400 font-medium block">Tracked Ingredients</span>
-            <span className="text-3xl font-serif font-black text-white mt-1 block">
+            <span className="text-xs text-stone-500 font-medium block">Tracked Ingredients</span>
+            <span className="text-3xl font-serif font-black text-stone-900 mt-1 block">
               {stats.totalCount} <span className="text-xs font-sans text-stone-500">items</span>
             </span>
           </div>
-          <div className="w-11 h-11 rounded-2xl bg-stone-800 border border-white/[0.06] text-stone-300 flex items-center justify-center">
-            <Package className="w-5 h-5 text-gold-400" />
+          <div className="w-11 h-11 rounded-2xl bg-stone-100 border border-stone-200 text-stone-700 flex items-center justify-center">
+            <Package className="w-5 h-5 text-amber-600" />
           </div>
         </div>
 
         {/* Low Stock Warning */}
-        <div className="p-5 rounded-3xl bg-[#16171B] border border-amber-500/30 shadow-gold-glow flex items-center justify-between">
+        <div className="p-5 rounded-3xl bg-white border border-amber-300 shadow-sm flex items-center justify-between">
           <div>
-            <span className="text-xs text-amber-300 font-medium block">Low Stock Alert</span>
-            <span className="text-3xl font-serif font-black text-amber-400 mt-1 block">
+            <span className="text-xs text-amber-800 font-medium block">Low Stock Alert</span>
+            <span className="text-3xl font-serif font-black text-amber-700 mt-1 block">
               {stats.lowStockCount}
             </span>
           </div>
-          <div className="w-11 h-11 rounded-2xl bg-amber-500/20 text-amber-400 flex items-center justify-center border border-amber-500/30">
+          <div className="w-11 h-11 rounded-2xl bg-amber-50 text-amber-700 flex items-center justify-center border border-amber-200">
             <AlertTriangle className="w-5 h-5" />
           </div>
         </div>
 
         {/* Depleted / Out of Stock */}
-        <div className="p-5 rounded-3xl bg-[#16171B] border border-red-500/30 shadow-pink-glow flex items-center justify-between">
+        <div className="p-5 rounded-3xl bg-white border border-red-200 shadow-sm flex items-center justify-between">
           <div>
-            <span className="text-xs text-red-400 font-medium block">Out of Stock (0 Left)</span>
-            <span className="text-3xl font-serif font-black text-red-400 mt-1 block">
+            <span className="text-xs text-red-700 font-medium block">Out of Stock (0 Left)</span>
+            <span className="text-3xl font-serif font-black text-red-600 mt-1 block">
               {stats.outOfStockCount}
             </span>
           </div>
-          <div className="w-11 h-11 rounded-2xl bg-red-500/20 text-red-400 flex items-center justify-center border border-red-500/30">
+          <div className="w-11 h-11 rounded-2xl bg-red-50 text-red-600 flex items-center justify-center border border-red-200">
             <XCircle className="w-5 h-5" />
           </div>
         </div>
 
         {/* Estimated Value */}
-        <div className="p-5 rounded-3xl bg-[#16171B] border border-emerald-500/30 shadow-premium-card flex items-center justify-between">
+        <div className="p-5 rounded-3xl bg-white border border-emerald-200 shadow-sm flex items-center justify-between">
           <div>
-            <span className="text-xs text-emerald-400 font-medium block">Est. Inventory Value</span>
-            <span className="text-2xl sm:text-3xl font-serif font-black text-emerald-300 mt-1 block">
+            <span className="text-xs text-emerald-800 font-medium block">Est. Inventory Value</span>
+            <span className="text-2xl sm:text-3xl font-serif font-black text-emerald-700 mt-1 block">
               {formatNPR(stats.totalEstimatedValue)}
             </span>
           </div>
-          <div className="w-11 h-11 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/30">
+          <div className="w-11 h-11 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center border border-emerald-200">
             <DollarSign className="w-5 h-5" />
           </div>
         </div>
@@ -395,19 +395,19 @@ export default function IngredientInventoryPage() {
 
       {/* Low Stock Warning Banner if items need attention */}
       {(stats.lowStockCount > 0 || stats.outOfStockCount > 0) && (
-        <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-amber-500/15 via-[#16171B] to-red-500/15 border border-amber-500/40 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4 animate-fade-in">
+        <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-amber-500/10 via-amber-50/50 to-red-50 border border-amber-300 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4 animate-fade-in">
           <div className="flex items-center space-x-3.5">
-            <div className="w-10 h-10 rounded-xl bg-amber-500/20 text-amber-400 flex items-center justify-center border border-amber-500/30 shrink-0">
+            <div className="w-10 h-10 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center border border-amber-200 shrink-0">
               <AlertTriangle className="w-5 h-5 animate-pulse" />
             </div>
             <div>
-              <h4 className="font-serif font-bold text-sm sm:text-base text-white flex items-center space-x-2">
+              <h4 className="font-serif font-bold text-sm sm:text-base text-stone-900 flex items-center space-x-2">
                 <span>Kitchen Attention Required</span>
-                <span className="px-2 py-0.5 rounded-full bg-red-500/20 text-red-300 text-[10px] font-bold border border-red-500/30">
+                <span className="px-2 py-0.5 rounded-full bg-red-100 text-red-800 text-[10px] font-bold border border-red-200">
                   {stats.lowStockCount + stats.outOfStockCount} Items Low / Out
                 </span>
               </h4>
-              <p className="text-xs text-stone-300 mt-0.5">
+              <p className="text-xs text-stone-600 mt-0.5">
                 Certain key ingredients have dropped below their minimum safety buffer. Reorder or update stock to prevent dishes becoming unavailable.
               </p>
             </div>
@@ -415,11 +415,10 @@ export default function IngredientInventoryPage() {
 
           <button
             onClick={() => setLowStockOnly(!lowStockOnly)}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-1.5 shrink-0 ${
-              lowStockOnly
-                ? 'bg-amber-400 text-black shadow-gold-glow'
-                : 'bg-stone-800 text-stone-200 border border-white/10 hover:border-amber-400/40'
-            }`}
+            className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-1.5 shrink-0 ${lowStockOnly
+                ? 'bg-amber-500 text-stone-950 shadow-sm'
+                : 'bg-white text-stone-700 border border-stone-200 hover:border-amber-400'
+              }`}
           >
             <span>{lowStockOnly ? 'Showing Low Stock Only' : 'Filter Low Stock Items'}</span>
           </button>
@@ -427,16 +426,16 @@ export default function IngredientInventoryPage() {
       )}
 
       {/* Filter and Search Bar */}
-      <div className="p-4 bg-[#16171B]/90 border border-white/[0.08] rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="p-4 bg-white border border-stone-200/80 rounded-2xl flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-sm">
         {/* Search */}
         <div className="relative flex-1 max-w-md">
-          <Search className="w-4 h-4 text-stone-500 absolute left-3.5 top-1/2 -translate-y-1/2" />
+          <Search className="w-4 h-4 text-stone-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
             type="text"
             placeholder="Search ingredient, category, or vendor..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 bg-stone-950/80 border border-white/10 rounded-xl text-xs text-white placeholder-stone-500 focus:outline-none focus:border-gold-400"
+            className="w-full pl-10 pr-4 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 placeholder-stone-400 focus:outline-none focus:border-amber-500"
           />
         </div>
 
@@ -446,11 +445,10 @@ export default function IngredientInventoryPage() {
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
-              className={`px-3 py-1.5 rounded-xl text-[11px] font-semibold whitespace-nowrap transition ${
-                selectedCategory === cat
-                  ? 'bg-gold-500 text-black shadow-gold-glow font-bold'
-                  : 'bg-stone-900/80 text-stone-400 hover:text-white border border-white/5'
-              }`}
+              className={`px-3 py-1.5 rounded-xl text-[11px] font-semibold whitespace-nowrap transition ${selectedCategory === cat
+                  ? 'bg-amber-500 text-stone-950 shadow-sm font-bold'
+                  : 'bg-stone-100 text-stone-600 hover:text-stone-900 border border-stone-200'
+                }`}
             >
               {cat}
             </button>
@@ -461,14 +459,14 @@ export default function IngredientInventoryPage() {
       {/* Ingredients Grid / Cards */}
       {loading && ingredients.length === 0 ? (
         <div className="p-16 text-center">
-          <div className="w-12 h-12 rounded-full border-4 border-gold-500/20 border-t-gold-500 animate-spin mx-auto mb-3 shadow-gold-glow" />
-          <p className="text-xs text-stone-400">Loading ingredient records...</p>
+          <div className="w-12 h-12 rounded-full border-4 border-amber-500/20 border-t-amber-500 animate-spin mx-auto mb-3" />
+          <p className="text-xs text-stone-500">Loading ingredient records...</p>
         </div>
       ) : filteredIngredients.length === 0 ? (
-        <div className="p-16 text-center bg-[#16171B]/60 border border-white/[0.06] rounded-3xl backdrop-blur">
-          <Boxes className="w-12 h-12 text-stone-600 mx-auto mb-2 opacity-50" />
-          <h3 className="font-serif font-bold text-white text-base">No ingredients found</h3>
-          <p className="text-xs text-stone-400 mt-1 max-w-sm mx-auto">
+        <div className="p-16 text-center bg-white border border-stone-200/80 rounded-3xl shadow-sm">
+          <Boxes className="w-12 h-12 text-stone-300 mx-auto mb-2 opacity-50" />
+          <h3 className="font-serif font-bold text-stone-900 text-base">No ingredients found</h3>
+          <p className="text-xs text-stone-600 mt-1 max-w-sm mx-auto">
             {searchQuery || selectedCategory !== 'All' || lowStockOnly
               ? 'Try adjusting your search query or category filters.'
               : 'Start by clicking "Add Ingredient" or "Load Kitchen Essentials" to track remaining stock.'}
@@ -485,33 +483,32 @@ export default function IngredientInventoryPage() {
             return (
               <div
                 key={item.id}
-                className={`bg-[#16171B]/90 backdrop-blur-xl border rounded-3xl p-5 shadow-premium-card flex flex-col justify-between transition-all duration-300 ${
-                  isOutOfStock
-                    ? 'border-red-500/50 shadow-pink-glow ring-1 ring-red-500/30'
+                className={`bg-white border rounded-3xl p-5 shadow-sm flex flex-col justify-between transition-all duration-300 ${isOutOfStock
+                    ? 'border-red-300 ring-1 ring-red-400/30'
                     : isLowStock
-                    ? 'border-amber-500/50 shadow-gold-glow ring-1 ring-amber-500/30'
-                    : 'border-white/[0.08] hover:border-gold-500/30'
-                }`}
+                      ? 'border-amber-300 ring-1 ring-amber-400/30'
+                      : 'border-stone-200/80 hover:border-amber-400/50 hover:shadow-md'
+                  }`}
               >
                 <div>
                   {/* Top Bar: Category Pill & Status Badge */}
-                  <div className="flex items-center justify-between gap-2 pb-3 border-b border-white/[0.06]">
-                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-stone-800 text-stone-300 border border-white/5 truncate max-w-[150px]">
+                  <div className="flex items-center justify-between gap-2 pb-3 border-b border-stone-100">
+                    <span className="px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-stone-100 text-stone-700 border border-stone-200 truncate max-w-[150px]">
                       {item.category}
                     </span>
 
                     {isOutOfStock ? (
-                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-red-500/15 border border-red-500/40 text-red-400 flex items-center space-x-1 shrink-0">
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-red-50 border border-red-200 text-red-700 flex items-center space-x-1 shrink-0">
                         <XCircle className="w-3 h-3" />
                         <span>Out of Stock</span>
                       </span>
                     ) : isLowStock ? (
-                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/15 border border-amber-500/40 text-amber-300 flex items-center space-x-1 shrink-0 animate-pulse">
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 border border-amber-200 text-amber-800 flex items-center space-x-1 shrink-0 animate-pulse">
                         <AlertTriangle className="w-3 h-3" />
                         <span>Low Stock</span>
                       </span>
                     ) : (
-                      <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center space-x-1 shrink-0">
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-50 border border-emerald-200 text-emerald-700 flex items-center space-x-1 shrink-0">
                         <CheckCircle2 className="w-3 h-3" />
                         <span>Healthy</span>
                       </span>
@@ -521,13 +518,13 @@ export default function IngredientInventoryPage() {
                   {/* Main Stock Counter */}
                   <div className="mt-4 flex items-baseline justify-between">
                     <div>
-                      <h3 className="font-serif font-bold text-white text-base leading-snug line-clamp-1">
+                      <h3 className="font-serif font-bold text-stone-900 text-base leading-snug line-clamp-1">
                         {item.name}
                       </h3>
                       {item.supplier && (
-                        <p className="text-[11px] text-stone-400 mt-0.5 flex items-center space-x-1">
+                        <p className="text-[11px] text-stone-500 mt-0.5 flex items-center space-x-1">
                           <span>Vendor:</span>
-                          <span className="text-stone-300 font-medium">{item.supplier}</span>
+                          <span className="text-stone-700 font-medium">{item.supplier}</span>
                         </p>
                       )}
                     </div>
@@ -535,21 +532,20 @@ export default function IngredientInventoryPage() {
                     <div className="text-right shrink-0">
                       <div className="flex items-baseline space-x-1 justify-end">
                         <span
-                          className={`text-2xl font-serif font-black ${
-                            isOutOfStock
-                              ? 'text-red-400'
+                          className={`text-2xl font-serif font-black ${isOutOfStock
+                              ? 'text-red-600'
                               : isLowStock
-                              ? 'text-amber-400'
-                              : 'text-gold-400'
-                          }`}
+                                ? 'text-amber-700'
+                                : 'text-stone-900'
+                            }`}
                         >
                           {item.currentStock}
                         </span>
-                        <span className="text-xs font-semibold text-stone-400 uppercase">
+                        <span className="text-xs font-semibold text-stone-500 uppercase">
                           {item.unit}
                         </span>
                       </div>
-                      <span className="text-[10px] text-stone-500 block">
+                      <span className="text-[10px] text-stone-400 block">
                         Min Alert: {item.minAlertStock} {item.unit}
                       </span>
                     </div>
@@ -557,15 +553,14 @@ export default function IngredientInventoryPage() {
 
                   {/* Stock Level Bar */}
                   <div className="mt-3">
-                    <div className="w-full bg-stone-900 rounded-full h-1.5 overflow-hidden border border-white/5">
+                    <div className="w-full bg-stone-100 rounded-full h-1.5 overflow-hidden border border-stone-200">
                       <div
-                        className={`h-full transition-all duration-500 rounded-full ${
-                          isOutOfStock
+                        className={`h-full transition-all duration-500 rounded-full ${isOutOfStock
                             ? 'bg-red-500'
                             : isLowStock
-                            ? 'bg-amber-400 shadow-gold-glow'
-                            : 'bg-emerald-400'
-                        }`}
+                              ? 'bg-amber-500'
+                              : 'bg-emerald-500'
+                          }`}
                         style={{ width: `${isOutOfStock ? 0 : Math.max(5, fillWidth)}%` }}
                       />
                     </div>
@@ -573,21 +568,21 @@ export default function IngredientInventoryPage() {
 
                   {/* Notes / Details */}
                   {item.notes && (
-                    <p className="text-[11px] text-stone-400/90 mt-3 p-2 bg-stone-950/60 rounded-xl border border-white/5 line-clamp-2 leading-relaxed">
+                    <p className="text-[11px] text-stone-600 mt-3 p-2 bg-stone-50 rounded-xl border border-stone-200 line-clamp-2 leading-relaxed">
                       {item.notes}
                     </p>
                   )}
                 </div>
 
                 {/* Bottom Action Bar */}
-                <div className="mt-4 pt-3 border-t border-white/[0.06] flex items-center justify-between gap-1.5">
+                <div className="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between gap-1.5">
                   {/* Quick Usage (-) */}
                   <button
                     onClick={() => setAdjustingItem({ item, mode: 'subtract' })}
                     title="Log Kitchen Used Amount"
-                    className="flex-1 py-1.5 px-2 rounded-xl bg-stone-900 hover:bg-stone-800 text-stone-300 hover:text-red-300 border border-white/5 text-[11px] font-semibold flex items-center justify-center space-x-1 transition"
+                    className="flex-1 py-1.5 px-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 hover:text-red-700 border border-stone-200 text-[11px] font-semibold flex items-center justify-center space-x-1 transition"
                   >
-                    <MinusCircle className="w-3.5 h-3.5 text-red-400" />
+                    <MinusCircle className="w-3.5 h-3.5 text-red-500" />
                     <span>Used</span>
                   </button>
 
@@ -595,9 +590,9 @@ export default function IngredientInventoryPage() {
                   <button
                     onClick={() => setAdjustingItem({ item, mode: 'add' })}
                     title="Restock Incoming Quantity"
-                    className="flex-1 py-1.5 px-2 rounded-xl bg-gold-500/15 hover:bg-gold-500/25 text-gold-300 border border-gold-500/30 text-[11px] font-bold flex items-center justify-center space-x-1 transition"
+                    className="flex-1 py-1.5 px-2 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 text-[11px] font-bold flex items-center justify-center space-x-1 transition"
                   >
-                    <PlusCircle className="w-3.5 h-3.5 text-gold-400" />
+                    <PlusCircle className="w-3.5 h-3.5 text-amber-600" />
                     <span>Restock</span>
                   </button>
 
@@ -605,7 +600,7 @@ export default function IngredientInventoryPage() {
                   <button
                     onClick={() => openEditModal(item)}
                     title="Edit Item Details"
-                    className="p-1.5 rounded-xl text-stone-400 hover:text-white hover:bg-stone-800 transition"
+                    className="p-1.5 rounded-xl text-stone-400 hover:text-stone-700 hover:bg-stone-100 transition"
                   >
                     <Edit2 className="w-3.5 h-3.5" />
                   </button>
@@ -614,7 +609,7 @@ export default function IngredientInventoryPage() {
                   <button
                     onClick={() => handleDelete(item.id, item.name)}
                     title="Delete Ingredient"
-                    className="p-1.5 rounded-xl text-stone-500 hover:text-red-400 hover:bg-stone-800 transition"
+                    className="p-1.5 rounded-xl text-stone-400 hover:text-red-600 hover:bg-stone-100 transition"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
                   </button>
@@ -629,14 +624,14 @@ export default function IngredientInventoryPage() {
       {/* MODAL 1: ADD / EDIT INGREDIENT                               */}
       {/* ============================================================ */}
       {isAddModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-fade-in">
-          <div className="bg-[#16171B] border border-white/[0.1] rounded-3xl max-w-lg w-full p-6 shadow-2xl relative overflow-hidden">
-            <div className="flex items-center justify-between pb-4 border-b border-white/[0.08]">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4 animate-fade-in">
+          <div className="bg-white border border-stone-200 rounded-3xl max-w-lg w-full p-6 shadow-2xl relative overflow-hidden">
+            <div className="flex items-center justify-between pb-4 border-b border-stone-200">
               <div className="flex items-center space-x-2.5">
-                <div className="w-8 h-8 rounded-lg bg-gold-500/20 text-gold-400 flex items-center justify-center border border-gold-500/30">
+                <div className="w-8 h-8 rounded-lg bg-amber-50 text-amber-700 flex items-center justify-center border border-amber-200">
                   <Boxes className="w-4 h-4" />
                 </div>
-                <h3 className="font-serif font-bold text-lg text-white">
+                <h3 className="font-serif font-bold text-lg text-stone-900">
                   {editingItem ? 'Edit Ingredient' : 'Add New Ingredient'}
                 </h3>
               </div>
@@ -645,14 +640,14 @@ export default function IngredientInventoryPage() {
                   setIsAddModalOpen(false);
                   setEditingItem(null);
                 }}
-                className="p-1.5 text-stone-400 hover:text-white rounded-lg hover:bg-stone-800 transition"
+                className="p-1.5 text-stone-400 hover:text-stone-700 rounded-lg hover:bg-stone-100 transition"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
             {formError && (
-              <div className="mt-4 p-3 bg-red-500/15 border border-red-500/30 rounded-xl text-xs text-red-300">
+              <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-xl text-xs text-red-700">
                 {formError}
               </div>
             )}
@@ -660,7 +655,7 @@ export default function IngredientInventoryPage() {
             <form onSubmit={handleSaveIngredient} className="mt-4 space-y-4">
               {/* Ingredient Name */}
               <div>
-                <label className="text-xs font-semibold text-stone-300 block mb-1">
+                <label className="text-xs font-semibold text-stone-800 block mb-1">
                   Ingredient Name *
                 </label>
                 <input
@@ -669,20 +664,20 @@ export default function IngredientInventoryPage() {
                   placeholder="e.g. Chicken (Breast), Basmati Rice, Mustard Oil"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-3.5 py-2.5 bg-stone-950/80 border border-white/10 rounded-xl text-xs text-white placeholder-stone-500 focus:outline-none focus:border-gold-400"
+                  className="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 placeholder-stone-400 focus:outline-none focus:border-amber-500"
                 />
               </div>
 
               {/* Category & Unit */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs font-semibold text-stone-300 block mb-1">
+                  <label className="text-xs font-semibold text-stone-800 block mb-1">
                     Category
                   </label>
                   <select
                     value={formData.category}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                    className="w-full px-3 py-2.5 bg-stone-950/80 border border-white/10 rounded-xl text-xs text-white focus:outline-none focus:border-gold-400"
+                    className="w-full px-3 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 focus:outline-none focus:border-amber-500"
                   >
                     {INVENTORY_CATEGORIES.filter((c) => c !== 'All').map((cat) => (
                       <option key={cat} value={cat}>
@@ -693,13 +688,13 @@ export default function IngredientInventoryPage() {
                 </div>
 
                 <div>
-                  <label className="text-xs font-semibold text-stone-300 block mb-1">
+                  <label className="text-xs font-semibold text-stone-800 block mb-1">
                     Unit of Measurement
                   </label>
                   <select
                     value={formData.unit}
                     onChange={(e) => setFormData({ ...formData, unit: e.target.value })}
-                    className="w-full px-3 py-2.5 bg-stone-950/80 border border-white/10 rounded-xl text-xs text-white focus:outline-none focus:border-gold-400 uppercase"
+                    className="w-full px-3 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 focus:outline-none focus:border-amber-500 uppercase"
                   >
                     {STANDARD_UNITS.map((u) => (
                       <option key={u} value={u}>
@@ -713,7 +708,7 @@ export default function IngredientInventoryPage() {
               {/* Current Stock & Low Stock Alert */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs font-semibold text-stone-300 block mb-1">
+                  <label className="text-xs font-semibold text-stone-800 block mb-1">
                     Current Quantity Left
                   </label>
                   <input
@@ -724,12 +719,12 @@ export default function IngredientInventoryPage() {
                     placeholder="e.g. 15"
                     value={formData.currentStock}
                     onChange={(e) => setFormData({ ...formData, currentStock: e.target.value })}
-                    className="w-full px-3.5 py-2.5 bg-stone-950/80 border border-white/10 rounded-xl text-xs text-white focus:outline-none focus:border-gold-400 font-mono"
+                    className="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 focus:outline-none focus:border-amber-500 font-mono font-bold"
                   />
                 </div>
 
                 <div>
-                  <label className="text-xs font-semibold text-amber-300 block mb-1">
+                  <label className="text-xs font-semibold text-amber-800 block mb-1">
                     Low Stock Alert Trigger
                   </label>
                   <input
@@ -739,7 +734,7 @@ export default function IngredientInventoryPage() {
                     placeholder="e.g. 5"
                     value={formData.minAlertStock}
                     onChange={(e) => setFormData({ ...formData, minAlertStock: e.target.value })}
-                    className="w-full px-3.5 py-2.5 bg-stone-950/80 border border-amber-500/30 rounded-xl text-xs text-amber-200 focus:outline-none focus:border-amber-400 font-mono"
+                    className="w-full px-3.5 py-2.5 bg-stone-50 border border-amber-300 rounded-xl text-xs text-stone-900 focus:outline-none focus:border-amber-500 font-mono font-bold"
                   />
                 </div>
               </div>
@@ -747,7 +742,7 @@ export default function IngredientInventoryPage() {
               {/* Cost Per Unit & Supplier */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-xs font-semibold text-stone-300 block mb-1">
+                  <label className="text-xs font-semibold text-stone-800 block mb-1">
                     Cost per Unit (NPR, optional)
                   </label>
                   <input
@@ -757,12 +752,12 @@ export default function IngredientInventoryPage() {
                     placeholder="e.g. 380"
                     value={formData.costPerUnit}
                     onChange={(e) => setFormData({ ...formData, costPerUnit: e.target.value })}
-                    className="w-full px-3.5 py-2.5 bg-stone-950/80 border border-white/10 rounded-xl text-xs text-white focus:outline-none focus:border-gold-400 font-mono"
+                    className="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 focus:outline-none focus:border-amber-500 font-mono"
                   />
                 </div>
 
                 <div>
-                  <label className="text-xs font-semibold text-stone-300 block mb-1">
+                  <label className="text-xs font-semibold text-stone-800 block mb-1">
                     Supplier / Vendor
                   </label>
                   <input
@@ -770,14 +765,14 @@ export default function IngredientInventoryPage() {
                     placeholder="e.g. Kalimati Mandi, DDC"
                     value={formData.supplier}
                     onChange={(e) => setFormData({ ...formData, supplier: e.target.value })}
-                    className="w-full px-3.5 py-2.5 bg-stone-950/80 border border-white/10 rounded-xl text-xs text-white placeholder-stone-500 focus:outline-none focus:border-gold-400"
+                    className="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 placeholder-stone-400 focus:outline-none focus:border-amber-500"
                   />
                 </div>
               </div>
 
               {/* Notes */}
               <div>
-                <label className="text-xs font-semibold text-stone-300 block mb-1">
+                <label className="text-xs font-semibold text-stone-800 block mb-1">
                   Notes (Storage location, shelf life, prep notes)
                 </label>
                 <input
@@ -785,23 +780,23 @@ export default function IngredientInventoryPage() {
                   placeholder="e.g. Freezer #2, reorder on Tuesdays"
                   value={formData.notes}
                   onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                  className="w-full px-3.5 py-2 bg-stone-950/80 border border-white/10 rounded-xl text-xs text-white placeholder-stone-500 focus:outline-none focus:border-gold-400"
+                  className="w-full px-3.5 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 placeholder-stone-400 focus:outline-none focus:border-amber-500"
                 />
               </div>
 
               {/* Actions */}
-              <div className="pt-3 border-t border-white/[0.08] flex items-center justify-end space-x-2">
+              <div className="pt-3 border-t border-stone-200 flex items-center justify-end space-x-2">
                 <button
                   type="button"
                   onClick={() => setIsAddModalOpen(false)}
-                  className="px-4 py-2 rounded-xl text-xs font-semibold text-stone-400 hover:text-white transition"
+                  className="px-4 py-2 rounded-xl text-xs font-semibold text-stone-600 hover:text-stone-900 transition"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="px-5 py-2.5 rounded-xl gold-btn text-black text-xs font-bold shadow-gold-glow flex items-center space-x-1.5"
+                  className="px-5 py-2.5 rounded-xl gold-btn text-stone-950 text-xs font-bold shadow-sm flex items-center space-x-1.5"
                 >
                   <span>{editingItem ? 'Save Changes' : 'Create Ingredient'}</span>
                 </button>
@@ -815,24 +810,24 @@ export default function IngredientInventoryPage() {
       {/* MODAL 2: QUICK RESTOCK / LOG USAGE                           */}
       {/* ============================================================ */}
       {adjustingItem && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 animate-fade-in">
-          <div className="bg-[#16171B] border border-white/[0.1] rounded-3xl max-w-sm w-full p-6 shadow-2xl relative">
-            <div className="flex items-center justify-between pb-3.5 border-b border-white/[0.08]">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4 animate-fade-in">
+          <div className="bg-white border border-stone-200 rounded-3xl max-w-sm w-full p-6 shadow-2xl relative">
+            <div className="flex items-center justify-between pb-3.5 border-b border-stone-200">
               <div className="flex items-center space-x-2">
                 {adjustingItem.mode === 'add' ? (
-                  <div className="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/30">
+                  <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-700 flex items-center justify-center border border-emerald-200">
                     <TrendingUp className="w-4 h-4" />
                   </div>
                 ) : (
-                  <div className="w-8 h-8 rounded-lg bg-red-500/20 text-red-400 flex items-center justify-center border border-red-500/30">
+                  <div className="w-8 h-8 rounded-lg bg-red-50 text-red-700 flex items-center justify-center border border-red-200">
                     <TrendingDown className="w-4 h-4" />
                   </div>
                 )}
                 <div>
-                  <h3 className="font-serif font-bold text-sm text-white">
+                  <h3 className="font-serif font-bold text-sm text-stone-900">
                     {adjustingItem.mode === 'add' ? 'Restock Stock' : 'Log Kitchen Usage'}
                   </h3>
-                  <span className="text-[11px] text-stone-400 block truncate max-w-[200px]">
+                  <span className="text-[11px] text-stone-500 block truncate max-w-[200px]">
                     {adjustingItem.item.name}
                   </span>
                 </div>
@@ -840,22 +835,22 @@ export default function IngredientInventoryPage() {
 
               <button
                 onClick={() => setAdjustingItem(null)}
-                className="p-1 text-stone-400 hover:text-white"
+                className="p-1 text-stone-400 hover:text-stone-700"
               >
                 <X className="w-4 h-4" />
               </button>
             </div>
 
             <form onSubmit={handleQuickAdjust} className="mt-4 space-y-4">
-              <div className="p-3 bg-stone-950/70 border border-white/5 rounded-2xl flex items-center justify-between text-xs">
-                <span className="text-stone-400">Current Balance:</span>
-                <span className="font-mono font-bold text-white text-sm">
+              <div className="p-3 bg-stone-50 border border-stone-200 rounded-2xl flex items-center justify-between text-xs">
+                <span className="text-stone-600">Current Balance:</span>
+                <span className="font-mono font-bold text-stone-900 text-sm">
                   {adjustingItem.item.currentStock} {adjustingItem.item.unit}
                 </span>
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-stone-300 block mb-1">
+                <label className="text-xs font-semibold text-stone-800 block mb-1">
                   {adjustingItem.mode === 'add' ? 'Quantity Added +' : 'Quantity Used -'} ({adjustingItem.item.unit})
                 </label>
                 <input
@@ -867,18 +862,18 @@ export default function IngredientInventoryPage() {
                   placeholder={`Amount in ${adjustingItem.item.unit}`}
                   value={adjustAmount}
                   onChange={(e) => setAdjustAmount(e.target.value)}
-                  className="w-full px-3.5 py-2.5 bg-stone-950 border border-white/10 rounded-xl text-base font-bold font-mono text-white focus:outline-none focus:border-gold-400"
+                  className="w-full px-3.5 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-base font-bold font-mono text-stone-900 focus:outline-none focus:border-amber-500"
                 />
               </div>
 
               <div>
-                <label className="text-xs font-semibold text-stone-300 block mb-1">
+                <label className="text-xs font-semibold text-stone-800 block mb-1">
                   Reason / Purpose
                 </label>
                 <select
                   value={adjustReason}
                   onChange={(e) => setAdjustReason(e.target.value)}
-                  className="w-full px-3 py-2 bg-stone-950 border border-white/10 rounded-xl text-xs text-white focus:outline-none focus:border-gold-400"
+                  className="w-full px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 focus:outline-none focus:border-amber-500"
                 >
                   {adjustingItem.mode === 'add' ? (
                     <>
@@ -903,18 +898,17 @@ export default function IngredientInventoryPage() {
                 <button
                   type="button"
                   onClick={() => setAdjustingItem(null)}
-                  className="px-3 py-1.5 rounded-xl text-xs text-stone-400 hover:text-white"
+                  className="px-3 py-1.5 rounded-xl text-xs text-stone-600 hover:text-stone-900"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-1 ${
-                    adjustingItem.mode === 'add'
-                      ? 'gold-btn text-black shadow-gold-glow'
-                      : 'bg-red-500 hover:bg-red-400 text-white shadow-pink-glow'
-                  }`}
+                  className={`px-4 py-2 rounded-xl text-xs font-bold transition flex items-center space-x-1 ${adjustingItem.mode === 'add'
+                      ? 'gold-btn text-stone-950 shadow-sm'
+                      : 'bg-red-600 hover:bg-red-500 text-white shadow-sm'
+                    }`}
                 >
                   <span>{adjustingItem.mode === 'add' ? 'Confirm Restock' : 'Deduct Used Stock'}</span>
                 </button>

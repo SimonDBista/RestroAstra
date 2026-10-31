@@ -244,10 +244,10 @@ export default function PlatformAdminDashboard() {
       {/* Top Banner */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-serif font-extrabold text-white">
+          <h1 className="text-3xl font-serif font-extrabold text-stone-900">
             Hotel & Restaurant Accounts
           </h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-stone-500 mt-1">
             Provision tenant accounts, toggle active subscriptions, and manage QR codes
           </p>
         </div>
@@ -255,7 +255,7 @@ export default function PlatformAdminDashboard() {
         <div className="flex items-center space-x-3">
           <button
             onClick={fetchData}
-            className="px-4 py-2.5 rounded-xl dark-btn text-slate-300 text-xs font-semibold flex items-center space-x-2"
+            className="px-4 py-2.5 rounded-xl bg-white border border-stone-200 text-stone-700 hover:bg-stone-50 text-xs font-semibold flex items-center space-x-2 shadow-sm transition"
           >
             <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
             <span>Sync</span>
@@ -263,7 +263,7 @@ export default function PlatformAdminDashboard() {
 
           <button
             onClick={() => setIsAddModalOpen(true)}
-            className="px-5 py-2.5 rounded-xl gold-btn text-xs font-extrabold flex items-center space-x-2 shadow-gold-glow"
+            className="px-5 py-2.5 rounded-xl gold-btn text-xs font-extrabold flex items-center space-x-2 shadow-sm"
           >
             <Plus className="w-4 h-4" />
             <span>Add Hotel Account</span>
@@ -274,34 +274,34 @@ export default function PlatformAdminDashboard() {
       {/* Overview KPI Cards */}
       {stats && (
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3.5">
-          <div className="p-5 rounded-3xl bg-dark-850/90 backdrop-blur-xl border border-white/[0.08] shadow-premium-card">
-            <span className="text-[11px] font-bold text-slate-400 block">Total Hotels</span>
-            <span className="text-3xl font-serif font-black text-white mt-1 block">{stats.totalHotels}</span>
+          <div className="p-5 rounded-3xl bg-white border border-stone-200 shadow-sm">
+            <span className="text-[11px] font-bold text-stone-500 block">Total Hotels</span>
+            <span className="text-3xl font-serif font-black text-stone-900 mt-1 block">{stats.totalHotels}</span>
           </div>
 
-          <div className="p-5 rounded-3xl bg-dark-850/90 backdrop-blur-xl border border-emerald-500/30 shadow-premium-card">
-            <span className="text-[11px] font-bold text-emerald-400 block">Active Subscriptions</span>
-            <span className="text-3xl font-serif font-black text-emerald-400 mt-1 block">{stats.activeHotels}</span>
+          <div className="p-5 rounded-3xl bg-emerald-50/50 border border-emerald-200 shadow-sm">
+            <span className="text-[11px] font-bold text-emerald-700 block">Active Subscriptions</span>
+            <span className="text-3xl font-serif font-black text-emerald-700 mt-1 block">{stats.activeHotels}</span>
           </div>
 
-          <div className="p-5 rounded-3xl bg-dark-850/90 backdrop-blur-xl border border-yellow-500/30 shadow-premium-card">
-            <span className="text-[11px] font-bold text-yellow-400 block">Pending Review</span>
-            <span className="text-3xl font-serif font-black text-yellow-400 mt-1 block">{stats.pendingHotels}</span>
+          <div className="p-5 rounded-3xl bg-amber-50/50 border border-amber-200 shadow-sm">
+            <span className="text-[11px] font-bold text-amber-800 block">Pending Review</span>
+            <span className="text-3xl font-serif font-black text-amber-800 mt-1 block">{stats.pendingHotels}</span>
           </div>
 
-          <div className="p-5 rounded-3xl bg-dark-850/90 backdrop-blur-xl border border-red-500/30 shadow-premium-card">
-            <span className="text-[11px] font-bold text-red-400 block">Expired Accounts</span>
-            <span className="text-3xl font-serif font-black text-red-400 mt-1 block">{stats.expiredHotels}</span>
+          <div className="p-5 rounded-3xl bg-red-50/50 border border-red-200 shadow-sm">
+            <span className="text-[11px] font-bold text-red-600 block">Expired Accounts</span>
+            <span className="text-3xl font-serif font-black text-red-600 mt-1 block">{stats.expiredHotels}</span>
           </div>
 
-          <div className="p-5 rounded-3xl bg-dark-850/90 backdrop-blur-xl border border-brandPink-500/30 shadow-pink-glow">
-            <span className="text-[11px] font-bold text-brandPink-400 block">Total Orders</span>
-            <span className="text-3xl font-serif font-black text-white mt-1 block">{stats.totalOrders}</span>
+          <div className="p-5 rounded-3xl bg-white border border-stone-200 shadow-sm">
+            <span className="text-[11px] font-bold text-stone-500 block">Total Orders</span>
+            <span className="text-3xl font-serif font-black text-stone-900 mt-1 block">{stats.totalOrders}</span>
           </div>
 
-          <div className="p-5 rounded-3xl bg-dark-850/90 backdrop-blur-xl border border-gold-500/30 shadow-gold-glow">
-            <span className="text-[11px] font-bold text-gold-400 block">Platform Volume</span>
-            <span className="text-xl font-serif font-black text-gold-400 mt-1 block truncate">
+          <div className="p-5 rounded-3xl bg-amber-50/60 border border-amber-300 shadow-sm">
+            <span className="text-[11px] font-bold text-amber-800 block">Platform Volume</span>
+            <span className="text-xl font-serif font-black text-amber-800 mt-1 block truncate">
               {formatNPR(stats.totalRevenue)}
             </span>
           </div>
@@ -322,8 +322,8 @@ export default function PlatformAdminDashboard() {
               onClick={() => setStatusFilter(tab.id)}
               className={`px-4 py-2 rounded-xl text-xs font-bold transition-all ${
                 statusFilter === tab.id
-                  ? 'gold-btn text-black shadow-gold-glow'
-                  : 'dark-btn text-slate-400 hover:text-white'
+                  ? 'gold-btn text-black shadow-sm'
+                  : 'bg-white border border-stone-200 text-stone-700 hover:bg-stone-50 shadow-sm'
               }`}
             >
               {tab.label}
@@ -332,23 +332,23 @@ export default function PlatformAdminDashboard() {
         </div>
 
         <div className="relative min-w-[260px]">
-          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-500" />
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-stone-400" />
           <input
             type="text"
             placeholder="Search hotel name, email, slug..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-3 py-2 bg-dark-900 border border-white/[0.08] rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-gold-500 shadow-inner"
+            className="w-full pl-9 pr-3 py-2 bg-white border border-stone-200 rounded-xl text-xs text-stone-900 placeholder-stone-400 focus:outline-none focus:border-amber-500 shadow-sm"
           />
         </div>
       </div>
 
       {/* Hotels Table */}
-      <div className="bg-dark-850/90 backdrop-blur-xl border border-white/[0.08] rounded-3xl overflow-hidden shadow-premium-card">
+      <div className="bg-white border border-stone-200 rounded-3xl overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse text-xs">
             <thead>
-              <tr className="bg-dark-900/90 border-b border-surface-border text-slate-400 font-bold uppercase tracking-wider text-[10px]">
+              <tr className="bg-stone-50 border-b border-stone-200 text-stone-500 font-bold uppercase tracking-wider text-[10px]">
                 <th className="py-4 px-6">Hotel / Restaurant</th>
                 <th className="py-4 px-5">Owner Email & Phone</th>
                 <th className="py-4 px-5">Subscription Status</th>
@@ -357,24 +357,24 @@ export default function PlatformAdminDashboard() {
                 <th className="py-4 px-6 text-right">Admin Controls</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-white/[0.04]">
+            <tbody className="divide-y divide-stone-100">
               {filteredHotels.length === 0 ? (
                 <tr>
-                  <td colSpan={6} className="py-16 text-center text-slate-500">
+                  <td colSpan={6} className="py-16 text-center text-stone-400">
                     No hotel accounts found
                   </td>
                 </tr>
               ) : (
                 filteredHotels.map((h) => (
-                  <tr key={h.id} className="hover:bg-dark-800/50 transition">
+                  <tr key={h.id} className="hover:bg-stone-50 transition">
                     <td className="py-4 px-6">
                       <div className="flex items-center space-x-3.5">
-                        <div className="w-10 h-10 rounded-2xl bg-dark-800 border border-gold-500/30 flex items-center justify-center font-bold text-gold-400 flex-shrink-0 shadow-inner">
+                        <div className="w-10 h-10 rounded-2xl bg-amber-50 border border-amber-200 flex items-center justify-center font-bold text-amber-700 flex-shrink-0 shadow-sm">
                           <Hotel className="w-4 h-4" />
                         </div>
                         <div>
-                          <div className="font-serif font-bold text-white text-sm">{h.name}</div>
-                          <div className="text-[11px] text-gold-400 font-mono">
+                          <div className="font-serif font-bold text-stone-900 text-sm">{h.name}</div>
+                          <div className="text-[11px] text-amber-700 font-mono">
                             /menu/{h.slug}
                           </div>
                         </div>
@@ -382,8 +382,8 @@ export default function PlatformAdminDashboard() {
                     </td>
 
                     <td className="py-4 px-5">
-                      <div className="text-slate-200 font-semibold">{h.ownerEmail}</div>
-                      <div className="text-[11px] text-slate-400 font-mono">{h.phone || 'No phone'}</div>
+                      <div className="text-stone-800 font-semibold">{h.ownerEmail}</div>
+                      <div className="text-[11px] text-stone-500 font-mono">{h.phone || 'No phone'}</div>
                     </td>
 
                     <td className="py-4 px-5">
@@ -392,34 +392,34 @@ export default function PlatformAdminDashboard() {
                         onChange={(e) => handleStatusChange(h.id, e.target.value)}
                         className={`px-3 py-1.5 rounded-xl font-bold text-xs border focus:outline-none cursor-pointer ${
                           h.status === 'active'
-                            ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
+                            ? 'bg-emerald-50 text-emerald-800 border-emerald-300'
                             : h.status === 'pending'
-                            ? 'bg-yellow-500/20 text-yellow-300 border-yellow-500/40'
-                            : 'bg-red-500/20 text-red-300 border-red-500/40'
+                            ? 'bg-amber-50 text-amber-800 border-amber-300'
+                            : 'bg-red-50 text-red-700 border-red-300'
                         }`}
                       >
-                        <option value="pending" className="bg-dark-900 text-yellow-300">
+                        <option value="pending" className="bg-white text-stone-900">
                           Pending
                         </option>
-                        <option value="active" className="bg-dark-900 text-emerald-300">
+                        <option value="active" className="bg-white text-stone-900">
                           Active
                         </option>
-                        <option value="expired" className="bg-dark-900 text-red-300">
+                        <option value="expired" className="bg-white text-stone-900">
                           Expired
                         </option>
                       </select>
                     </td>
 
                     <td className="py-4 px-5">
-                      <div className="text-slate-300">
-                        <span className="font-bold text-white">{h._count?.orders || 0}</span> orders
+                      <div className="text-stone-600">
+                        <span className="font-bold text-stone-900">{h._count?.orders || 0}</span> orders
                       </div>
-                      <div className="text-[11px] text-slate-400">
+                      <div className="text-[11px] text-stone-400">
                         {h._count?.menuItems || 0} dishes on menu
                       </div>
                     </td>
 
-                    <td className="py-4 px-5 text-slate-400 font-mono text-[11px]">
+                    <td className="py-4 px-5 text-stone-400 font-mono text-[11px]">
                       {formatDate(h.createdAt)}
                     </td>
 
@@ -428,7 +428,7 @@ export default function PlatformAdminDashboard() {
                         <button
                           onClick={() => handleOpenQR(h)}
                           title="Generate QR Code"
-                          className="p-2 rounded-xl bg-dark-800 hover:bg-dark-750 text-gold-400 transition"
+                          className="p-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 transition"
                         >
                           <QrCode className="w-4 h-4" />
                         </button>
@@ -440,7 +440,7 @@ export default function PlatformAdminDashboard() {
                             setPasswordResetResult(null);
                           }}
                           title="Reset Password"
-                          className="p-2 rounded-xl bg-dark-800 hover:bg-dark-750 text-slate-300 transition"
+                          className="p-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 transition"
                         >
                           <Key className="w-4 h-4" />
                         </button>
@@ -449,7 +449,7 @@ export default function PlatformAdminDashboard() {
                           href={`/menu/${h.slug}`}
                           target="_blank"
                           title="View Live Menu"
-                          className="p-2 rounded-xl bg-dark-800 hover:bg-dark-750 text-slate-300 transition"
+                          className="p-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 transition"
                         >
                           <ExternalLink className="w-4 h-4" />
                         </Link>
@@ -457,7 +457,7 @@ export default function PlatformAdminDashboard() {
                         <button
                           onClick={() => handleDeleteHotel(h.id, h.name)}
                           title="Delete Hotel Account"
-                          className="p-2 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-400 transition"
+                          className="p-2 rounded-xl bg-red-50 hover:bg-red-100 text-red-600 transition"
                         >
                           <Trash2 className="w-4 h-4" />
                         </button>
@@ -473,27 +473,27 @@ export default function PlatformAdminDashboard() {
 
       {/* Add New Hotel Modal */}
       {isAddModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fade-in">
-          <div className="relative w-full max-w-lg bg-surface border border-white/[0.1] rounded-3xl shadow-2xl overflow-hidden">
-            <div className="px-6 py-4 bg-dark-900 border-b border-surface-border flex items-center justify-between">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
+          <div className="relative w-full max-w-lg bg-white border border-stone-200 rounded-3xl shadow-2xl overflow-hidden">
+            <div className="px-6 py-4 bg-stone-50 border-b border-stone-200 flex items-center justify-between">
               <div className="flex items-center space-x-2.5">
-                <Hotel className="w-5 h-5 text-gold-400" />
-                <h2 className="font-serif font-extrabold text-white text-base">
+                <Hotel className="w-5 h-5 text-amber-600" />
+                <h2 className="font-serif font-extrabold text-stone-900 text-base">
                   Provision Hotel Account
                 </h2>
               </div>
               <button
                 onClick={() => setIsAddModalOpen(false)}
-                className="p-1 text-slate-400 hover:text-white"
+                className="p-1 text-stone-400 hover:text-stone-800"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <form onSubmit={handleCreateHotel} className="p-6 space-y-4 max-h-[82vh] overflow-y-auto">
+            <form onSubmit={handleCreateHotel} className="p-6 space-y-4 max-h-[82vh] overflow-y-auto bg-white">
               <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1">
-                  Hotel / Restaurant Name <span className="text-brandPink-500">*</span>
+                <label className="block text-xs font-bold text-stone-700 mb-1">
+                  Hotel / Restaurant Name <span className="text-amber-600">*</span>
                 </label>
                 <input
                   type="text"
@@ -501,13 +501,13 @@ export default function PlatformAdminDashboard() {
                   placeholder="e.g. Pokhara Sekuwa & Lounge"
                   value={newHotelForm.name}
                   onChange={(e) => setNewHotelForm({ ...newHotelForm, name: e.target.value })}
-                  className="w-full px-4 py-2.5 bg-dark-900 border border-surface-border rounded-xl text-xs text-white focus:outline-none focus:border-gold-500 shadow-inner"
+                  className="w-full px-4 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 placeholder-stone-400 focus:outline-none focus:border-amber-500 focus:bg-white transition"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1">
-                  Owner Email Address <span className="text-brandPink-500">*</span>
+                <label className="block text-xs font-bold text-stone-700 mb-1">
+                  Owner Email Address <span className="text-amber-600">*</span>
                 </label>
                 <input
                   type="email"
@@ -515,13 +515,13 @@ export default function PlatformAdminDashboard() {
                   placeholder="owner@hotel.com"
                   value={newHotelForm.ownerEmail}
                   onChange={(e) => setNewHotelForm({ ...newHotelForm, ownerEmail: e.target.value })}
-                  className="w-full px-4 py-2.5 bg-dark-900 border border-surface-border rounded-xl text-xs text-white focus:outline-none focus:border-gold-500 shadow-inner"
+                  className="w-full px-4 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 placeholder-stone-400 focus:outline-none focus:border-amber-500 focus:bg-white transition"
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 mb-1">
+                  <label className="block text-xs font-bold text-stone-700 mb-1">
                     Phone Number
                   </label>
                   <input
@@ -529,11 +529,11 @@ export default function PlatformAdminDashboard() {
                     placeholder="98XXXXXXXX"
                     value={newHotelForm.phone}
                     onChange={(e) => setNewHotelForm({ ...newHotelForm, phone: e.target.value })}
-                    className="w-full px-4 py-2.5 bg-dark-900 border border-surface-border rounded-xl text-xs text-white focus:outline-none focus:border-gold-500 shadow-inner"
+                    className="w-full px-4 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 placeholder-stone-400 focus:outline-none focus:border-amber-500 focus:bg-white transition"
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 mb-1">
+                  <label className="block text-xs font-bold text-stone-700 mb-1">
                     Location / Address
                   </label>
                   <input
@@ -541,30 +541,30 @@ export default function PlatformAdminDashboard() {
                     placeholder="Lakeside, Pokhara"
                     value={newHotelForm.address}
                     onChange={(e) => setNewHotelForm({ ...newHotelForm, address: e.target.value })}
-                    className="w-full px-4 py-2.5 bg-dark-900 border border-surface-border rounded-xl text-xs text-white focus:outline-none focus:border-gold-500 shadow-inner"
+                    className="w-full px-4 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 placeholder-stone-400 focus:outline-none focus:border-amber-500 focus:bg-white transition"
                   />
                 </div>
               </div>
 
-              <div className="p-3.5 bg-dark-900 rounded-2xl border border-white/[0.06] text-xs text-slate-400">
-                <span className="font-semibold text-gold-400">Automated Provisioning:</span>
-                <p className="mt-1">
+              <div className="p-3.5 bg-amber-50 rounded-2xl border border-amber-200 text-xs text-stone-700">
+                <span className="font-semibold text-amber-800">Automated Provisioning:</span>
+                <p className="mt-1 text-stone-600">
                   A custom URL slug and secure initial password will be auto-generated with status <strong>Pending</strong>.
                 </p>
               </div>
 
-              <div className="flex items-center justify-end space-x-3 pt-4 border-t border-surface-border">
+              <div className="flex items-center justify-end space-x-3 pt-4 border-t border-stone-200">
                 <button
                   type="button"
                   onClick={() => setIsAddModalOpen(false)}
-                  className="px-4 py-2.5 rounded-xl bg-dark-800 text-slate-300 text-xs font-semibold"
+                  className="px-4 py-2.5 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-semibold transition"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={isCreating}
-                  className="px-6 py-2.5 rounded-xl gold-btn text-xs font-extrabold shadow-gold-glow"
+                  className="px-6 py-2.5 rounded-xl gold-btn text-xs font-extrabold shadow-sm"
                 >
                   {isCreating ? 'Provisioning...' : 'Create Account'}
                 </button>
@@ -576,37 +576,37 @@ export default function PlatformAdminDashboard() {
 
       {/* Created Hotel Modal */}
       {createdHotelInfo && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fade-in">
-          <div className="relative w-full max-w-md bg-surface border border-gold-500/40 rounded-3xl shadow-gold-glow p-7 text-center">
-            <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center mx-auto mb-3.5">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
+          <div className="relative w-full max-w-md bg-white border border-amber-300 rounded-3xl shadow-xl p-7 text-center">
+            <div className="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto mb-3.5 border border-emerald-200">
               <CheckCircle2 className="w-6 h-6" />
             </div>
 
-            <h3 className="font-serif font-extrabold text-white text-lg">
+            <h3 className="font-serif font-extrabold text-stone-900 text-lg">
               Hotel Account Provisioned!
             </h3>
-            <p className="text-xs text-slate-400 mt-1">
+            <p className="text-xs text-stone-500 mt-1">
               Provide these login details to the restaurant owner:
             </p>
 
-            <div className="my-5 p-4 bg-dark-900 rounded-2xl border border-white/[0.08] text-left space-y-2 text-xs">
+            <div className="my-5 p-4 bg-stone-50 rounded-2xl border border-stone-200 text-left space-y-2 text-xs">
               <div>
-                <span className="text-slate-400 block">Hotel:</span>
-                <span className="font-serif font-bold text-white text-sm">{createdHotelInfo.hotel.name}</span>
+                <span className="text-stone-500 block">Hotel:</span>
+                <span className="font-serif font-bold text-stone-900 text-sm">{createdHotelInfo.hotel.name}</span>
               </div>
               <div>
-                <span className="text-slate-400 block">Login Email:</span>
-                <span className="font-mono text-gold-400 font-bold">{createdHotelInfo.hotel.ownerEmail}</span>
+                <span className="text-stone-500 block">Login Email:</span>
+                <span className="font-mono text-amber-700 font-bold">{createdHotelInfo.hotel.ownerEmail}</span>
               </div>
               <div>
-                <span className="text-slate-400 block">Temporary Password:</span>
-                <span className="font-mono text-brandPink-400 text-base font-extrabold">
+                <span className="text-stone-500 block">Temporary Password:</span>
+                <span className="font-mono text-amber-800 text-base font-extrabold">
                   {createdHotelInfo.temporaryPassword}
                 </span>
               </div>
               <div>
-                <span className="text-slate-400 block">Customer Menu URL:</span>
-                <span className="font-mono text-slate-300">
+                <span className="text-stone-500 block">Customer Menu URL:</span>
+                <span className="font-mono text-stone-700">
                   /menu/{createdHotelInfo.hotel.slug}
                 </span>
               </div>
@@ -618,7 +618,7 @@ export default function PlatformAdminDashboard() {
                   `Hotel: ${createdHotelInfo.hotel.name}\nDashboard: ${window.location.origin}/dashboard/login\nEmail: ${createdHotelInfo.hotel.ownerEmail}\nPassword: ${createdHotelInfo.temporaryPassword}`
                 );
               }}
-              className="w-full py-3 rounded-2xl gold-btn text-xs font-bold flex items-center justify-center space-x-2 mb-2 shadow-gold-glow"
+              className="w-full py-3 rounded-2xl gold-btn text-xs font-bold flex items-center justify-center space-x-2 mb-2 shadow-sm"
             >
               {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
               <span>{copied ? 'Copied to Clipboard!' : 'Copy Credentials'}</span>
@@ -626,7 +626,7 @@ export default function PlatformAdminDashboard() {
 
             <button
               onClick={() => setCreatedHotelInfo(null)}
-              className="w-full py-2 rounded-xl bg-dark-800 text-slate-400 hover:text-white text-xs"
+              className="w-full py-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs transition"
             >
               Done
             </button>
@@ -636,37 +636,37 @@ export default function PlatformAdminDashboard() {
 
       {/* Reset Password Modal */}
       {resetPasswordHotel && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fade-in">
-          <div className="relative w-full max-w-md bg-surface border border-white/[0.1] rounded-3xl shadow-2xl p-7">
-            <div className="flex items-center justify-between mb-4 pb-3 border-b border-surface-border">
-              <h3 className="font-serif font-bold text-white text-base">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
+          <div className="relative w-full max-w-md bg-white border border-stone-200 rounded-3xl shadow-2xl p-7">
+            <div className="flex items-center justify-between mb-4 pb-3 border-b border-stone-200">
+              <h3 className="font-serif font-bold text-stone-900 text-base">
                 Reset Password: {resetPasswordHotel.name}
               </h3>
               <button
                 onClick={() => setResetPasswordHotel(null)}
-                className="p-1 text-slate-400 hover:text-white"
+                className="p-1 text-stone-400 hover:text-stone-800"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {passwordResetResult ? (
-              <div className="p-4 bg-dark-900 border border-emerald-500/30 rounded-2xl text-center space-y-3">
-                <CheckCircle2 className="w-8 h-8 text-emerald-400 mx-auto" />
-                <p className="text-xs text-slate-300 font-medium">New Password Generated:</p>
-                <div className="p-3 bg-dark-950 rounded-xl font-mono text-gold-400 font-extrabold text-base">
+              <div className="p-4 bg-stone-50 border border-emerald-300 rounded-2xl text-center space-y-3">
+                <CheckCircle2 className="w-8 h-8 text-emerald-600 mx-auto" />
+                <p className="text-xs text-stone-700 font-medium">New Password Generated:</p>
+                <div className="p-3 bg-white border border-stone-200 rounded-xl font-mono text-amber-700 font-extrabold text-base shadow-sm">
                   {passwordResetResult}
                 </div>
                 <button
                   onClick={() => copyToClipboard(passwordResetResult)}
-                  className="px-5 py-2.5 rounded-xl gold-btn text-xs font-bold"
+                  className="px-5 py-2.5 rounded-xl gold-btn text-xs font-bold shadow-sm"
                 >
                   {copied ? 'Copied!' : 'Copy Password'}
                 </button>
               </div>
             ) : (
               <form onSubmit={handleResetPassword} className="space-y-4">
-                <p className="text-xs text-slate-400">
+                <p className="text-xs text-stone-600">
                   Enter a new custom password, or leave empty to auto-generate a strong password.
                 </p>
                 <input
@@ -674,12 +674,12 @@ export default function PlatformAdminDashboard() {
                   placeholder="Optional custom password..."
                   value={newPasswordInput}
                   onChange={(e) => setNewPasswordInput(e.target.value)}
-                  className="w-full px-4 py-2.5 bg-dark-900 border border-surface-border rounded-xl text-xs text-white focus:outline-none focus:border-gold-500"
+                  className="w-full px-4 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 placeholder-stone-400 focus:outline-none focus:border-amber-500 focus:bg-white transition"
                 />
                 <button
                   type="submit"
                   disabled={isResetting}
-                  className="w-full py-3 rounded-2xl gold-btn text-xs font-bold shadow-gold-glow"
+                  className="w-full py-3 rounded-2xl gold-btn text-xs font-bold shadow-sm"
                 >
                   {isResetting ? 'Resetting...' : 'Confirm Reset Password'}
                 </button>
@@ -691,21 +691,21 @@ export default function PlatformAdminDashboard() {
 
       {/* QR Code Modal */}
       {selectedQRHotel && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fade-in">
-          <div className="relative w-full max-w-sm bg-surface border border-gold-500/40 rounded-3xl shadow-gold-glow p-7 text-center">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-fade-in">
+          <div className="relative w-full max-w-sm bg-white border border-stone-200 rounded-3xl shadow-2xl p-7 text-center">
             <div className="flex items-center justify-between mb-3">
-              <h3 className="font-serif font-bold text-white text-base">
+              <h3 className="font-serif font-bold text-stone-900 text-base">
                 {selectedQRHotel.hotel.name} QR
               </h3>
               <button
                 onClick={() => setSelectedQRHotel(null)}
-                className="p-1 text-slate-400 hover:text-white"
+                className="p-1 text-stone-400 hover:text-stone-800"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <div className="my-4 p-3.5 bg-white rounded-2xl shadow-2xl inline-block">
+            <div className="my-4 p-3.5 bg-stone-50 border border-stone-200 rounded-2xl shadow-inner inline-block">
               <img
                 src={selectedQRHotel.qrDataUrl}
                 alt="QR Code"
@@ -713,7 +713,7 @@ export default function PlatformAdminDashboard() {
               />
             </div>
 
-            <p className="text-xs font-mono text-gold-400 break-all mb-4">
+            <p className="text-xs font-mono text-amber-700 break-all mb-4">
               {selectedQRHotel.targetUrl}
             </p>
 
@@ -721,7 +721,7 @@ export default function PlatformAdminDashboard() {
               <a
                 href={selectedQRHotel.qrDataUrl}
                 download={`${selectedQRHotel.hotel.slug}-menu-qr.png`}
-                className="w-full py-3 rounded-2xl gold-btn text-xs font-bold flex items-center justify-center space-x-2 block shadow-gold-glow"
+                className="w-full py-3 rounded-2xl gold-btn text-xs font-bold flex items-center justify-center space-x-2 block shadow-sm"
               >
                 <Download className="w-4 h-4" />
                 <span>Download QR PNG</span>
@@ -729,7 +729,7 @@ export default function PlatformAdminDashboard() {
 
               <button
                 onClick={() => setSelectedQRHotel(null)}
-                className="w-full py-2 rounded-xl bg-dark-800 text-slate-400 text-xs"
+                className="w-full py-2 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs transition"
               >
                 Close
               </button>

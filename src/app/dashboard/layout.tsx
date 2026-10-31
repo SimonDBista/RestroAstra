@@ -45,7 +45,10 @@ export default function DashboardLayout({
 
     async function checkAuth() {
       try {
-        const token = typeof window !== 'undefined' ? localStorage.getItem('hotel_token') : null;
+        const token =
+          typeof window !== 'undefined'
+            ? localStorage.getItem('restroastra_hotel_token') || localStorage.getItem('hotel_token')
+            : null;
         const headers: Record<string, string> = {};
         if (token) headers['Authorization'] = `Bearer ${token}`;
 
@@ -69,6 +72,7 @@ export default function DashboardLayout({
   const handleLogout = async () => {
     try {
       try {
+        localStorage.removeItem('restroastra_hotel_token');
         localStorage.removeItem('hotel_token');
       } catch {}
       await fetch('/api/auth/hotel/logout', { method: 'POST' });
@@ -84,9 +88,9 @@ export default function DashboardLayout({
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#121316] flex flex-col items-center justify-center p-6 text-center">
-        <div className="w-12 h-12 rounded-full border-2 border-bronze-400/20 border-t-bronze-400 animate-spin mb-4" />
-        <p className="text-sm font-serif tracking-wider uppercase text-stone-300">
+      <div className="min-h-screen bg-stone-50 flex flex-col items-center justify-center p-6 text-center">
+        <div className="w-12 h-12 rounded-full border-2 border-amber-500/20 border-t-amber-500 animate-spin mb-4" />
+        <p className="text-sm font-serif tracking-wider uppercase text-stone-700">
           Opening Staff Dashboard...
         </p>
       </div>
@@ -96,28 +100,28 @@ export default function DashboardLayout({
   // Account Inactivity Guard
   if (hotel && hotel.status !== 'active') {
     return (
-      <div className="min-h-screen bg-[#121316] flex items-center justify-center p-6">
-        <div className="max-w-md w-full bg-[#16171B] border border-amber-500/30 rounded-3xl p-8 text-center shadow-2xl">
-          <div className="w-16 h-16 rounded-2xl bg-amber-500/10 border border-amber-500/30 text-amber-400 flex items-center justify-center mx-auto mb-4">
+      <div className="min-h-screen bg-stone-50 flex items-center justify-center p-6">
+        <div className="max-w-md w-full bg-white border border-amber-300 rounded-3xl p-8 text-center shadow-xl">
+          <div className="w-16 h-16 rounded-2xl bg-amber-50 border border-amber-300 text-amber-600 flex items-center justify-center mx-auto mb-4">
             <ShieldAlert className="w-8 h-8" />
           </div>
-          <h2 className="text-2xl font-serif font-bold text-stone-100 mb-2">Account Inactive</h2>
-          <p className="text-[11px] uppercase tracking-widest text-amber-400 font-bold mb-3">
+          <h2 className="text-2xl font-serif font-bold text-stone-900 mb-2">Account Inactive</h2>
+          <p className="text-[11px] uppercase tracking-widest text-amber-700 font-bold mb-3">
             STATUS: {hotel.status.toUpperCase()}
           </p>
-          <p className="text-xs text-stone-300 mb-6 leading-relaxed">
+          <p className="text-xs text-stone-600 mb-6 leading-relaxed">
             Your restaurant subscription for <strong>{hotel.name}</strong> is currently pending or expired. Please reach out to the platform admin to activate access.
           </p>
           <div className="space-y-3">
             <a
-              href="mailto:admin@digitalizenepal.com"
-              className="w-full py-3 rounded-xl bronze-btn text-xs font-semibold uppercase tracking-wider block"
+              href="mailto:support@restroastra.com"
+              className="w-full py-3 rounded-xl bronze-btn text-xs font-semibold uppercase tracking-wider block text-white"
             >
               Contact Support
             </a>
             <button
               onClick={handleLogout}
-              className="w-full py-2.5 rounded-xl bg-stone-850 text-stone-400 hover:text-white text-xs font-medium"
+              className="w-full py-2.5 rounded-xl bg-stone-100 text-stone-600 hover:text-stone-900 text-xs font-medium"
             >
               Sign Out
             </button>
@@ -138,21 +142,21 @@ export default function DashboardLayout({
   ];
 
   return (
-    <div className="min-h-screen bg-[#121316] text-stone-100 flex selection:bg-bronze-400 selection:text-black">
+    <div className="min-h-screen bg-stone-50 text-stone-900 flex selection:bg-amber-500 selection:text-white">
       {/* Desktop Luxury Sidebar */}
-      <aside className="hidden lg:flex w-72 flex-col bg-[#121316] border-r border-white/[0.07] p-5 sticky top-0 h-screen justify-between z-20">
+      <aside className="hidden lg:flex w-72 flex-col bg-white border-r border-stone-200 p-5 sticky top-0 h-screen justify-between z-20 shadow-xs">
         <div>
           {/* Brand Header */}
-          <div className="p-3.5 bg-[#16171B] rounded-2xl border border-white/[0.06] mb-6">
+          <div className="p-3.5 bg-stone-50 rounded-2xl border border-stone-200/80 mb-6">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 rounded-xl bg-bronze-400/15 border border-bronze-400/40 flex items-center justify-center text-bronze-400 font-serif font-bold text-lg">
+              <div className="w-10 h-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-600 font-serif font-bold text-lg">
                 <Utensils className="w-5 h-5" />
               </div>
               <div className="leading-tight overflow-hidden">
-                <span className="font-serif font-semibold text-sm text-stone-100 tracking-wide block truncate">
+                <span className="font-serif font-semibold text-sm text-stone-900 tracking-wide block truncate">
                   {hotel?.name || 'Restaurant Dashboard'}
                 </span>
-                <span className="text-[9px] text-bronze-400 font-semibold tracking-[0.2em] uppercase mt-0.5 block">
+                <span className="text-[9px] text-amber-600 font-bold tracking-[0.2em] uppercase mt-0.5 block">
                   Staff Operations Hub
                 </span>
               </div>
@@ -171,7 +175,7 @@ export default function DashboardLayout({
                   className={`flex items-center space-x-3.5 px-4 py-3 rounded-2xl text-xs font-semibold tracking-wider transition-all ${
                     isActive
                       ? 'bronze-btn text-white shadow-sm'
-                      : 'text-stone-400 hover:text-stone-100 hover:bg-[#16171B]'
+                      : 'text-stone-600 hover:text-stone-950 hover:bg-stone-100'
                   }`}
                 >
                   <Icon className="w-4 h-4" />
@@ -183,21 +187,21 @@ export default function DashboardLayout({
         </div>
 
         {/* Footer Actions */}
-        <div className="pt-4 border-t border-white/[0.06] space-y-2.5">
+        <div className="pt-4 border-t border-stone-200 space-y-2.5">
           {/* Order Alert Bell Status & Test Button */}
           <button
             onClick={() => {
               unlockAudio();
               playOrderBell();
             }}
-            className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-gold-400/10 hover:bg-gold-400/20 border border-gold-400/30 text-gold-300 text-xs font-bold transition group shadow-gold-glow"
+            className="w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-amber-50 hover:bg-amber-100 border border-amber-300 text-amber-800 text-xs font-bold transition group shadow-xs"
             title="Click to test order bell sound and activate audio alert"
           >
             <span className="flex items-center space-x-2">
-              <Bell className="w-3.5 h-3.5 text-gold-400 group-hover:animate-bounce" />
+              <Bell className="w-3.5 h-3.5 text-amber-600 group-hover:animate-bounce" />
               <span>Order Bell Alert</span>
             </span>
-            <span className="px-2 py-0.5 rounded-md bg-gold-400/20 text-[10px] font-mono font-bold text-gold-300">
+            <span className="px-2 py-0.5 rounded-md bg-amber-200/60 text-[10px] font-mono font-bold text-amber-900">
               Test Bell
             </span>
           </button>
@@ -206,16 +210,16 @@ export default function DashboardLayout({
             <Link
               href={`/menu/${hotel.slug}`}
               target="_blank"
-              className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl bg-[#16171B] hover:bg-[#1B1D23] border border-white/[0.06] text-stone-300 text-xs font-semibold transition group"
+              className="w-full flex items-center justify-between px-4 py-2.5 rounded-xl bg-stone-50 hover:bg-stone-100 border border-stone-200 text-stone-700 text-xs font-semibold transition group shadow-xs"
             >
               <span>View Customer Menu</span>
-              <ExternalLink className="w-3.5 h-3.5 text-bronze-400 group-hover:translate-x-0.5 transition-transform" />
+              <ExternalLink className="w-3.5 h-3.5 text-amber-600 group-hover:translate-x-0.5 transition-transform" />
             </Link>
           )}
 
           <button
             onClick={handleLogout}
-            className="w-full flex items-center justify-center space-x-2 px-4 py-2.5 rounded-xl text-red-400 hover:bg-red-500/10 text-xs font-semibold transition"
+            className="w-full flex items-center justify-center space-x-2 px-4 py-2.5 rounded-xl text-red-600 hover:bg-red-50 text-xs font-semibold transition"
           >
             <LogOut className="w-4 h-4" />
             <span>Sign Out</span>
@@ -226,16 +230,16 @@ export default function DashboardLayout({
       {/* Main Area */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Mobile Top Header */}
-        <header className="lg:hidden sticky top-0 z-30 bg-[#121316]/95 backdrop-blur-xl border-b border-white/[0.07] px-4 py-3.5 flex items-center justify-between">
+        <header className="lg:hidden sticky top-0 z-30 bg-white/95 backdrop-blur-xl border-b border-stone-200 px-4 py-3.5 flex items-center justify-between shadow-xs">
           <div className="flex items-center space-x-2.5">
-            <div className="w-8 h-8 rounded-xl bg-bronze-400/20 border border-bronze-400/40 flex items-center justify-center text-bronze-400 font-bold font-serif text-sm">
+            <div className="w-8 h-8 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-600 font-bold font-serif text-sm">
               <Utensils className="w-4 h-4" />
             </div>
             <div className="max-w-[180px] truncate">
-              <span className="font-serif font-bold text-xs text-white block truncate">
+              <span className="font-serif font-bold text-xs text-stone-900 block truncate">
                 {hotel?.name}
               </span>
-              <span className="text-[9px] text-bronze-400 uppercase tracking-wider font-semibold">
+              <span className="text-[9px] text-amber-600 uppercase tracking-wider font-semibold">
                 Staff Dashboard
               </span>
             </div>
@@ -247,7 +251,7 @@ export default function DashboardLayout({
                 unlockAudio();
                 playOrderBell();
               }}
-              className="p-2 rounded-xl bg-gold-400/10 border border-gold-400/30 text-gold-400 text-xs flex items-center justify-center"
+              className="p-2 rounded-xl bg-amber-50 border border-amber-300 text-amber-700 text-xs flex items-center justify-center"
               title="Test Order Bell Sound"
             >
               <Bell className="w-4 h-4" />
@@ -256,14 +260,14 @@ export default function DashboardLayout({
               <Link
                 href={`/menu/${hotel.slug}`}
                 target="_blank"
-                className="p-2 rounded-xl bg-[#16171B] border border-white/[0.06] text-bronze-400 text-xs"
+                className="p-2 rounded-xl bg-stone-50 border border-stone-200 text-amber-600 text-xs"
               >
                 <ExternalLink className="w-4 h-4" />
               </Link>
             )}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="p-2 rounded-xl bg-[#16171B] border border-white/[0.06] text-stone-300"
+              className="p-2 rounded-xl bg-stone-50 border border-stone-200 text-stone-700"
             >
               {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
@@ -272,7 +276,7 @@ export default function DashboardLayout({
 
         {/* Mobile Navigation Drawer */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden bg-[#16171B] border-b border-white/[0.08] p-4 space-y-2 animate-fade-in">
+          <div className="lg:hidden bg-white border-b border-stone-200 p-4 space-y-2 animate-fade-in shadow-lg">
             {navItems.map((item) => {
               const Icon = item.icon;
               const isActive = pathname === item.href;
@@ -284,7 +288,7 @@ export default function DashboardLayout({
                   className={`flex items-center space-x-3 px-4 py-3 rounded-2xl text-xs font-semibold transition ${
                     isActive
                       ? 'bronze-btn text-white shadow-sm'
-                      : 'text-stone-300 bg-[#121316]'
+                      : 'text-stone-700 bg-stone-50 border border-stone-200'
                   }`}
                 >
                   <Icon className="w-4 h-4" />
@@ -294,7 +298,7 @@ export default function DashboardLayout({
             })}
             <button
               onClick={handleLogout}
-              className="w-full flex items-center justify-center space-x-2 px-4 py-3 rounded-2xl text-red-400 bg-red-500/10 text-xs font-semibold mt-2"
+              className="w-full flex items-center justify-center space-x-2 px-4 py-3 rounded-2xl text-red-600 bg-red-50 text-xs font-semibold mt-2"
             >
               <LogOut className="w-4 h-4" />
               <span>Sign Out</span>

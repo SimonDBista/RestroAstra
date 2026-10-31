@@ -460,17 +460,17 @@ export default function HotelMenuManagerPage() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-serif font-extrabold text-white">
+          <h1 className="text-3xl font-serif font-extrabold text-stone-900">
             Digital Menu Manager
           </h1>
-          <p className="text-xs text-slate-400 mt-1">
+          <p className="text-xs text-stone-600 mt-1">
             Manage your food & drink catalog, prices, and instant stock availability
           </p>
         </div>
 
         <button
           onClick={() => openAddModal()}
-          className="px-5 py-3 rounded-2xl gold-btn text-xs font-extrabold flex items-center justify-center space-x-2 shadow-gold-glow"
+          className="px-5 py-3 rounded-2xl gold-btn text-xs font-extrabold flex items-center justify-center space-x-2 shadow-sm text-stone-950"
         >
           <Plus className="w-4 h-4" />
           <span>Add New Menu Item</span>
@@ -492,14 +492,14 @@ export default function HotelMenuManagerPage() {
             }}
             className={`px-4 py-2 rounded-xl text-xs font-black whitespace-nowrap transition-all flex items-center space-x-1.5 shadow-sm ${
               sortBy === 'most_ordered'
-                ? 'bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 text-white shadow-orange-500/25 border border-amber-300 ring-2 ring-amber-400/40'
-                : 'dark-btn text-amber-400 hover:text-amber-300 hover:border-amber-500/40'
+                ? 'bg-gradient-to-r from-amber-500 via-orange-500 to-rose-500 text-white shadow-sm border border-amber-300 ring-2 ring-amber-400/40'
+                : 'dark-btn text-amber-700 hover:text-amber-800 border-amber-300/60'
             }`}
           >
-            <Flame className={`w-3.5 h-3.5 ${sortBy === 'most_ordered' ? 'animate-bounce text-yellow-200' : 'text-amber-400'}`} />
+            <Flame className={`w-3.5 h-3.5 ${sortBy === 'most_ordered' ? 'animate-bounce text-yellow-200' : 'text-amber-600'}`} />
             <span>Most Ordered</span>
             <span className={`text-[10px] px-1.5 py-0.2 rounded-full font-bold ${
-              sortBy === 'most_ordered' ? 'bg-black/40 text-yellow-200' : 'bg-amber-500/15 text-amber-300'
+              sortBy === 'most_ordered' ? 'bg-black/30 text-yellow-200' : 'bg-amber-100 text-amber-800'
             }`}>
               Top
             </span>
@@ -509,8 +509,8 @@ export default function HotelMenuManagerPage() {
             onClick={() => setActiveCategory('all')}
             className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all flex items-center space-x-1.5 ${
               activeCategory === 'all' && sortBy !== 'most_ordered'
-                ? 'gold-btn text-black shadow-gold-glow'
-                : 'dark-btn text-slate-400 hover:text-white'
+                ? 'gold-btn text-stone-950 shadow-sm'
+                : 'dark-btn text-stone-600 hover:text-stone-900 border-stone-200'
             }`}
           >
             <span>🍽️</span>
@@ -526,13 +526,13 @@ export default function HotelMenuManagerPage() {
                 onClick={() => setActiveCategory(cat)}
                 className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all flex items-center space-x-1.5 ${
                   activeCategory === cat && sortBy !== 'most_ordered'
-                    ? 'gold-btn text-black shadow-gold-glow'
-                    : 'dark-btn text-slate-400 hover:text-white'
+                    ? 'gold-btn text-stone-950 shadow-sm'
+                    : 'dark-btn text-stone-600 hover:text-stone-900 border-stone-200'
                 }`}
               >
                 <span>{info.icon}</span>
                 <span>{info.label}</span>
-                <span className={`text-[11px] ${count > 0 ? 'text-gold-400 font-extrabold' : 'opacity-40'}`}>
+                <span className={`text-[11px] ${count > 0 ? 'text-amber-700 font-extrabold' : 'opacity-40'}`}>
                   ({count})
                 </span>
               </button>
@@ -543,13 +543,13 @@ export default function HotelMenuManagerPage() {
         {/* Search & Sort Dropdown */}
         <div className="flex items-center space-x-2.5">
           <div className="relative min-w-[200px]">
-            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-slate-500" />
+            <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-stone-400" />
             <input
               type="text"
               placeholder="Search items..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-3 py-2 bg-dark-900 border border-white/[0.08] rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-gold-500 shadow-inner"
+              className="w-full pl-9 pr-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 placeholder-stone-400 focus:outline-none focus:border-amber-500 shadow-sm"
             />
           </div>
 
@@ -557,7 +557,7 @@ export default function HotelMenuManagerPage() {
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as any)}
-              className="px-3 py-2 bg-dark-900 border border-white/[0.1] rounded-xl text-xs text-slate-200 font-bold focus:outline-none focus:border-gold-500 cursor-pointer shadow-inner pr-7"
+              className="px-3 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-800 font-bold focus:outline-none focus:border-amber-500 cursor-pointer shadow-sm pr-7"
             >
               <option value="default">Default Order</option>
               <option value="most_ordered">🔥 Most Ordered (First to Last)</option>
@@ -571,26 +571,26 @@ export default function HotelMenuManagerPage() {
 
       {/* Most Ordered Informational Insights Banner */}
       {sortBy === 'most_ordered' && (
-        <div className="p-4 rounded-2xl bg-gradient-to-r from-amber-500/10 via-orange-500/10 to-gold-500/10 border border-amber-500/30 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs shadow-lg animate-fade-in">
+        <div className="p-4 rounded-2xl bg-gradient-to-r from-amber-500/10 via-amber-50 to-orange-50 border border-amber-300 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs shadow-sm animate-fade-in">
           <div className="flex items-center space-x-3">
-            <div className="w-9 h-9 rounded-xl bg-amber-500/20 text-amber-300 flex items-center justify-center border border-amber-500/30 shrink-0">
-              <Flame className="w-5 h-5 animate-pulse text-amber-400" />
+            <div className="w-9 h-9 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center border border-amber-200 shrink-0">
+              <Flame className="w-5 h-5 animate-pulse text-amber-600" />
             </div>
             <div>
               <div className="flex items-center space-x-2">
-                <span className="font-serif font-black text-white text-sm">Most Ordered & Bestseller Ranking</span>
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-500/20 text-amber-300 border border-amber-500/30">
+                <span className="font-serif font-black text-stone-900 text-sm">Most Ordered & Bestseller Ranking</span>
+                <span className="px-2 py-0.5 rounded-full text-[10px] font-extrabold bg-amber-100 text-amber-800 border border-amber-200">
                   Real Sales Data
                 </span>
               </div>
-              <p className="text-stone-400 text-[11px] mt-0.5">
+              <p className="text-stone-600 text-[11px] mt-0.5">
                 Displaying all dishes sorted strictly from #1 highest selling down to least ordered (first to last).
               </p>
             </div>
           </div>
           <button
             onClick={() => setSortBy('default')}
-            className="text-[11px] font-bold text-amber-400 hover:text-white px-3 py-1.5 rounded-xl bg-black/40 border border-white/10 hover:border-amber-400/40 whitespace-nowrap self-start sm:self-center transition"
+            className="text-[11px] font-bold text-amber-700 hover:text-amber-800 px-3 py-1.5 rounded-xl bg-white border border-stone-200 hover:border-amber-300 whitespace-nowrap self-start sm:self-center transition shadow-sm"
           >
             Reset to Default
           </button>
@@ -600,27 +600,27 @@ export default function HotelMenuManagerPage() {
       {/* Items Grid */}
       {loading ? (
         <div className="p-16 text-center">
-          <RefreshCw className="w-8 h-8 text-gold-500 animate-spin mx-auto mb-2 shadow-gold-glow" />
-          <p className="text-xs text-slate-400">Loading catalog...</p>
+          <RefreshCw className="w-8 h-8 text-amber-600 animate-spin mx-auto mb-2" />
+          <p className="text-xs text-stone-500">Loading catalog...</p>
         </div>
       ) : filteredItems.length === 0 ? (
-        <div className="p-16 text-center bg-dark-850/60 border border-white/[0.06] rounded-3xl backdrop-blur">
+        <div className="p-16 text-center bg-white border border-stone-200/80 rounded-3xl shadow-sm">
           <div className="text-4xl mb-3">
             {activeCategory !== 'all' ? getCategoryDetails(activeCategory).icon : '🍽️'}
           </div>
-          <h3 className="font-serif font-bold text-white text-base">
+          <h3 className="font-serif font-bold text-stone-900 text-base">
             {activeCategory !== 'all'
               ? `No items in ${getCategoryDetails(activeCategory).label} yet`
               : 'No items found'}
           </h3>
-          <p className="text-xs text-slate-400 mt-1 mb-5">
+          <p className="text-xs text-stone-600 mt-1 mb-5">
             {activeCategory !== 'all'
               ? `Add delicious ${getCategoryDetails(activeCategory).label.toLowerCase()} dishes to your live menu.`
               : 'Add delicious dishes to your live digital menu'}
           </p>
           <button
             onClick={() => openAddModal(activeCategory !== 'all' ? activeCategory : undefined)}
-            className="px-6 py-2.5 rounded-xl gold-btn text-xs font-bold shadow-gold-glow inline-flex items-center space-x-2"
+            className="px-6 py-2.5 rounded-xl gold-btn text-xs font-bold shadow-sm text-stone-950 inline-flex items-center space-x-2"
           >
             <Plus className="w-4 h-4" />
             <span>
@@ -635,10 +635,10 @@ export default function HotelMenuManagerPage() {
           {filteredItems.map((item) => (
             <div
               key={item.id}
-              className={`bg-dark-850/90 backdrop-blur-xl border rounded-3xl overflow-hidden shadow-premium-card flex flex-col justify-between transition-all duration-300 ${
+              className={`bg-white border rounded-3xl overflow-hidden shadow-sm hover:shadow-md flex flex-col justify-between transition-all duration-300 ${
                 item.isAvailable
-                  ? 'border-white/[0.08] hover:border-gold-500/40'
-                  : 'border-red-500/30 opacity-75'
+                  ? 'border-stone-200/80 hover:border-amber-400/50'
+                  : 'border-red-300 opacity-75'
               }`}
             >
               {/* Photo & Badges */}
@@ -655,7 +655,7 @@ export default function HotelMenuManagerPage() {
                     });
                   }
                 }}
-                className={`relative w-full h-40 bg-dark-900 overflow-hidden ${
+                className={`relative w-full h-40 bg-stone-100 overflow-hidden ${
                   item.imageUrl ? 'cursor-zoom-in group/itemphoto' : ''
                 }`}
                 title={item.imageUrl ? 'Click to zoom and inspect photo' : undefined}
@@ -668,18 +668,18 @@ export default function HotelMenuManagerPage() {
                       className="w-full h-full object-cover group-hover/itemphoto:scale-105 transition-transform duration-500"
                     />
                     <div className="absolute bottom-2 right-2 px-2 py-0.5 rounded-full bg-black/75 backdrop-blur border border-white/10 text-white text-[9px] font-bold opacity-0 group-hover/itemphoto:opacity-100 transition-opacity flex items-center space-x-1 pointer-events-none">
-                      <ZoomIn className="w-2.5 h-2.5 text-gold-400" />
+                      <ZoomIn className="w-2.5 h-2.5 text-amber-400" />
                       <span>Inspect</span>
                     </div>
                   </>
                 ) : (
-                  <div className="w-full h-full flex flex-col items-center justify-center text-slate-600">
+                  <div className="w-full h-full flex flex-col items-center justify-center text-stone-400">
                     <ImageIcon className="w-8 h-8 mb-1 opacity-40" />
                     <span className="text-[10px]">No image</span>
                   </div>
                 )}
 
-                <div className="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-lg bg-black/80 backdrop-blur border border-white/10 text-[10px] font-bold text-gold-400 flex items-center space-x-1">
+                <div className="absolute top-2.5 left-2.5 px-2.5 py-1 rounded-lg bg-white/90 backdrop-blur border border-stone-200 text-[10px] font-bold text-amber-800 flex items-center space-x-1 shadow-sm">
                   <span>{getCategoryDetails(item.category).icon}</span>
                   <span>{getCategoryDetails(item.category).label}</span>
                 </div>
@@ -691,14 +691,14 @@ export default function HotelMenuManagerPage() {
                   if (rank) {
                     return (
                       <div
-                        className={`absolute top-2.5 right-2.5 px-2 py-0.5 rounded-lg text-[10px] font-black flex items-center space-x-1 shadow-lg backdrop-blur z-10 ${
+                        className={`absolute top-2.5 right-2.5 px-2 py-0.5 rounded-lg text-[10px] font-black flex items-center space-x-1 shadow-sm backdrop-blur z-10 ${
                           rank === 1
-                            ? 'bg-gradient-to-r from-amber-400 to-yellow-500 text-black border border-yellow-200 shadow-yellow-500/30 ring-1 ring-yellow-300'
+                            ? 'bg-gradient-to-r from-amber-400 to-yellow-500 text-stone-950 border border-yellow-200'
                             : rank === 2
-                            ? 'bg-gradient-to-r from-slate-200 to-slate-400 text-slate-900 border border-white'
+                            ? 'bg-gradient-to-r from-stone-200 to-stone-400 text-stone-900 border border-white'
                             : rank === 3
-                            ? 'bg-gradient-to-r from-amber-700 to-orange-700 text-amber-100 border border-amber-500/50'
-                            : 'bg-black/85 text-amber-300 border border-amber-500/30'
+                            ? 'bg-gradient-to-r from-amber-700 to-orange-700 text-amber-50 border border-amber-600'
+                            : 'bg-stone-900/85 text-amber-300 border border-amber-400/30'
                         }`}
                       >
                         <span>
@@ -710,7 +710,7 @@ export default function HotelMenuManagerPage() {
                   }
                   if (sortBy === 'most_ordered') {
                     return (
-                      <div className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded-lg bg-black/75 text-slate-400 border border-white/10 text-[9px] font-bold z-10">
+                      <div className="absolute top-2.5 right-2.5 px-2 py-0.5 rounded-lg bg-stone-900/75 text-stone-300 border border-white/10 text-[9px] font-bold z-10">
                         0 sold yet
                       </div>
                     );
@@ -719,7 +719,7 @@ export default function HotelMenuManagerPage() {
                 })()}
 
                 {item.is3dEnabled && !itemRankMap.has(item.id) && (
-                  <div className="absolute top-2.5 right-2.5 px-2.5 py-0.5 rounded-full bg-brandPink-500 text-white text-[9px] font-bold flex items-center space-x-1 shadow-pink-glow">
+                  <div className="absolute top-2.5 right-2.5 px-2.5 py-0.5 rounded-full bg-brandPink-500 text-white text-[9px] font-bold flex items-center space-x-1 shadow-sm">
                     <Box className="w-3 h-3" />
                     <span>3D</span>
                   </div>
@@ -729,23 +729,23 @@ export default function HotelMenuManagerPage() {
               {/* Body */}
               <div className="p-5 flex-1 flex flex-col justify-between">
                 <div>
-                  <h3 className="font-serif font-bold text-white text-base leading-snug">
+                  <h3 className="font-serif font-bold text-stone-900 text-base leading-snug">
                     {item.name}
                   </h3>
                   {item.description && (
-                    <p className="text-xs text-slate-400 mt-1.5 line-clamp-2 leading-relaxed">
+                    <p className="text-xs text-stone-600 mt-1.5 line-clamp-2 leading-relaxed">
                       {item.description}
                     </p>
                   )}
                 </div>
 
-                <div className="mt-5 pt-3.5 border-t border-white/[0.08] flex items-center justify-between">
+                <div className="mt-5 pt-3.5 border-t border-stone-100 flex items-center justify-between">
                   <div>
-                    <span className="text-base font-serif font-black text-gold-400 block">
+                    <span className="text-base font-serif font-black text-amber-700 block">
                       {formatNPR(item.price)}
                     </span>
                     {(item.totalOrdered || 0) > 0 && (
-                      <span className="text-[10px] text-emerald-400 font-semibold block mt-0.5">
+                      <span className="text-[10px] text-emerald-700 font-semibold block mt-0.5">
                         {item.totalOrdered} ordered • {formatNPR(item.totalRevenue || 0)}
                       </span>
                     )}
@@ -756,13 +756,13 @@ export default function HotelMenuManagerPage() {
                     onClick={() => toggleAvailability(item)}
                     className={`px-3 py-1 rounded-xl text-[10px] font-bold transition flex items-center space-x-1.5 ${
                       item.isAvailable
-                        ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
-                        : 'bg-red-500/20 text-red-300 border border-red-500/30'
+                        ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                        : 'bg-red-50 text-red-700 border border-red-200'
                     }`}
                   >
                     <span
                       className={`w-1.5 h-1.5 rounded-full ${
-                        item.isAvailable ? 'bg-emerald-400 animate-pulse' : 'bg-red-400'
+                        item.isAvailable ? 'bg-emerald-500 animate-pulse' : 'bg-red-500'
                       }`}
                     />
                     <span>{item.isAvailable ? 'In Stock' : 'Out of Stock'}</span>
@@ -771,18 +771,18 @@ export default function HotelMenuManagerPage() {
               </div>
 
               {/* Action Buttons Footer */}
-              <div className="px-5 py-3 bg-dark-900/90 border-t border-white/[0.06] flex items-center justify-between">
+              <div className="px-5 py-3 bg-stone-50 border-t border-stone-100 flex items-center justify-between">
                 <button
                   onClick={() => openEditModal(item)}
-                  className="text-xs text-slate-300 hover:text-gold-400 font-semibold flex items-center space-x-1.5 transition"
+                  className="text-xs text-stone-700 hover:text-amber-700 font-semibold flex items-center space-x-1.5 transition"
                 >
-                  <Edit2 className="w-3.5 h-3.5" />
+                  <Edit2 className="w-3.5 h-3.5 text-amber-600" />
                   <span>Edit</span>
                 </button>
 
                 <button
                   onClick={() => handleDelete(item.id)}
-                  className="text-xs text-red-400 hover:text-red-300 font-semibold flex items-center space-x-1.5 transition"
+                  className="text-xs text-red-600 hover:text-red-700 font-semibold flex items-center space-x-1.5 transition"
                 >
                   <Trash2 className="w-3.5 h-3.5" />
                   <span>Delete</span>
@@ -795,15 +795,15 @@ export default function HotelMenuManagerPage() {
 
       {/* Add / Edit Item Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md animate-fade-in">
-          <div className="relative w-full max-w-lg bg-surface border border-white/[0.1] rounded-3xl shadow-2xl overflow-hidden">
-            <div className="px-6 py-4 bg-dark-900 border-b border-surface-border flex items-center justify-between">
-              <h2 className="font-serif font-extrabold text-white text-base">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-stone-900/60 backdrop-blur-sm animate-fade-in">
+          <div className="relative w-full max-w-lg bg-white border border-stone-200 rounded-3xl shadow-2xl overflow-hidden text-stone-800">
+            <div className="px-6 py-4 bg-stone-50 border-b border-stone-200 flex items-center justify-between">
+              <h2 className="font-serif font-extrabold text-stone-900 text-base">
                 {editingItem ? 'Edit Menu Item' : 'Add New Menu Item'}
               </h2>
               <button
                 onClick={() => setIsModalOpen(false)}
-                className="p-1 text-slate-400 hover:text-white"
+                className="p-1 text-stone-400 hover:text-stone-700 transition"
               >
                 <X className="w-5 h-5" />
               </button>
@@ -811,8 +811,8 @@ export default function HotelMenuManagerPage() {
 
             <form onSubmit={handleSave} className="p-6 space-y-4 max-h-[82vh] overflow-y-auto">
               <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1">
-                  Item Name <span className="text-brandPink-500">*</span>
+                <label className="block text-xs font-bold text-stone-700 mb-1">
+                  Item Name <span className="text-amber-600">*</span>
                 </label>
                 <input
                   type="text"
@@ -820,15 +820,15 @@ export default function HotelMenuManagerPage() {
                   placeholder="e.g. Special Mutton Sekuwa (मटन सेकुवा)"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-4 py-2.5 bg-dark-900 border border-surface-border rounded-xl text-xs text-white focus:outline-none focus:border-gold-500 shadow-inner"
+                  className="w-full px-4 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 placeholder-stone-400 focus:outline-none focus:border-amber-500 shadow-inner"
                 />
               </div>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <div className="flex items-center justify-between mb-1">
-                    <label className="block text-xs font-bold text-slate-300">
-                      Category <span className="text-brandPink-500">*</span>
+                    <label className="block text-xs font-bold text-stone-700">
+                      Category <span className="text-amber-600">*</span>
                     </label>
                     <button
                       type="button"
@@ -838,7 +838,7 @@ export default function HotelMenuManagerPage() {
                           setFormData((prev) => ({ ...prev, category: 'SNAKS,CUISINE' }));
                         }
                       }}
-                      className="text-[10px] text-gold-400 hover:text-gold-300 font-medium transition"
+                      className="text-[10px] text-amber-600 hover:text-amber-700 font-bold transition"
                     >
                       {isCustomCategory ? 'Choose from list' : '+ Type custom category'}
                     </button>
@@ -852,9 +852,9 @@ export default function HotelMenuManagerPage() {
                         placeholder="e.g. BED ROOM, DRINK, BAKERY..."
                         value={formData.category}
                         onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                        className="w-full px-4 py-2.5 bg-dark-900 border border-surface-border rounded-xl text-xs text-white focus:outline-none focus:border-gold-500 shadow-inner"
+                        className="w-full px-4 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 placeholder-stone-400 focus:outline-none focus:border-amber-500 shadow-inner"
                       />
-                      <p className="text-[10px] text-slate-500">
+                      <p className="text-[10px] text-stone-500">
                         Type any custom category name to create a new category section.
                       </p>
                     </div>
@@ -870,39 +870,39 @@ export default function HotelMenuManagerPage() {
                           setFormData({ ...formData, category: e.target.value });
                         }
                       }}
-                      className="w-full px-4 py-2.5 bg-dark-900 border border-surface-border rounded-xl text-xs text-white focus:outline-none focus:border-gold-500 shadow-inner cursor-pointer"
+                      className="w-full px-4 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 focus:outline-none focus:border-amber-500 shadow-inner cursor-pointer"
                     >
                       <option value="" disabled>
                         -- Select Category --
                       </option>
-                      <optgroup label="Hotel Rooms & Drinks" className="bg-dark-900 text-gold-400 font-bold">
-                        <option value="BED ROOM" className="bg-dark-900 text-white">
+                      <optgroup label="Hotel Rooms & Drinks" className="bg-stone-50 text-amber-700 font-bold">
+                        <option value="BED ROOM" className="bg-white text-stone-900">
                           🛏️ Bed Room (Room Service)
                         </option>
-                        <option value="DRINK" className="bg-dark-900 text-white">
+                        <option value="DRINK" className="bg-white text-stone-900">
                           🍹 Drink / Beverages
                         </option>
-                        <option value="SNAKS,CUISINE" className="bg-dark-900 text-white">
+                        <option value="SNAKS,CUISINE" className="bg-white text-stone-900">
                           🍲 Snacks & Cuisine
                         </option>
                       </optgroup>
-                      <optgroup label="Food & Dining Categories" className="bg-dark-900 text-gold-400 font-bold">
-                        <option value="SNACKS" className="bg-dark-900 text-white">
+                      <optgroup label="Food & Dining Categories" className="bg-stone-50 text-amber-700 font-bold">
+                        <option value="SNACKS" className="bg-white text-stone-900">
                           🥟 Snacks & Starters
                         </option>
-                        <option value="CUISINE" className="bg-dark-900 text-white">
+                        <option value="CUISINE" className="bg-white text-stone-900">
                           🍛 Cuisine & Main Course
                         </option>
-                        <option value="BREAKFAST" className="bg-dark-900 text-white">
+                        <option value="BREAKFAST" className="bg-white text-stone-900">
                           🍳 Breakfast
                         </option>
-                        <option value="FAST FOOD" className="bg-dark-900 text-white">
+                        <option value="FAST FOOD" className="bg-white text-stone-900">
                           🍔 Fast Food / Momo / Sekuwa
                         </option>
-                        <option value="DESSERT" className="bg-dark-900 text-white">
+                        <option value="DESSERT" className="bg-white text-stone-900">
                           🍰 Desserts & Sweets
                         </option>
-                        <option value="SPECIALS" className="bg-dark-900 text-white">
+                        <option value="SPECIALS" className="bg-white text-stone-900">
                           ✨ Chef Specials
                         </option>
                       </optgroup>
@@ -922,11 +922,11 @@ export default function HotelMenuManagerPage() {
                             ].includes(c.toUpperCase())
                         )
                         .map((cat: string) => (
-                          <option key={cat} value={cat} className="bg-dark-900 text-white">
+                          <option key={cat} value={cat} className="bg-white text-stone-900">
                             🏷️ {cat}
                           </option>
                         ))}
-                      <option value="__OTHER__" className="bg-dark-900 text-gold-400 font-semibold">
+                      <option value="__OTHER__" className="bg-stone-50 text-amber-600 font-semibold">
                         ➕ Other / Type New Category...
                       </option>
                     </select>
@@ -934,8 +934,8 @@ export default function HotelMenuManagerPage() {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-slate-300 mb-1">
-                    Price (NPR) <span className="text-brandPink-500">*</span>
+                  <label className="block text-xs font-bold text-stone-700 mb-1">
+                    Price (NPR) <span className="text-amber-600">*</span>
                   </label>
                   <input
                     type="number"
@@ -945,7 +945,7 @@ export default function HotelMenuManagerPage() {
                     placeholder="e.g. 550"
                     value={formData.price}
                     onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-                    className="w-full px-4 py-2.5 bg-dark-900 border border-surface-border rounded-xl text-xs text-white focus:outline-none focus:border-gold-500 shadow-inner"
+                    className="w-full px-4 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 placeholder-stone-400 focus:outline-none focus:border-amber-500 shadow-inner"
                   />
                 </div>
               </div>
@@ -953,13 +953,13 @@ export default function HotelMenuManagerPage() {
               {/* Picture Upload from Device */}
               <div>
                 <div className="flex items-center justify-between mb-1.5">
-                  <label className="block text-xs font-bold text-slate-300">
+                  <label className="block text-xs font-bold text-stone-700">
                     Food Picture
                   </label>
                   <button
                     type="button"
                     onClick={() => setShowUrlInput(!showUrlInput)}
-                    className="text-[11px] text-gold-400 hover:text-gold-300 transition flex items-center space-x-1"
+                    className="text-[11px] text-amber-600 hover:text-amber-700 font-bold transition flex items-center space-x-1"
                   >
                     <Link2 className="w-3 h-3" />
                     <span>{showUrlInput ? 'Upload from device instead' : 'Enter image URL instead'}</span>
@@ -973,9 +973,9 @@ export default function HotelMenuManagerPage() {
                       placeholder="https://images.unsplash.com/..."
                       value={formData.imageUrl}
                       onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
-                      className="w-full px-4 py-2.5 bg-dark-900 border border-surface-border rounded-xl text-xs text-white focus:outline-none focus:border-gold-500 shadow-inner"
+                      className="w-full px-4 py-2.5 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 placeholder-stone-400 focus:outline-none focus:border-amber-500 shadow-inner"
                     />
-                    <p className="text-[10px] text-slate-500 mt-1">
+                    <p className="text-[10px] text-stone-500 mt-1">
                       Paste a direct web link to an image (Unsplash, Cloudinary, etc.)
                     </p>
                   </div>
@@ -991,22 +991,22 @@ export default function HotelMenuManagerPage() {
 
                     {formData.imageUrl ? (
                       /* Preview & change/remove controls */
-                      <div className="border border-white/10 rounded-2xl overflow-hidden bg-dark-900 flex items-center p-3 space-x-3">
-                        <div className="relative w-20 h-20 rounded-xl overflow-hidden bg-dark-950 border border-white/10 shrink-0">
+                      <div className="border border-stone-200 rounded-2xl overflow-hidden bg-stone-50 flex items-center p-3 space-x-3">
+                        <div className="relative w-20 h-20 rounded-xl overflow-hidden bg-stone-100 border border-stone-200 shrink-0">
                           <img
                             src={formData.imageUrl}
                             alt="Food preview"
                             className="w-full h-full object-cover"
                           />
                           {isUploadingImage && (
-                            <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
-                              <RefreshCw className="w-5 h-5 text-gold-400 animate-spin" />
+                            <div className="absolute inset-0 bg-stone-900/40 flex items-center justify-center">
+                              <RefreshCw className="w-5 h-5 text-amber-500 animate-spin" />
                             </div>
                           )}
                         </div>
 
                         <div className="flex-1 min-w-0">
-                          <div className="flex items-center space-x-1.5 text-xs font-semibold text-emerald-400 mb-0.5">
+                          <div className="flex items-center space-x-1.5 text-xs font-semibold text-emerald-600 mb-0.5">
                             <CheckCircle2 className="w-3.5 h-3.5 shrink-0" />
                             <span className="truncate">
                               {isUploadingImage
@@ -1016,7 +1016,7 @@ export default function HotelMenuManagerPage() {
                                 : 'Picture ready'}
                             </span>
                           </div>
-                          <p className="text-[11px] text-slate-400 truncate mb-2">
+                          <p className="text-[11px] text-stone-500 truncate mb-2">
                             {uploadStats?.size
                               ? `${(uploadStats.size / 1024).toFixed(0)} KB • WebP Optimized`
                               : formData.imageUrl.startsWith('/uploads/')
@@ -1029,15 +1029,15 @@ export default function HotelMenuManagerPage() {
                               type="button"
                               disabled={isUploadingImage}
                               onClick={() => fileInputRef.current?.click()}
-                              className="px-2.5 py-1 bg-dark-800 hover:bg-dark-750 text-slate-200 border border-white/10 rounded-lg text-[11px] font-medium transition flex items-center space-x-1"
+                              className="px-2.5 py-1 bg-white hover:bg-stone-100 text-stone-700 border border-stone-200 rounded-lg text-[11px] font-medium transition flex items-center space-x-1 shadow-sm"
                             >
-                              <Camera className="w-3 h-3 text-gold-400" />
+                              <Camera className="w-3 h-3 text-amber-600" />
                               <span>Change Photo</span>
                             </button>
                             <button
                               type="button"
                               onClick={() => setFormData({ ...formData, imageUrl: '' })}
-                              className="px-2.5 py-1 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/20 rounded-lg text-[11px] font-medium transition flex items-center space-x-1"
+                              className="px-2.5 py-1 bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200 rounded-lg text-[11px] font-medium transition flex items-center space-x-1"
                             >
                               <Trash2 className="w-3 h-3" />
                               <span>Remove</span>
@@ -1057,26 +1057,26 @@ export default function HotelMenuManagerPage() {
                         onDrop={handleDropImage}
                         className={`border-2 border-dashed rounded-2xl p-5 flex flex-col items-center justify-center text-center cursor-pointer transition-all ${
                           isDragging
-                            ? 'border-gold-500 bg-gold-500/10 scale-[1.01]'
-                            : 'border-white/15 bg-dark-900/60 hover:bg-dark-900 hover:border-gold-500/50'
+                            ? 'border-amber-500 bg-amber-50 scale-[1.01]'
+                            : 'border-stone-200 bg-stone-50/70 hover:bg-stone-50 hover:border-amber-400'
                         }`}
                       >
                         {isUploadingImage ? (
                           <div className="py-2 flex flex-col items-center space-y-2">
-                            <RefreshCw className="w-7 h-7 text-gold-400 animate-spin" />
-                            <p className="text-xs font-semibold text-slate-200">
+                            <RefreshCw className="w-7 h-7 text-amber-500 animate-spin" />
+                            <p className="text-xs font-semibold text-stone-700">
                               Uploading picture from device...
                             </p>
                           </div>
                         ) : (
                           <>
-                            <div className="w-11 h-11 rounded-2xl bg-gold-500/10 border border-gold-500/20 flex items-center justify-center text-gold-400 mb-2">
+                            <div className="w-11 h-11 rounded-2xl bg-amber-100 border border-amber-200 flex items-center justify-center text-amber-700 mb-2">
                               <Camera className="w-5 h-5" />
                             </div>
-                            <p className="text-xs font-bold text-white mb-0.5">
+                            <p className="text-xs font-bold text-stone-900 mb-0.5">
                               Click to take photo or choose from device
                             </p>
-                            <p className="text-[11px] text-slate-400">
+                            <p className="text-[11px] text-stone-500">
                               Upload directly from your phone camera or gallery (JPG, PNG, WEBP)
                             </p>
                           </>
@@ -1085,7 +1085,7 @@ export default function HotelMenuManagerPage() {
                     )}
 
                     {uploadError && (
-                      <div className="mt-2 text-xs text-red-400 flex items-center space-x-1.5">
+                      <div className="mt-2 text-xs text-rose-600 flex items-center space-x-1.5">
                         <AlertCircle className="w-3.5 h-3.5 shrink-0" />
                         <span>{uploadError}</span>
                       </div>
@@ -1095,7 +1095,7 @@ export default function HotelMenuManagerPage() {
               </div>
 
               <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1">
+                <label className="block text-xs font-bold text-stone-700 mb-1">
                   Description
                 </label>
                 <textarea
@@ -1103,38 +1103,38 @@ export default function HotelMenuManagerPage() {
                   placeholder="Short description of ingredients, style, or marinade..."
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  className="w-full px-4 py-2 bg-dark-900 border border-surface-border rounded-xl text-xs text-white focus:outline-none focus:border-gold-500 shadow-inner"
+                  className="w-full px-4 py-2 bg-stone-50 border border-stone-200 rounded-xl text-xs text-stone-900 placeholder-stone-400 focus:outline-none focus:border-amber-500 shadow-inner"
                 />
               </div>
 
               {/* 3D Model Option */}
-              <div className="p-4 bg-dark-900 border border-surface-border rounded-2xl space-y-3">
+              <div className="p-4 bg-stone-50 border border-stone-200 rounded-2xl space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center space-x-2">
-                    <Box className="w-4 h-4 text-brandPink-400" />
+                    <Box className="w-4 h-4 text-amber-600" />
                     <div>
-                      <span className="text-xs font-bold text-white block">3D Food Preview</span>
-                      <span className="text-[10px] text-slate-400">Interactive 360° touch and zoom view</span>
+                      <span className="text-xs font-bold text-stone-900 block">3D Food Preview</span>
+                      <span className="text-[10px] text-stone-500">Interactive 360° touch and zoom view</span>
                     </div>
                   </div>
                   <input
                     type="checkbox"
                     checked={formData.is3dEnabled}
                     onChange={(e) => setFormData({ ...formData, is3dEnabled: e.target.checked })}
-                    className="w-4 h-4 accent-brandPink-500 rounded cursor-pointer"
+                    className="w-4 h-4 accent-amber-500 rounded cursor-pointer"
                   />
                 </div>
 
                 {formData.is3dEnabled && (
-                  <div className="pt-2 border-t border-white/5 space-y-2">
+                  <div className="pt-2 border-t border-stone-200 space-y-2">
                     <div className="flex items-center justify-between">
-                      <label className="block text-[11px] font-medium text-slate-400">
+                      <label className="block text-[11px] font-medium text-stone-600">
                         3D Model File (.glb)
                       </label>
                       <button
                         type="button"
                         onClick={() => setShowModelUrlInput(!showModelUrlInput)}
-                        className="text-[10px] text-brandPink-400 hover:text-brandPink-300"
+                        className="text-[10px] text-amber-600 hover:text-amber-700 font-bold"
                       >
                         {showModelUrlInput ? 'Upload .glb from device' : 'Enter URL instead'}
                       </button>
@@ -1146,7 +1146,7 @@ export default function HotelMenuManagerPage() {
                         placeholder="https://.../model.glb"
                         value={formData.modelUrl}
                         onChange={(e) => setFormData({ ...formData, modelUrl: e.target.value })}
-                        className="w-full px-3 py-1.5 bg-dark-850 border border-surface-border rounded-lg text-xs text-white"
+                        className="w-full px-3 py-1.5 bg-white border border-stone-200 rounded-lg text-xs text-stone-900 placeholder-stone-400 focus:outline-none focus:border-amber-500"
                       />
                     ) : (
                       <div>
@@ -1162,12 +1162,12 @@ export default function HotelMenuManagerPage() {
                             type="button"
                             disabled={isUploadingModel}
                             onClick={() => modelFileInputRef.current?.click()}
-                            className="px-3 py-1.5 rounded-lg bg-dark-850 hover:bg-dark-800 border border-white/10 text-xs text-slate-200 font-medium flex items-center space-x-1.5 transition"
+                            className="px-3 py-1.5 rounded-lg bg-white hover:bg-stone-100 border border-stone-200 text-xs text-stone-700 font-medium flex items-center space-x-1.5 transition shadow-sm"
                           >
                             {isUploadingModel ? (
-                              <RefreshCw className="w-3.5 h-3.5 animate-spin text-brandPink-400" />
+                              <RefreshCw className="w-3.5 h-3.5 animate-spin text-amber-600" />
                             ) : (
-                              <UploadCloud className="w-3.5 h-3.5 text-brandPink-400" />
+                              <UploadCloud className="w-3.5 h-3.5 text-amber-600" />
                             )}
                             <span>
                               {isUploadingModel
@@ -1178,16 +1178,16 @@ export default function HotelMenuManagerPage() {
                             </span>
                           </button>
                           {formData.modelUrl && (
-                            <div className="flex items-center space-x-1 text-[11px] text-emerald-400 truncate max-w-[180px]">
+                            <div className="flex items-center space-x-1 text-[11px] text-emerald-600 truncate max-w-[180px]">
                               <CheckCircle2 className="w-3 h-3 shrink-0" />
                               <span className="truncate">{formData.modelUrl.split('/').pop()}</span>
                             </div>
                           )}
                         </div>
                         {modelUploadError && (
-                          <p className="text-[10px] text-red-400 mt-1">{modelUploadError}</p>
+                          <p className="text-[10px] text-rose-600 mt-1">{modelUploadError}</p>
                         )}
-                        <p className="text-[10px] text-slate-500 mt-1">
+                        <p className="text-[10px] text-stone-500 mt-1">
                           Default demo 3D model used if left blank.
                         </p>
                       </div>
@@ -1196,11 +1196,11 @@ export default function HotelMenuManagerPage() {
                 )}
               </div>
 
-              <div className="flex items-center justify-end space-x-3 pt-4 border-t border-surface-border">
+              <div className="flex items-center justify-end space-x-3 pt-4 border-t border-stone-200">
                 <button
                   type="button"
                   onClick={() => setIsModalOpen(false)}
-                  className="px-4 py-2.5 rounded-xl bg-dark-800 text-slate-300 text-xs font-semibold"
+                  className="px-4 py-2.5 rounded-xl dark-btn text-stone-700 border border-stone-200 text-xs font-semibold"
                 >
                   Cancel
                 </button>
