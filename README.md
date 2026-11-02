@@ -86,6 +86,12 @@ Open **`http://localhost:3005`** in your browser.
 - **Staff Operations Hub:** `http://localhost:3005/dashboard/login` (Email: `sitan@sekuwacornor.com` | Password: `password123`)
 - **Platform Super Admin:** `http://localhost:3005/admin/login` (Email: `admin@restroastra.com` | Password: `adminpassword123`)
 
+### 🌐 Live Production Links (restroastra.com)
+- **Live Production Domain:** [https://restroastra.com](https://restroastra.com)
+- **Customer QR Menu:** [https://restroastra.com/menu/sitan-dabaka-sekuwa?table=1](https://restroastra.com/menu/sitan-dabaka-sekuwa?table=1)
+- **Restaurant POS / Kitchen Hub:** [https://restroastra.com/dashboard/login](https://restroastra.com/dashboard/login)
+- **Super Admin Portal:** [https://restroastra.com/admin/login](https://restroastra.com/admin/login)
+
 ---
 
 ## 🛡️ Production Deployment & Isolation (VPS)
@@ -112,7 +118,7 @@ RestroAstra is engineered to run alongside other websites on a shared VPS withou
    ```
 5. Issue SSL certificate via Certbot:
    ```bash
-   certbot --nginx -d NEW_APP_DOMAIN -d www.NEW_APP_DOMAIN
+   certbot --nginx -d restroastra.com -d www.restroastra.com
    ```
 6. Build and launch with PM2:
    ```bash

@@ -16,7 +16,7 @@ services:
       - ADMIN_JWT_SECRET=${ADMIN_JWT_SECRET:-restroastra_production_admin_secret_2026}
       - AUTH_COOKIE_HOTEL=${AUTH_COOKIE_HOTEL:-restroastra_hotel_token}
       - AUTH_COOKIE_ADMIN=${AUTH_COOKIE_ADMIN:-restroastra_admin_token}
-      - NEXT_PUBLIC_APP_URL=${NEXT_PUBLIC_APP_URL:-https://NEW_APP_DOMAIN}
+      - NEXT_PUBLIC_APP_URL=${NEXT_PUBLIC_APP_URL:-https://restroastra.com}
     depends_on:
       db:
         condition: service_healthy
