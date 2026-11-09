@@ -33,6 +33,8 @@
 - **Daily Financial Register & Reports (`/dashboard/reports`):** Opening/closing cash register balance, gross sales, payment breakdown (Cash vs. QR), and top-selling items.
 - **Table QR Generator (`/dashboard/qr`):** High-resolution QR generator for individual tables and general menus with printable luxury table tent cards.
 - **Ingredient & Inventory Management (`/dashboard/inventory`):** Ingredient tracking, low-stock threshold notifications, and usage deductions.
+- **Staff Attendance & Workforce Hub (`/dashboard/attendance`):** Live daily attendance tracking, 1-click "Mark All Present", quick check-in/out clocks, shift rosters, department filters, and monthly payroll timesheets.
+- **Role-Based Access Control (RBAC) & Quick POS PIN:** Instant 2-second staff role switching on shared counter tablets using 4-digit PINs (`Owner`, `Chef`, `Waiter`, `Cashier`) with automatic navigation filtering and route protection.
 
 ### 3. Platform Super Admin (`/admin`)
 - **Multi-Tenant Administration:** Provision new restaurants, generate unique slugs, and assign credentials.

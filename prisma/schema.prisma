@@ -40,6 +40,8 @@ model Hotel {
   dailyRegisters  DailyRegister[]
   expenses        Expense[]
   ingredients     Ingredient[]
+  staffMembers    StaffMember[]
+  staffAttendances StaffAttendance[]
 }
 
 model MenuItem {
@@ -208,4 +210,58 @@ model Ingredient {
   @@index([hotelId])
   @@index([hotelId, category])
 }
+
+model StaffMember {
+  id               String            @id @default(cuid())
+  hotelId          String
+  hotel            Hotel             @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  name             String
+  role             String            // e.g. "Head Chef", "Line Cook", "Waiter / Captain", "Bartender", "Cashier", "Floor Manager", "Dishwasher", "Cleaner"
+  department       String            @default("Service") // "Kitchen", "Service", "Bar", "Management", "Operations"
+  systemRole       String            @default("WAITER") // "OWNER" | "MANAGER" | "CHEF" | "WAITER" | "CASHIER"
+  pinCode          String?           // 4-6 digit quick POS switch PIN (e.g. 1234)
+  phone            String?
+  email            String?
+  shift            String            @default("Full Day") // "Morning", "Evening", "Night", "Full Day", "Flexible"
+  salary           Float?
+  salaryType       String            @default("monthly") // "monthly" | "daily" | "hourly"
+  status           String            @default("active") // "active" | "inactive" | "on_leave"
+  joinDate         DateTime?         @default(now())
+  avatar           String?
+  emergencyContact String?
+  notes            String?
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+
+  attendances      StaffAttendance[]
+
+  @@index([hotelId])
+  @@index([hotelId, status])
+  @@index([hotelId, department])
+}
+
+model StaffAttendance {
+  id           String       @id @default(cuid())
+  hotelId      String
+  hotel        Hotel        @relation(fields: [hotelId], references: [id], onDelete: Cascade)
+  staffId      String
+  staff        StaffMember  @relation(fields: [staffId], references: [id], onDelete: Cascade)
+  date         String       // YYYY-MM-DD
+  status       String       @default("present") // "present" | "late" | "half_day" | "absent" | "on_leave"
+  checkInTime  String?      // e.g. "09:15 AM"
+  checkOutTime String?      // e.g. "06:00 PM"
+  shift        String?      // "Morning", "Evening", "Night", "Full Day"
+  hoursWorked  Float?       // e.g. 8.5
+  notes        String?      // e.g. "Approved medical leave", "Covered for Ramesh"
+  markedBy     String?      @default("Manager")
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+
+  @@unique([hotelId, staffId, date])
+  @@index([hotelId])
+  @@index([hotelId, date])
+  @@index([staffId])
+  @@index([status])
+}
+
 

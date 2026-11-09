@@ -129,3 +129,32 @@ export function getAppBaseUrl(request?: { headers: { get: (name: string) => stri
   const defaultPort = process.env.PORT || '3005';
   return `http://localhost:${defaultPort}`;
 }
+
+export function getNepalDateString(date: Date = new Date()): string {
+  return new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kathmandu' }).format(date);
+}
+
+export function calculateHoursWorked(checkIn?: string | null, checkOut?: string | null): number | null {
+  if (!checkIn || !checkOut) return null;
+  try {
+    const parseTime = (t: string) => {
+      const match = t.match(/(\d+):(\d+)(?:\s*(AM|PM))?/i);
+      if (!match) return null;
+      let hours = parseInt(match[1], 10);
+      const minutes = parseInt(match[2], 10);
+      const meridiem = match[3]?.toUpperCase();
+      if (meridiem === 'PM' && hours < 12) hours += 12;
+      if (meridiem === 'AM' && hours === 12) hours = 0;
+      return hours * 60 + minutes;
+    };
+    const inMinutes = parseTime(checkIn);
+    const outMinutes = parseTime(checkOut);
+    if (inMinutes === null || outMinutes === null) return null;
+    let diff = outMinutes - inMinutes;
+    if (diff < 0) diff += 24 * 60; // crossed midnight
+    return Math.round((diff / 60) * 10) / 10;
+  } catch {
+    return null;
+  }
+}
+

@@ -109,3 +109,74 @@ export interface IngredientData {
   createdAt: string | Date;
   updatedAt: string | Date;
 }
+
+export type SystemRole = 'OWNER' | 'MANAGER' | 'CHEF' | 'WAITER' | 'CASHIER';
+
+export interface ActiveStaffSession {
+  id: string;
+  name: string;
+  role: SystemRole;
+  department?: string;
+  isOwner?: boolean;
+}
+
+export interface StaffMemberData {
+  id: string;
+  hotelId: string;
+  name: string;
+  role: string;
+  department: string;
+  systemRole?: SystemRole | string;
+  pinCode?: string | null;
+  hasPin?: boolean;
+  phone?: string | null;
+  email?: string | null;
+  shift: string;
+  salary?: number | null;
+  salaryType?: string;
+  status: 'active' | 'inactive' | 'on_leave';
+  joinDate?: string | Date | null;
+  avatar?: string | null;
+  emergencyContact?: string | null;
+  notes?: string | null;
+  createdAt: string | Date;
+  updatedAt: string | Date;
+  todayAttendance?: StaffAttendanceData | null;
+  attendances?: StaffAttendanceData[];
+}
+
+export interface StaffAttendanceData {
+  id: string;
+  hotelId: string;
+  staffId: string;
+  date: string;
+  status: 'present' | 'late' | 'half_day' | 'absent' | 'on_leave';
+  checkInTime?: string | null;
+  checkOutTime?: string | null;
+  shift?: string | null;
+  hoursWorked?: number | null;
+  notes?: string | null;
+  markedBy?: string | null;
+  createdAt: string | Date;
+  updatedAt: string | Date;
+  staff?: {
+    id: string;
+    name: string;
+    role: string;
+    department: string;
+    phone?: string | null;
+    shift: string;
+    status: string;
+  };
+}
+
+export interface AttendanceStatsData {
+  totalStaff: number;
+  present: number;
+  late: number;
+  halfDay: number;
+  absent: number;
+  onLeave: number;
+  attendanceRate: number;
+}
+

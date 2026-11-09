@@ -369,6 +369,54 @@ async function main() {
     },
   });
 
+  // 12. Seed Staff Members & Attendance for Demo Hotel
+  console.log('Seeding Staff Members & Initial Attendance...');
+  await prisma.staffAttendance.deleteMany({ where: { hotelId: hotel.id } });
+  await prisma.staffMember.deleteMany({ where: { hotelId: hotel.id } });
+
+  const demoStaffList = [
+    { name: 'Bikram Thapa', role: 'Head Chef / Sekuwa Master', department: 'Kitchen', shift: 'Morning', phone: '9801234567', salary: 45000, salaryType: 'monthly', status: 'active', notes: 'Master in charcoal grilled chicken & mutton' },
+    { name: 'Suman Shrestha', role: 'Sous Chef & Curry Specialist', department: 'Kitchen', shift: 'Morning', phone: '9812345678', salary: 32000, salaryType: 'monthly', status: 'active', notes: 'Specialist in authentic gravies & tandoor' },
+    { name: 'Aayush Maharjan', role: 'Senior Waiter & Captain', department: 'Service', shift: 'Full Day', phone: '9823456789', salary: 22000, salaryType: 'monthly', status: 'active', notes: 'Table management and customer dining care' },
+    { name: 'Pooja Gurung', role: 'Floor Hostess & Waitress', department: 'Service', shift: 'Evening', phone: '9845678901', salary: 20000, salaryType: 'monthly', status: 'active', notes: 'Evening floor reception and dining hospitality' },
+    { name: 'Rabin Tamang', role: 'Mixologist & Bartender', department: 'Bar', shift: 'Evening', phone: '9856789012', salary: 26000, salaryType: 'monthly', status: 'active', notes: 'Signature mocktails, beverages and bar stock' },
+    { name: 'Sunita Rai', role: 'Cashier & Front Desk', department: 'Management', shift: 'Full Day', phone: '9867890123', salary: 25000, salaryType: 'monthly', status: 'active', notes: 'Billing, registers, and phone reservations' },
+    { name: 'Kiran KC', role: 'Kitchen Steward & Cleaner', department: 'Operations', shift: 'Full Day', phone: '9811223344', salary: 16000, salaryType: 'monthly', status: 'active', notes: 'Dishwashing, kitchen hygiene, and deep cleaning' },
+  ];
+
+  const todayStr = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kathmandu' }).format(new Date());
+
+  for (let i = 0; i < demoStaffList.length; i++) {
+    const s = demoStaffList[i];
+    const createdStaff = await prisma.staffMember.create({
+      data: {
+        hotelId: hotel.id,
+        ...s,
+      },
+    });
+
+    // Create realistic today's attendance
+    const attendanceStatuses = ['present', 'present', 'present', 'late', 'present', 'present', 'half_day'];
+    const checkInTimes = ['08:45 AM', '08:50 AM', '09:00 AM', '09:42 AM', '04:00 PM', '08:30 AM', '09:15 AM'];
+    const checkOutTimes = ['05:00 PM', '05:30 PM', null, null, null, null, '01:30 PM'];
+    const hours = [8.2, 8.6, null, null, null, null, 4.2];
+
+    await prisma.staffAttendance.create({
+      data: {
+        hotelId: hotel.id,
+        staffId: createdStaff.id,
+        date: todayStr,
+        status: attendanceStatuses[i % attendanceStatuses.length],
+        checkInTime: checkInTimes[i % checkInTimes.length],
+        checkOutTime: checkOutTimes[i % checkOutTimes.length],
+        hoursWorked: hours[i % hours.length],
+        shift: s.shift,
+        markedBy: 'Manager',
+        notes: i === 3 ? 'Traffic delay on Ring Road' : null,
+      },
+    });
+  }
+
   console.log('--- Database Seeding Complete! ---');
 }
 
