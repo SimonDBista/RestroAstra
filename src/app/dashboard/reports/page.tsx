@@ -135,6 +135,8 @@ export default function HotelReportsPage() {
   const [selectedReceiptOrder, setSelectedReceiptOrder] = useState<OrderData | null>(null);
   const [isReceiptModalOpen, setIsReceiptModalOpen] = useState(false);
   const [hotelName, setHotelName] = useState('RestroAstra Restaurant');
+  const [hotelPhone, setHotelPhone] = useState('');
+  const [hotelAddress, setHotelAddress] = useState('');
 
   const parseOrderItems = (rawItems: any): Array<{ name: string; quantity: number; price?: number }> => {
     if (!rawItems) return [];
@@ -214,6 +216,8 @@ export default function HotelReportsPage() {
       .then((res) => (res.ok ? res.json() : null))
       .then((data) => {
         if (data?.hotel?.name) setHotelName(data.hotel.name);
+        if (data?.hotel?.phone) setHotelPhone(data.hotel.phone);
+        if (data?.hotel?.address) setHotelAddress(data.hotel.address);
       })
       .catch((err) => console.error(err));
   }, []);
@@ -1359,13 +1363,15 @@ export default function HotelReportsPage() {
       )}
 
       {/* ============================================================ */}
-      {/* MODAL: VIEW / PRINT THERMAL RECEIPT SLIP                     */}
+      {/* MODAL: VIEW / PRINT THERMAL RECEIPT SLIP (xLab XTKP-607UL) */}
       {/* ============================================================ */}
       <ReceiptModal
         isOpen={isReceiptModalOpen}
         onClose={() => setIsReceiptModalOpen(false)}
         order={selectedReceiptOrder}
         hotelName={hotelName}
+        hotelPhone={hotelPhone}
+        hotelAddress={hotelAddress}
         onOrderUpdated={() => {
           fetchReports(selectedRange);
           if (selectedRange === 'yesterday') {

@@ -34,6 +34,8 @@ export default function HotelOrdersDashboard() {
   const [tableSearch, setTableSearch] = useState<string>('');
   const [hotelId, setHotelId] = useState<string>('');
   const [hotelName, setHotelName] = useState<string>('Hotel');
+  const [hotelPhone, setHotelPhone] = useState<string>('');
+  const [hotelAddress, setHotelAddress] = useState<string>('');
   const [selectedReceiptOrder, setSelectedReceiptOrder] = useState<OrderData | null>(null);
   const [isTableBillModal, setIsTableBillModal] = useState<boolean>(false);
   const [incomingAlert, setIncomingAlert] = useState<string | null>(null);
@@ -57,6 +59,8 @@ export default function HotelOrdersDashboard() {
         const meData = await meRes.json();
         setHotelId(meData.hotel.id);
         setHotelName(meData.hotel.name);
+        if (meData.hotel.phone) setHotelPhone(meData.hotel.phone);
+        if (meData.hotel.address) setHotelAddress(meData.hotel.address);
       }
 
       const res = await fetch('/api/hotel/orders');
@@ -873,12 +877,14 @@ export default function HotelOrdersDashboard() {
         </div>
       )}
 
-      {/* Thermal Receipt Print Modal */}
+      {/* Thermal Receipt Print Modal - Targeted for xLab XTKP-607UL */}
       <ReceiptModal
         isOpen={!!selectedReceiptOrder}
         onClose={() => setSelectedReceiptOrder(null)}
         order={selectedReceiptOrder}
         hotelName={hotelName}
+        hotelPhone={hotelPhone}
+        hotelAddress={hotelAddress}
         isTableBill={isTableBillModal}
         onOrderUpdated={() => fetchOrders()}
       />

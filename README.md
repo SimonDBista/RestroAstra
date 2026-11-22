@@ -28,6 +28,7 @@
 - **Live Orders Feed & Audio Chimes:** Instant order broadcast with browser Web Audio API acoustic bells.
 - **1-Click Order Workflow:** Advance orders through Received, In Progress, Done, and Settled.
 - **Printable Thermal Receipts & KOT:** Pre-formatted 80mm/58mm kitchen tickets and customer VAT invoices.
+- **xLab Thermal Kitchen Printer (XTKP-607UL) Calibration:** Native 80mm roll and 72mm printable width formatting with auto-cutter clearance spacing, pure-black thermal contrast, PAN/VAT tax invoices, and 1-click dual-mode Kitchen Order Tickets (KOT) vs. Final Table Bills.
 - **Menu Management (`/dashboard/menu`):** Add dishes, upload and auto-compress photos (WebP via Sharp), manage 3D GLB models, and toggle stock.
 - **Realtime Table Chat (`/dashboard/chat`):** Manage active diner threads with instant replies.
 - **Daily Financial Register & Reports (`/dashboard/reports`):** Opening/closing cash register balance, gross sales, payment breakdown (Cash vs. QR), and top-selling items.
