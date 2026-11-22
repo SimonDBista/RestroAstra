@@ -877,7 +877,7 @@ export default function HotelOrdersDashboard() {
         </div>
       )}
 
-      {/* Thermal Receipt Print Modal - Targeted for xLab XTKP-607UL */}
+      {/* Thermal Receipt Print Modal */}
       <ReceiptModal
         isOpen={!!selectedReceiptOrder}
         onClose={() => setSelectedReceiptOrder(null)}

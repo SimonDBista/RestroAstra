@@ -1363,7 +1363,7 @@ export default function HotelReportsPage() {
       )}
 
       {/* ============================================================ */}
-      {/* MODAL: VIEW / PRINT THERMAL RECEIPT SLIP (xLab XTKP-607UL) */}
+      {/* MODAL: VIEW / PRINT THERMAL RECEIPT SLIP */}
       {/* ============================================================ */}
       <ReceiptModal
         isOpen={isReceiptModalOpen}

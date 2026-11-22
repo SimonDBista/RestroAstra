@@ -15,7 +15,6 @@ import {
   Phone,
   FileText,
   Sliders,
-  Scissors,
 } from 'lucide-react';
 import { OrderData, OrderItem } from '@/lib/types';
 import { formatNPR, formatDate } from '@/lib/utils';
@@ -141,18 +140,6 @@ export default function ReceiptModal({
     }
   }, [order, subtotal]);
 
-  // Add/remove printing-thermal-receipt class on body
-  useEffect(() => {
-    if (isOpen) {
-      document.body.classList.add('printing-thermal-receipt');
-    } else {
-      document.body.classList.remove('printing-thermal-receipt');
-    }
-    return () => {
-      document.body.classList.remove('printing-thermal-receipt');
-    };
-  }, [isOpen]);
-
   // Compute calculated discount and final payable
   const { calculatedDiscount, discountPercent, finalTotal } = useMemo(() => {
     const rawVal = parseFloat(discountInput) || 0;
@@ -222,7 +209,7 @@ export default function ReceiptModal({
     }
   };
 
-  // Print slip handler targeted to xLab XTKP-607UL
+  // Robust Thermal Print Handler (Direct Iframe Injection - No Blank Pages)
   const handlePrint = async () => {
     if (printMode === 'bill' && hasUnsavedDiscountChanges) {
       const saved = await handleSaveDiscount();
@@ -233,13 +220,167 @@ export default function ReceiptModal({
       }
     }
 
-    // Ensure class is on body for print styles
-    document.body.classList.add('printing-thermal-receipt');
-
-    // Give browser event loop a moment before opening print dialog
-    setTimeout(() => {
+    const receiptEl = document.getElementById('printable-receipt');
+    if (!receiptEl) {
       window.print();
-    }, 60);
+      return;
+    }
+
+    // Clean up old print iframe if present
+    const existingIframe = document.getElementById('thermal-print-iframe');
+    if (existingIframe) {
+      existingIframe.remove();
+    }
+
+    // Create an isolated hidden iframe
+    const iframe = document.createElement('iframe');
+    iframe.id = 'thermal-print-iframe';
+    iframe.style.position = 'fixed';
+    iframe.style.right = '0';
+    iframe.style.bottom = '0';
+    iframe.style.width = '0';
+    iframe.style.height = '0';
+    iframe.style.border = '0';
+    iframe.style.visibility = 'hidden';
+    document.body.appendChild(iframe);
+
+    const frameDoc = iframe.contentWindow?.document || iframe.contentDocument;
+    if (!frameDoc || !iframe.contentWindow) {
+      window.print();
+      return;
+    }
+
+    // Get current receipt content
+    const receiptHtml = receiptEl.innerHTML;
+
+    frameDoc.open();
+    frameDoc.write(`
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <meta charset="utf-8" />
+          <title>${printMode === 'kot' ? 'KOT' : 'Bill'} - ${order?.tableNumber || 'Receipt'}</title>
+          <style>
+            @page {
+              size: 80mm auto;
+              margin: 0mm;
+            }
+            *, *::before, *::after {
+              box-sizing: border-box;
+              -webkit-print-color-adjust: exact !important;
+              print-color-adjust: exact !important;
+            }
+            html, body {
+              width: 80mm;
+              margin: 0;
+              padding: 0;
+              background: #ffffff !important;
+              color: #000000 !important;
+              font-family: 'Courier New', Courier, 'Lucida Console', Monaco, monospace;
+              font-size: 11px;
+              line-height: 1.3;
+            }
+            .thermal-page {
+              width: 72mm;
+              max-width: 72mm;
+              margin: 0 auto;
+              padding: 2mm 1mm 16mm 1mm;
+              background: #ffffff !important;
+              color: #000000 !important;
+            }
+            .text-center { text-align: center; }
+            .text-right { text-align: right; }
+            .text-left { text-align: left; }
+            .font-bold { font-weight: bold; }
+            .font-black { font-weight: 900; }
+            .font-mono { font-family: 'Courier New', Courier, monospace; }
+            .uppercase { text-transform: uppercase; }
+            .italic { font-style: italic; }
+            .leading-snug { line-height: 1.25; }
+            .leading-tight { line-height: 1.15; }
+            .tracking-wider { letter-spacing: 0.05em; }
+            .tracking-widest { letter-spacing: 0.1em; }
+
+            .border-b { border-bottom: 1px solid #000000; }
+            .border-t { border-top: 1px solid #000000; }
+            .border-2 { border: 2px solid #000000; }
+            .border-dashed { border-style: dashed; }
+            .border-black { border-color: #000000; }
+
+            .flex { display: flex; }
+            .justify-between { justify-content: space-between; }
+            .items-start { align-items: flex-start; }
+            .items-baseline { align-items: baseline; }
+            .items-center { align-items: center; }
+            .justify-center { justify-content: center; }
+
+            .w-8 { width: 32px; }
+            .w-10 { width: 40px; }
+            .w-12 { width: 48px; }
+            .w-14 { width: 56px; }
+            .flex-1 { flex: 1 1 0%; }
+            .px-1 { padding-left: 4px; padding-right: 4px; }
+            .px-2 { padding-left: 8px; padding-right: 8px; }
+            .py-0\\.5 { padding-top: 2px; padding-bottom: 2px; }
+            .py-1 { padding-top: 4px; padding-bottom: 4px; }
+            .py-1\\.5 { padding-top: 6px; padding-bottom: 6px; }
+            .p-1 { padding: 4px; }
+            .p-1\\.5 { padding: 6px; }
+            .pt-0\\.5 { padding-top: 2px; }
+            .pt-2 { padding-top: 8px; }
+            .pt-3 { padding-top: 12px; }
+            .pt-6 { padding-top: 24px; }
+            .pb-1 { padding-bottom: 4px; }
+            .pb-1\\.5 { padding-bottom: 6px; }
+            .pb-2 { padding-bottom: 8px; }
+            .my-1 { margin-top: 4px; margin-bottom: 4px; }
+            .my-1\\.5 { margin-top: 6px; margin-bottom: 6px; }
+            .my-2 { margin-top: 8px; margin-bottom: 8px; }
+            .mt-0\\.5 { margin-top: 2px; }
+            .mt-1 { margin-top: 4px; }
+            .mt-2 { margin-top: 8px; }
+            .mt-3 { margin-top: 12px; }
+            .mb-2 { margin-bottom: 8px; }
+            .mr-1 { margin-right: 4px; }
+            .pl-8 { padding-left: 32px; }
+            .pl-11 { padding-left: 44px; }
+
+            .text-\\[9px\\] { font-size: 9px; }
+            .text-\\[10px\\] { font-size: 10px; }
+            .text-\\[11px\\] { font-size: 11px; }
+            .text-xs { font-size: 12px; }
+            .text-sm { font-size: 14px; }
+            .text-base { font-size: 16px; }
+            .text-black { color: #000000 !important; }
+            .bg-white { background-color: #ffffff !important; }
+            .inline-block { display: inline-block; }
+            .space-y-1 > * + * { margin-top: 4px; }
+            .space-y-2 > * + * { margin-top: 8px; }
+            .divide-y > * + * { border-top: 1px dashed #777777; }
+            .whitespace-nowrap { white-space: nowrap; }
+
+            .print-hide { display: none !important; }
+          </style>
+        </head>
+        <body>
+          <div class="thermal-page">
+            ${receiptHtml}
+          </div>
+        </body>
+      </html>
+    `);
+    frameDoc.close();
+
+    // Trigger print
+    setTimeout(() => {
+      try {
+        iframe.contentWindow?.focus();
+        iframe.contentWindow?.print();
+      } catch (err) {
+        console.error('Iframe print failed:', err);
+        window.print();
+      }
+    }, 200);
   };
 
   if (!isOpen || !order) return null;
@@ -249,8 +390,8 @@ export default function ReceiptModal({
     : `TABLE #${order.tableNumber.replace(/^#/, '')}`;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-sm animate-fade-in print:p-0 print:bg-white print:static overflow-y-auto">
-      {/* Dynamic Scoped Print Stylesheet for xLab Thermal Kitchen Printer XTKP-607UL */}
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/60 backdrop-blur-sm animate-fade-in overflow-y-auto">
+      {/* Keyboard Ctrl+P Fallback Print Styles */}
       <style
         dangerouslySetInnerHTML={{
           __html: `
@@ -259,42 +400,13 @@ export default function ReceiptModal({
                 size: 80mm auto !important;
                 margin: 0mm !important;
               }
-              html, body {
+              body {
                 width: 80mm !important;
                 margin: 0 !important;
                 padding: 0 !important;
                 background: #ffffff !important;
-                color: #000000 !important;
-                -webkit-print-color-adjust: exact !important;
-                print-color-adjust: exact !important;
               }
-              /* Strict print isolation: Hide all non-receipt elements */
-              body * {
-                visibility: hidden !important;
-              }
-              #printable-receipt,
-              #printable-receipt * {
-                visibility: visible !important;
-              }
-              #printable-receipt {
-                display: block !important;
-                position: absolute !important;
-                left: 0 !important;
-                top: 0 !important;
-                width: 72mm !important;
-                max-width: 72mm !important;
-                margin: 0 4mm !important;
-                padding: 2mm 1mm 20mm 1mm !important;
-                background: #ffffff !important;
-                color: #000000 !important;
-                font-family: 'Courier New', Courier, 'Lucida Console', Monaco, monospace !important;
-                font-size: 11px !important;
-                line-height: 1.3 !important;
-                box-shadow: none !important;
-                border: none !important;
-                overflow: visible !important;
-              }
-              .xlab-thermal-hidden {
+              .no-print {
                 display: none !important;
               }
             }
@@ -302,12 +414,12 @@ export default function ReceiptModal({
         }}
       />
 
-      <div className="relative w-full max-w-xl bg-white text-stone-900 rounded-2xl shadow-2xl overflow-hidden print:shadow-none print:w-full print:max-w-full border border-stone-200 my-auto">
+      <div className="relative w-full max-w-xl bg-white text-stone-900 rounded-2xl shadow-2xl overflow-hidden border border-stone-200 my-auto">
         
         {/* ==================================================================== */}
-        {/* MODAL CONTROL HEADER (Hidden in Print)                               */}
+        {/* MODAL CONTROL HEADER                                                 */}
         {/* ==================================================================== */}
-        <div className="px-5 py-3.5 bg-stone-900 text-white flex items-center justify-between print:hidden">
+        <div className="px-5 py-3.5 bg-stone-900 text-white flex items-center justify-between no-print">
           <div className="flex items-center space-x-2.5">
             <div className="w-8 h-8 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-400">
               <Printer className="w-4 h-4" />
@@ -315,13 +427,13 @@ export default function ReceiptModal({
             <div>
               <div className="flex items-center space-x-2">
                 <span className="font-serif font-bold text-xs tracking-wider uppercase text-white">
-                  xLab Thermal Printer (XTKP-607UL)
+                  Thermal Receipt & KOT Hub
                 </span>
                 <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">
-                  80mm Roll
+                  80mm Thermal
                 </span>
               </div>
-              <p className="text-[10px] text-stone-400">Calibrated for 72mm printable width • Auto-Cutter ready</p>
+              <p className="text-[10px] text-stone-400">Standard 72mm printable width • Auto-Cutter ready</p>
             </div>
           </div>
 
@@ -330,10 +442,10 @@ export default function ReceiptModal({
               onClick={handlePrint}
               disabled={isSaving}
               className="px-4 py-1.5 bg-amber-500 hover:bg-amber-400 text-stone-950 font-bold text-xs rounded-xl transition flex items-center space-x-1.5 shadow-md active:scale-95"
-              title="Send to xLab XTKP-607UL Thermal Printer"
+              title="Print Receipt"
             >
               <Printer className="w-3.5 h-3.5" />
-              <span>Print to xLab</span>
+              <span>Print Slip</span>
             </button>
             <button
               onClick={onClose}
@@ -346,9 +458,9 @@ export default function ReceiptModal({
         </div>
 
         {/* ==================================================================== */}
-        {/* PRINTER SETTINGS & MODE SELECTOR TABS (Hidden in Print)              */}
+        {/* MODE SELECTOR TABS & CONFIGURATION                                   */}
         {/* ==================================================================== */}
-        <div className="bg-stone-50 border-b border-stone-200 px-5 py-2.5 print:hidden flex flex-wrap items-center justify-between gap-2 text-xs">
+        <div className="bg-stone-50 border-b border-stone-200 px-5 py-2.5 flex flex-wrap items-center justify-between gap-2 text-xs no-print">
           {/* Slip Mode Switcher: Bill vs KOT */}
           <div className="flex items-center bg-stone-200 p-0.5 rounded-xl text-xs font-semibold">
             <button
@@ -384,13 +496,13 @@ export default function ReceiptModal({
             className="flex items-center space-x-1 text-stone-600 hover:text-amber-700 font-medium text-[11px]"
           >
             <Sliders className="w-3.5 h-3.5" />
-            <span>{isConfigOpen ? 'Hide Bill Header Config' : 'Configure PAN / Details'}</span>
+            <span>{isConfigOpen ? 'Hide Header Config' : 'Configure PAN / Cashier'}</span>
           </button>
         </div>
 
-        {/* Header Config Panel (Hidden in Print) */}
+        {/* Header Config Panel */}
         {isConfigOpen && (
-          <div className="p-3 bg-amber-50/60 border-b border-amber-200 print:hidden text-xs space-y-2">
+          <div className="p-3 bg-amber-50/60 border-b border-amber-200 text-xs space-y-2 no-print">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
               <div>
                 <label className="text-[10px] font-bold text-stone-600 block mb-1">
@@ -424,10 +536,10 @@ export default function ReceiptModal({
         )}
 
         {/* ==================================================================== */}
-        {/* DISCOUNT CONTROL PANEL (Customer Bill Only - Hidden in Print)        */}
+        {/* DISCOUNT CONTROL PANEL (Customer Bill Only)                          */}
         {/* ==================================================================== */}
         {printMode === 'bill' && (
-          <div className="px-5 py-3.5 bg-stone-50/70 border-b border-stone-200 print:hidden space-y-2.5">
+          <div className="px-5 py-3.5 bg-stone-50/70 border-b border-stone-200 space-y-2.5 no-print">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-1.5 text-xs font-bold text-stone-700">
                 <Tag className="w-3.5 h-3.5 text-amber-600" />
@@ -549,14 +661,13 @@ export default function ReceiptModal({
         )}
 
         {/* ==================================================================== */}
-        {/* THERMAL RECEIPT DISPLAY CONTAINER (Target: xLab XTKP-607UL 80mm)      */}
-        {/* On screen: Styled preview (320px). In print: Exact 72mm width.       */}
+        {/* THERMAL RECEIPT DISPLAY CONTAINER (Screen Preview & Print Source)    */}
         {/* ==================================================================== */}
-        <div className="bg-stone-200/70 p-3 sm:p-5 max-h-[65vh] overflow-y-auto print:max-h-none print:p-0 print:bg-white print:overflow-visible flex justify-center">
+        <div className="bg-stone-200/70 p-3 sm:p-5 max-h-[65vh] overflow-y-auto flex justify-center">
           
           <div
             id="printable-receipt"
-            className="w-full max-w-[340px] bg-white text-black p-4 rounded-lg shadow-md border border-stone-300 print:shadow-none print:border-none print:rounded-none font-mono text-xs leading-tight"
+            className="w-full max-w-[340px] bg-white text-black p-4 rounded-lg shadow-md border border-stone-300 font-mono text-xs leading-tight"
             style={{
               color: '#000000',
               fontFamily: "'Courier New', Courier, 'Lucida Console', Monaco, monospace",
@@ -564,7 +675,7 @@ export default function ReceiptModal({
           >
 
             {/* ================================================================ */}
-            {/* VIEW A: CUSTOMER BILL / TAX INVOICE (xLab XTKP-607UL Calibrated) */}
+            {/* VIEW A: CUSTOMER BILL / TAX INVOICE                              */}
             {/* ================================================================ */}
             {printMode === 'bill' && (
               <div>
@@ -708,14 +819,14 @@ export default function ReceiptModal({
                   </p>
                   <p className="mt-0.5">Please Visit Again</p>
                   <p className="text-[9px] mt-1 text-black font-mono">
-                    RestroAstra POS • xLab XTKP-607UL
+                    RestroAstra Digital POS
                   </p>
                 </div>
               </div>
             )}
 
             {/* ================================================================ */}
-            {/* VIEW B: KITCHEN ORDER TICKET (KOT) (xLab XTKP-607UL Calibrated)  */}
+            {/* VIEW B: KITCHEN ORDER TICKET (KOT)                               */}
             {/* ================================================================ */}
             {printMode === 'kot' && (
               <div>
@@ -728,7 +839,7 @@ export default function ReceiptModal({
                 </div>
 
                 {/* Big Table / Room Banner */}
-                <div className="border-2 border-black p-1.5 text-center my-2 bg-black text-white print:bg-white print:text-black print:border-black">
+                <div className="border-2 border-black p-1.5 text-center my-2 bg-black text-white">
                   <span className="text-base font-black tracking-widest uppercase">
                     &gt;&gt;&gt; {displayTable} &lt;&lt;&lt;
                   </span>
@@ -768,7 +879,7 @@ export default function ReceiptModal({
 
                 {/* Kitchen Order Instructions */}
                 {order.notes && (
-                  <div className="my-2 p-1.5 border-2 border-black text-xs font-bold bg-stone-100 print:bg-white">
+                  <div className="my-2 p-1.5 border-2 border-black text-xs font-bold bg-stone-100">
                     <span className="uppercase">CHEF INSTRUCTION: </span>
                     <span>{order.notes}</span>
                   </div>
@@ -776,34 +887,31 @@ export default function ReceiptModal({
 
                 {/* KOT Footer */}
                 <div className="border-t-2 border-black mt-3 pt-2 text-center text-[10px] font-bold uppercase tracking-wider">
-                  *** DISPATCH TO KITCHEN / BAR ***
-                  <p className="text-[9px] font-normal mt-0.5">Printed on xLab XTKP-607UL (80mm)</p>
+                  *** KITCHEN DISPATCH ***
                 </div>
               </div>
             )}
 
             {/* ================================================================ */}
-            {/* AUTO-CUTTER FEED MARGIN (Crucial for xLab XTKP-607UL)            */}
-            {/* Advance paper 18mm so cutter blade slices below the footer!      */}
+            {/* AUTO-CUTTER FEED MARGIN (18mm)                                   */}
             {/* ================================================================ */}
-            <div className="pt-6 mt-3 text-center border-t border-dashed border-stone-400 text-[10px] text-stone-500 print:text-black">
+            <div className="pt-6 mt-3 text-center border-t border-dashed border-stone-400 text-[10px] text-stone-500">
               <div className="flex items-center justify-center space-x-1 font-mono text-[9px]">
-                <Scissors className="w-3 h-3 inline" />
                 <span>- - - - - - - - - - - - - - - - - - - - ✂</span>
               </div>
-              <p className="text-[8px] mt-1 text-stone-400 print:hidden">
-                xLab XTKP-607UL Auto-Cutter Clearance Area (18mm)
+              <p className="text-[8px] mt-1 text-stone-400 print-hide">
+                Auto-Cutter Clearance (18mm)
               </p>
             </div>
 
           </div>
         </div>
 
-        {/* Modal Footer Controls (Hidden in Print) */}
-        <div className="px-5 py-3 bg-stone-50 border-t border-stone-200 print:hidden flex items-center justify-between text-xs">
+        {/* Modal Footer Controls */}
+        <div className="px-5 py-3 bg-stone-50 border-t border-stone-200 flex items-center justify-between text-xs no-print">
           <div className="flex items-center space-x-1.5 text-stone-500 text-[11px]">
             <Printer className="w-3.5 h-3.5 text-amber-600" />
-            <span>Target: xLab XTKP-607UL (80mm Roll • 72mm Width)</span>
+            <span>Format: 80mm Thermal Paper (72mm Printable)</span>
           </div>
 
           <div className="flex items-center space-x-2">
@@ -821,7 +929,7 @@ export default function ReceiptModal({
               className="px-4 py-1.5 bronze-btn text-white text-xs font-bold rounded-xl transition flex items-center space-x-1.5 shadow-sm active:scale-95"
             >
               <Printer className="w-3.5 h-3.5" />
-              <span>Print {printMode === 'kot' ? 'KOT' : 'Bill'} (xLab)</span>
+              <span>Print {printMode === 'kot' ? 'KOT' : 'Bill'}</span>
             </button>
           </div>
         </div>
