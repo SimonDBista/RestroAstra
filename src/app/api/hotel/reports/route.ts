@@ -12,7 +12,28 @@ export async function GET(request: NextRequest) {
     }
 
     const { searchParams } = new URL(request.url);
-    const range = searchParams.get('range') || '7days'; // 'today' | 'yesterday' | '7days' | 'month' | 'all'
+    const range = searchParams.get('range') || 'today'; // 'today' | 'yesterday' | 'date' | 'custom' | '7days' | 'month' | 'all'
+    const dateParam = searchParams.get('date'); // YYYY-MM-DD
+    const startDateParam = searchParams.get('startDate'); // YYYY-MM-DD
+    const endDateParam = searchParams.get('endDate'); // YYYY-MM-DD
+
+    // Owner-Only RBAC Guard: Access to past dates, custom date ranges, and all-time records is restricted to Owner
+    const staffRole = request.headers.get('x-staff-role') || searchParams.get('staffRole') || 'OWNER';
+    const isOwnerVerified = request.headers.get('x-owner-verified') === 'true';
+
+    const isHistoricalRequest =
+      range === 'all' ||
+      range === 'date' ||
+      range === 'custom' ||
+      range === '7days' ||
+      range === 'month';
+
+    if (isHistoricalRequest && staffRole !== 'OWNER' && !isOwnerVerified) {
+      return NextResponse.json(
+        { error: 'Access to historical sales records and custom date selection is restricted to the Restaurant Owner.' },
+        { status: 403 }
+      );
+    }
 
     // Determine start and end date filter in Nepal Time (Asia/Kathmandu UTC+5:45)
     const now = new Date();
@@ -31,6 +52,15 @@ export async function GET(request: NextRequest) {
       startDate = new Date(startOfToday.getTime() - 24 * 60 * 60 * 1000);
       endDate = startOfToday;
       chartDays = 1;
+    } else if (range === 'date' && dateParam) {
+      startDate = new Date(`${dateParam}T00:00:00+05:45`);
+      endDate = new Date(`${dateParam}T23:59:59.999+05:45`);
+      chartDays = 1;
+    } else if (range === 'custom' && startDateParam && endDateParam) {
+      startDate = new Date(`${startDateParam}T00:00:00+05:45`);
+      endDate = new Date(`${endDateParam}T23:59:59.999+05:45`);
+      const diffMs = Math.abs(endDate.getTime() - startDate.getTime());
+      chartDays = Math.max(1, Math.min(60, Math.ceil(diffMs / (1000 * 60 * 60 * 24))));
     } else if (range === '7days') {
       startDate = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000);
       endDate = null;
@@ -40,9 +70,9 @@ export async function GET(request: NextRequest) {
       endDate = null;
       chartDays = 30;
     } else if (range === 'all') {
-      startDate = null; // all time
+      startDate = null; // ALL TIME RECORD: No date ceiling or floor!
       endDate = null;
-      chartDays = 30; // display last 30 days on daily trend chart
+      chartDays = 30; // display last 30 active days on chart
     }
 
     // 1. Fetch active orders matching hotel and date
@@ -179,6 +209,19 @@ export async function GET(request: NextRequest) {
       const yesterdaySample = new Date(startOfToday.getTime() - 12 * 60 * 60 * 1000);
       const dateStr = yesterdaySample.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'Asia/Kathmandu' });
       daysMap[dateStr] = { date: dateStr, sales: 0, count: 0 };
+    } else if (range === 'date' && dateParam) {
+      const d = new Date(`${dateParam}T12:00:00+05:45`);
+      const dateStr = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'Asia/Kathmandu' });
+      daysMap[dateStr] = { date: dateStr, sales: 0, count: 0 };
+    } else if (range === 'custom' && startDate && endDate) {
+      const cur = new Date(startDate);
+      let count = 0;
+      while (cur <= endDate && count < 60) {
+        const dateStr = cur.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'Asia/Kathmandu' });
+        daysMap[dateStr] = { date: dateStr, sales: 0, count: 0 };
+        cur.setDate(cur.getDate() + 1);
+        count++;
+      }
     } else {
       for (let i = chartDays - 1; i >= 0; i--) {
         const d = new Date();
@@ -277,6 +320,9 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({
       range,
+      selectedDate: dateParam || null,
+      startDate: startDateParam || null,
+      endDate: endDateParam || null,
       summary: {
         totalRevenue: Math.round(totalRevenue),
         grossSales: Math.round(grossSales),
@@ -293,7 +339,7 @@ export async function GET(request: NextRequest) {
       },
       topItems,
       dailyTrends,
-      expenses: expenses.slice(0, 50),
+      expenses: expenses.slice(0, 100),
       categoryBreakdown,
       orderRecords,
     });

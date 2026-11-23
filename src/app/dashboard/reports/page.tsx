@@ -31,6 +31,14 @@ import {
   UtensilsCrossed,
   Banknote,
   Smartphone,
+  Crown,
+  Lock,
+  KeyRound,
+  ShieldCheck,
+  EyeOff,
+  ChevronLeft,
+  ChevronRight,
+  Filter,
 } from 'lucide-react';
 import { formatNPR, formatTime, formatDate } from '@/lib/utils';
 import ReceiptModal from '@/components/ReceiptModal';
@@ -111,7 +119,31 @@ export default function HotelReportsPage() {
     isClosed?: boolean;
   } | null>(null);
 
-  const [selectedRange, setSelectedRange] = useState<'today' | 'yesterday' | '7days' | 'month' | 'all'>('today');
+  // Time Period & Date Selection State
+  const [selectedRange, setSelectedRange] = useState<string>('today');
+  const [selectedDate, setSelectedDate] = useState<string>(() => {
+    return new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kathmandu' }).format(new Date());
+  });
+  const [customStartDate, setCustomStartDate] = useState<string>(() => {
+    const d = new Date();
+    d.setDate(d.getDate() - 7);
+    return new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kathmandu' }).format(d);
+  });
+  const [customEndDate, setCustomEndDate] = useState<string>(() => {
+    return new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kathmandu' }).format(new Date());
+  });
+  const [isCustomRangeOpen, setIsCustomRangeOpen] = useState(false);
+
+  // RBAC & Owner Authentication State
+  const [isOwner, setIsOwner] = useState(true);
+  const [activeStaff, setActiveStaff] = useState<any>(null);
+  const [isOwnerUnlocked, setIsOwnerUnlocked] = useState(false);
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [ownerPasswordInput, setOwnerPasswordInput] = useState('');
+  const [authError, setAuthError] = useState<string | null>(null);
+  const [isVerifyingOwner, setIsVerifyingOwner] = useState(false);
+  const [pendingAction, setPendingAction] = useState<(() => void) | null>(null);
+  const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(true);
 
   // Register editing inputs (Staff only types opening balance)
@@ -170,14 +202,61 @@ export default function HotelReportsPage() {
     setIsReceiptModalOpen(true);
   };
 
-  // Fetch Reports
-  const fetchReports = async (range: string = selectedRange) => {
+  // Load Active Staff profile from localStorage
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem('restroastra_active_staff');
+      if (stored) {
+        const staff = JSON.parse(stored);
+        setActiveStaff(staff);
+        const ownerStatus = staff.isOwner === true || staff.role === 'OWNER';
+        setIsOwner(ownerStatus);
+      } else {
+        setIsOwner(true);
+      }
+    } catch {
+      setIsOwner(true);
+    }
+  }, []);
+
+  // Fetch Reports with Owner verification & parameters
+  const fetchReports = async (
+    range: string = selectedRange,
+    customDate: string = selectedDate,
+    startD: string = customStartDate,
+    endD: string = customEndDate
+  ) => {
     try {
       setLoading(true);
-      const res = await fetch(`/api/hotel/reports?range=${range}`);
+      let url = `/api/hotel/reports?range=${range}`;
+      if (range === 'date' && customDate) {
+        url += `&date=${customDate}`;
+      } else if (range === 'custom' && startD && endD) {
+        url += `&startDate=${startD}&endDate=${endD}`;
+      }
+
+      const headers: Record<string, string> = {};
+      const staffJson = typeof window !== 'undefined' ? localStorage.getItem('restroastra_active_staff') : null;
+      if (staffJson) {
+        try {
+          const parsed = JSON.parse(staffJson);
+          headers['x-staff-role'] = parsed.role || (parsed.isOwner ? 'OWNER' : 'CASHIER');
+        } catch {}
+      }
+      if (isOwnerUnlocked) {
+        headers['x-owner-verified'] = 'true';
+      }
+
+      const res = await fetch(url, { headers });
       if (res.ok) {
         const data = await res.json();
         setReports(data);
+      } else {
+        const errData = await res.json().catch(() => ({}));
+        if (res.status === 403) {
+          setAuthError(errData.error || 'Owner authorization required for historical records.');
+          setIsAuthModalOpen(true);
+        }
       }
     } catch (err) {
       console.error(err);
@@ -198,7 +277,19 @@ export default function HotelReportsPage() {
   // Fetch Daily Register
   const fetchRegister = async (targetDate?: string) => {
     try {
-      const url = targetDate ? `/api/hotel/register?date=${targetDate}` : '/api/hotel/register';
+      let dateQuery = targetDate;
+      if (!dateQuery) {
+        if (selectedRange === 'yesterday') {
+          dateQuery = getYesterdayNepalString();
+        } else if (selectedRange === 'date') {
+          dateQuery = selectedDate;
+        } else if (selectedRange === 'custom') {
+          dateQuery = customStartDate;
+        } else {
+          dateQuery = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Kathmandu' }).format(new Date());
+        }
+      }
+      const url = `/api/hotel/register?date=${dateQuery}`;
       const res = await fetch(url);
       if (res.ok) {
         const data = await res.json();
@@ -223,13 +314,99 @@ export default function HotelReportsPage() {
   }, []);
 
   useEffect(() => {
-    fetchReports(selectedRange);
+    fetchReports(selectedRange, selectedDate, customStartDate, customEndDate);
     if (selectedRange === 'yesterday') {
       fetchRegister(getYesterdayNepalString());
+    } else if (selectedRange === 'date') {
+      fetchRegister(selectedDate);
+    } else if (selectedRange === 'custom') {
+      fetchRegister(customStartDate);
     } else {
       fetchRegister();
     }
-  }, [selectedRange]);
+  }, [selectedRange, selectedDate, isOwnerUnlocked]);
+
+  // Handle Range Selection with Owner Guard
+  const handleRangeSelect = (range: string) => {
+    const isPublic = range === 'today' || range === 'yesterday';
+    const hasOwnerAccess = isOwner || isOwnerUnlocked;
+
+    if (!isPublic && !hasOwnerAccess) {
+      setPendingAction(() => () => {
+        setSelectedRange(range);
+        if (range === 'custom') setIsCustomRangeOpen(true);
+      });
+      setAuthError(null);
+      setOwnerPasswordInput('');
+      setIsAuthModalOpen(true);
+      return;
+    }
+
+    setSelectedRange(range);
+    if (range === 'custom') {
+      setIsCustomRangeOpen(true);
+    }
+  };
+
+  // Handle Specific Date Selection with Owner Guard
+  const handleSelectSingleDate = (newDate: string) => {
+    const hasOwnerAccess = isOwner || isOwnerUnlocked;
+
+    if (!hasOwnerAccess) {
+      setPendingAction(() => () => {
+        setSelectedRange('date');
+        setSelectedDate(newDate);
+      });
+      setAuthError(null);
+      setOwnerPasswordInput('');
+      setIsAuthModalOpen(true);
+      return;
+    }
+
+    setSelectedRange('date');
+    setSelectedDate(newDate);
+  };
+
+  // Verify Owner Password / PIN
+  const handleVerifyOwner = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    if (!ownerPasswordInput.trim()) {
+      setAuthError('Please enter your owner password.');
+      return;
+    }
+
+    try {
+      setIsVerifyingOwner(true);
+      setAuthError(null);
+
+      const res = await fetch('/api/hotel/staff/verify-pin', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          isOwner: true,
+          pinCode: ownerPasswordInput.trim(),
+        }),
+      });
+
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setIsOwnerUnlocked(true);
+        setIsAuthModalOpen(false);
+        setOwnerPasswordInput('');
+        if (pendingAction) {
+          pendingAction();
+          setPendingAction(null);
+        }
+      } else {
+        setAuthError(data.error || 'Incorrect owner password. Access denied.');
+      }
+    } catch (err) {
+      console.error('Owner verify error:', err);
+      setAuthError('Failed to verify owner credentials.');
+    } finally {
+      setIsVerifyingOwner(false);
+    }
+  };
 
   // Save Opening Balance (Staff only types opening balance)
   const handleSaveRegister = async () => {
@@ -414,31 +591,207 @@ export default function HotelReportsPage() {
         </div>
       </div>
 
-      {/* Time Period Filter Tabs */}
-      <div className="flex items-center space-x-2 border-b border-stone-200 pb-4 print:hidden overflow-x-auto">
-        {(['today', 'yesterday', '7days', 'month', 'all'] as const).map((range) => {
-          const labels = {
-            today: "Today's Ledger",
-            yesterday: "Yesterday's Ledger",
-            '7days': 'Last 7 Days',
-            month: 'Last 30 Days',
-            all: 'All Time Records',
-          };
-          const isSelected = selectedRange === range;
-          return (
+      {/* Time Period Filter Tabs & Date Selection (Owner Protected) */}
+      <div className="space-y-3 border-b border-stone-200 pb-4 print:hidden">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          {/* Quick Period Buttons */}
+          <div className="flex items-center space-x-1.5 overflow-x-auto pb-1 sm:pb-0">
+            {/* Today */}
             <button
-              key={range}
-              onClick={() => setSelectedRange(range)}
-              className={`px-4 py-2 rounded-xl text-xs font-bold transition whitespace-nowrap ${
-                isSelected
-                  ? 'bg-amber-500 text-black shadow-sm'
-                  : 'bg-white text-stone-700 hover:bg-stone-50 border border-stone-200 shadow-sm'
+              onClick={() => handleRangeSelect('today')}
+              className={`px-3.5 py-2 rounded-xl text-xs font-bold transition whitespace-nowrap ${
+                selectedRange === 'today'
+                  ? 'bg-amber-500 text-stone-950 shadow-sm'
+                  : 'bg-white text-stone-700 hover:bg-stone-50 border border-stone-200 shadow-xs'
               }`}
             >
-              {labels[range]}
+              Today's Ledger
             </button>
-          );
-        })}
+
+            {/* Yesterday */}
+            <button
+              onClick={() => handleRangeSelect('yesterday')}
+              className={`px-3.5 py-2 rounded-xl text-xs font-bold transition whitespace-nowrap ${
+                selectedRange === 'yesterday'
+                  ? 'bg-amber-500 text-stone-950 shadow-sm'
+                  : 'bg-white text-stone-700 hover:bg-stone-50 border border-stone-200 shadow-xs'
+              }`}
+            >
+              Yesterday's Ledger
+            </button>
+
+            {/* Last 7 Days (Owner Only) */}
+            <button
+              onClick={() => handleRangeSelect('7days')}
+              className={`px-3.5 py-2 rounded-xl text-xs font-bold transition whitespace-nowrap flex items-center space-x-1.5 ${
+                selectedRange === '7days'
+                  ? 'bg-amber-500 text-stone-950 shadow-sm'
+                  : 'bg-white text-stone-700 hover:bg-stone-50 border border-stone-200 shadow-xs'
+              }`}
+            >
+              <span>Last 7 Days</span>
+              {!isOwner && !isOwnerUnlocked && (
+                <Lock className="w-3 h-3 text-amber-600" />
+              )}
+            </button>
+
+            {/* Last 30 Days (Owner Only) */}
+            <button
+              onClick={() => handleRangeSelect('month')}
+              className={`px-3.5 py-2 rounded-xl text-xs font-bold transition whitespace-nowrap flex items-center space-x-1.5 ${
+                selectedRange === 'month'
+                  ? 'bg-amber-500 text-stone-950 shadow-sm'
+                  : 'bg-white text-stone-700 hover:bg-stone-50 border border-stone-200 shadow-xs'
+              }`}
+            >
+              <span>Last 30 Days</span>
+              {!isOwner && !isOwnerUnlocked && (
+                <Lock className="w-3 h-3 text-amber-600" />
+              )}
+            </button>
+
+            {/* All Time Records (Owner Only) */}
+            <button
+              onClick={() => handleRangeSelect('all')}
+              className={`px-3.5 py-2 rounded-xl text-xs font-bold transition whitespace-nowrap flex items-center space-x-1.5 ${
+                selectedRange === 'all'
+                  ? 'bg-amber-500 text-stone-950 shadow-sm'
+                  : 'bg-white text-stone-700 hover:bg-stone-50 border border-stone-200 shadow-xs'
+              }`}
+            >
+              <Crown className="w-3.5 h-3.5 text-amber-600" />
+              <span>All Time Records</span>
+              {!isOwner && !isOwnerUnlocked && (
+                <Lock className="w-3 h-3 text-amber-600" />
+              )}
+            </button>
+          </div>
+
+          {/* Date Picker Controls (Owner Protected) */}
+          <div className="flex items-center flex-wrap gap-2">
+            {/* Specific Date Picker */}
+            <div className="relative flex items-center">
+              <label
+                onClick={() => {
+                  if (!isOwner && !isOwnerUnlocked) {
+                    handleRangeSelect('date');
+                  }
+                }}
+                className={`flex items-center space-x-2 px-3 py-1.5 rounded-xl border text-xs font-bold transition cursor-pointer ${
+                  selectedRange === 'date'
+                    ? 'bg-amber-50 border-amber-400 text-amber-900 shadow-xs'
+                    : 'bg-white border-stone-200 text-stone-700 hover:bg-stone-50'
+                }`}
+              >
+                <Calendar className="w-3.5 h-3.5 text-amber-600" />
+                <span className="hidden sm:inline">Select Date:</span>
+                <input
+                  type="date"
+                  value={selectedDate}
+                  onChange={(e) => {
+                    if (e.target.value) {
+                      handleSelectSingleDate(e.target.value);
+                    }
+                  }}
+                  disabled={!isOwner && !isOwnerUnlocked}
+                  className="bg-transparent text-stone-900 font-semibold focus:outline-none cursor-pointer text-xs"
+                />
+                {!isOwner && !isOwnerUnlocked && (
+                  <span className="inline-flex items-center px-1.5 py-0.5 rounded text-[9px] bg-amber-100 text-amber-800 font-bold">
+                    <Lock className="w-2.5 h-2.5 mr-0.5" /> Owner
+                  </span>
+                )}
+              </label>
+            </div>
+
+            {/* Custom Date Range Toggle */}
+            <button
+              onClick={() => {
+                if (!isOwner && !isOwnerUnlocked) {
+                  handleRangeSelect('custom');
+                } else {
+                  setIsCustomRangeOpen(!isCustomRangeOpen);
+                }
+              }}
+              className={`px-3 py-1.5 rounded-xl border text-xs font-bold transition flex items-center space-x-1.5 ${
+                selectedRange === 'custom' || isCustomRangeOpen
+                  ? 'bg-amber-50 border-amber-400 text-amber-900'
+                  : 'bg-white border-stone-200 text-stone-700 hover:bg-stone-50'
+              }`}
+            >
+              <Filter className="w-3.5 h-3.5 text-amber-600" />
+              <span>Custom Range</span>
+              {!isOwner && !isOwnerUnlocked && (
+                <Lock className="w-3 h-3 text-amber-600" />
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* Custom Date Range Picker Drawer */}
+        {isCustomRangeOpen && (isOwner || isOwnerUnlocked) && (
+          <div className="p-3 bg-stone-50 rounded-2xl border border-stone-200 flex flex-wrap items-center gap-3 text-xs animate-fade-in">
+            <div className="flex items-center space-x-2">
+              <span className="font-bold text-stone-600">From Date:</span>
+              <input
+                type="date"
+                value={customStartDate}
+                onChange={(e) => setCustomStartDate(e.target.value)}
+                className="bg-white border border-stone-300 rounded-lg px-2.5 py-1 text-xs font-medium focus:border-amber-500 focus:outline-none"
+              />
+            </div>
+            <div className="flex items-center space-x-2">
+              <span className="font-bold text-stone-600">To Date:</span>
+              <input
+                type="date"
+                value={customEndDate}
+                onChange={(e) => setCustomEndDate(e.target.value)}
+                className="bg-white border border-stone-300 rounded-lg px-2.5 py-1 text-xs font-medium focus:border-amber-500 focus:outline-none"
+              />
+            </div>
+            <button
+              onClick={() => {
+                setSelectedRange('custom');
+                fetchReports('custom', selectedDate, customStartDate, customEndDate);
+              }}
+              className="px-4 py-1.5 rounded-xl gold-btn text-xs font-bold text-stone-950 shadow-xs"
+            >
+              Apply Custom Range
+            </button>
+          </div>
+        )}
+
+        {/* Active Period Feedback Banner */}
+        <div className="flex items-center justify-between bg-stone-100/80 border border-stone-200/80 px-4 py-2.5 rounded-2xl text-xs">
+          <div className="flex items-center space-x-2 text-stone-700 flex-wrap">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+            <span className="font-bold text-stone-900">
+              {selectedRange === 'today' && "Viewing Live Operations: Today's Ledger"}
+              {selectedRange === 'yesterday' && "Viewing Reconciled Shift: Yesterday's Ledger"}
+              {selectedRange === 'date' && `Auditing Single Date: ${selectedDate} (Nepal Time)`}
+              {selectedRange === 'custom' && `Auditing Date Range: ${customStartDate} → ${customEndDate}`}
+              {selectedRange === '7days' && 'Auditing Range: Last 7 Days'}
+              {selectedRange === 'month' && 'Auditing Range: Last 30 Days'}
+              {selectedRange === 'all' && 'Auditing All Time Lifetime Records (All Historical Sales Kept)'}
+            </span>
+            <span className="text-stone-500 hidden sm:inline">•</span>
+            <span className="text-stone-600 hidden sm:inline">
+              {summary.completedCount} orders completed | {formatNPR(summary.totalRevenue)} net sales
+            </span>
+          </div>
+
+          {selectedRange !== 'today' && (
+            <button
+              onClick={() => {
+                setSelectedRange('today');
+                setIsCustomRangeOpen(false);
+              }}
+              className="text-[11px] font-bold text-amber-700 hover:text-amber-800 underline ml-2 whitespace-nowrap"
+            >
+              Reset to Today
+            </button>
+          )}
+        </div>
       </div>
 
       {/* ============================================================ */}
@@ -506,20 +859,18 @@ export default function HotelReportsPage() {
           <div className="flex items-center justify-between">
             <span className="text-xs font-bold text-stone-500 uppercase tracking-wider">Net Profit</span>
             <div
-              className={`w-9 h-9 rounded-xl flex items-center justify-center border ${
-                summary.netProfit >= 0
-                  ? 'bg-emerald-500/15 text-emerald-700 border-emerald-500/30'
-                  : 'bg-red-500/15 text-red-700 border-red-500/30'
-              }`}
+              className={`w-9 h-9 rounded-xl flex items-center justify-center border ${summary.netProfit >= 0
+                ? 'bg-emerald-500/15 text-emerald-700 border-emerald-500/30'
+                : 'bg-red-500/15 text-red-700 border-red-500/30'
+                }`}
             >
               <ArrowUpRight className="w-4 h-4" />
             </div>
           </div>
           <div className="mt-3">
             <span
-              className={`text-2xl sm:text-3xl font-serif font-black ${
-                summary.netProfit >= 0 ? 'text-emerald-700' : 'text-red-700'
-              }`}
+              className={`text-2xl sm:text-3xl font-serif font-black ${summary.netProfit >= 0 ? 'text-emerald-700' : 'text-red-700'
+                }`}
             >
               {formatNPR(summary.netProfit)}
             </span>
@@ -776,8 +1127,8 @@ export default function HotelReportsPage() {
               {selectedRange === 'yesterday'
                 ? "Yesterday's complete guest order records"
                 : selectedRange === 'today'
-                ? "Today's complete guest order records"
-                : 'Complete guest order records for this time period'}{' '}
+                  ? "Today's complete guest order records"
+                  : 'Complete guest order records for this time period'}{' '}
               with table numbers, itemized food & drinks, discounts given, total settlements, and receipt slips.
             </p>
           </div>
@@ -789,22 +1140,20 @@ export default function HotelReportsPage() {
               <button
                 type="button"
                 onClick={() => setRecordPaymentFilter('all')}
-                className={`px-3 py-1.5 rounded-lg font-bold transition ${
-                  recordPaymentFilter === 'all'
-                    ? 'bg-white text-stone-900 shadow-sm'
-                    : 'text-stone-600 hover:text-stone-900'
-                }`}
+                className={`px-3 py-1.5 rounded-lg font-bold transition ${recordPaymentFilter === 'all'
+                  ? 'bg-white text-stone-900 shadow-sm'
+                  : 'text-stone-600 hover:text-stone-900'
+                  }`}
               >
                 All ({orderRecords.length})
               </button>
               <button
                 type="button"
                 onClick={() => setRecordPaymentFilter('cash')}
-                className={`px-3 py-1.5 rounded-lg font-bold flex items-center space-x-1.5 transition ${
-                  recordPaymentFilter === 'cash'
-                    ? 'bg-emerald-100 text-emerald-800 shadow-sm'
-                    : 'text-stone-600 hover:text-emerald-700'
-                }`}
+                className={`px-3 py-1.5 rounded-lg font-bold flex items-center space-x-1.5 transition ${recordPaymentFilter === 'cash'
+                  ? 'bg-emerald-100 text-emerald-800 shadow-sm'
+                  : 'text-stone-600 hover:text-emerald-700'
+                  }`}
               >
                 <Banknote className="w-3.5 h-3.5" />
                 <span>Cash ({allCashCount})</span>
@@ -812,11 +1161,10 @@ export default function HotelReportsPage() {
               <button
                 type="button"
                 onClick={() => setRecordPaymentFilter('online')}
-                className={`px-3 py-1.5 rounded-lg font-bold flex items-center space-x-1.5 transition ${
-                  recordPaymentFilter === 'online'
-                    ? 'bg-cyan-100 text-cyan-800 shadow-sm'
-                    : 'text-stone-600 hover:text-cyan-700'
-                }`}
+                className={`px-3 py-1.5 rounded-lg font-bold flex items-center space-x-1.5 transition ${recordPaymentFilter === 'online'
+                  ? 'bg-cyan-100 text-cyan-800 shadow-sm'
+                  : 'text-stone-600 hover:text-cyan-700'
+                  }`}
               >
                 <Smartphone className="w-3.5 h-3.5" />
                 <span>Online Payment ({allOnlineCount})</span>
@@ -1168,11 +1516,10 @@ export default function HotelReportsPage() {
                   </div>
                   <div
                     style={{ height: `${Math.max(heightPercent, 4)}%` }}
-                    className={`w-full max-w-[36px] rounded-t-lg transition-all duration-300 ${
-                      trend.sales > 0
-                        ? 'bg-gradient-to-t from-amber-500 to-amber-400 shadow-sm group-hover:brightness-110'
-                        : 'bg-stone-200'
-                    }`}
+                    className={`w-full max-w-[36px] rounded-t-lg transition-all duration-300 ${trend.sales > 0
+                      ? 'bg-gradient-to-t from-amber-500 to-amber-400 shadow-sm group-hover:brightness-110'
+                      : 'bg-stone-200'
+                      }`}
                   />
                   <span className="text-[10px] text-stone-500 mt-2 font-mono truncate w-full text-center">
                     {trend.date}
@@ -1258,11 +1605,10 @@ export default function HotelReportsPage() {
                         key={cat.id}
                         type="button"
                         onClick={() => setExpenseCategory(cat.id)}
-                        className={`p-2.5 rounded-xl border text-xs font-semibold flex flex-col items-center text-center space-y-1 transition ${
-                          isSelected
-                            ? 'bg-amber-500 text-stone-950 border-amber-500 font-bold shadow-sm'
-                            : 'bg-stone-50 border-stone-200 text-stone-700 hover:border-amber-400 hover:text-stone-900'
-                        }`}
+                        className={`p-2.5 rounded-xl border text-xs font-semibold flex flex-col items-center text-center space-y-1 transition ${isSelected
+                          ? 'bg-amber-500 text-stone-950 border-amber-500 font-bold shadow-sm'
+                          : 'bg-stone-50 border-stone-200 text-stone-700 hover:border-amber-400 hover:text-stone-900'
+                          }`}
                       >
                         <span className="text-base">{cat.emoji}</span>
                         <span className="text-[10px] leading-tight truncate w-full">{cat.label}</span>
@@ -1390,11 +1736,27 @@ export default function HotelReportsPage() {
           <h1 className="text-2xl font-serif font-black uppercase">
             {selectedRange === 'yesterday'
               ? 'Yesterday Financial Settlement & Sales Report'
+              : selectedRange === 'date'
+              ? `Financial Settlement & Sales Report (${selectedDate})`
+              : selectedRange === 'all'
+              ? 'All Time Lifetime Sales & Financial Report'
+              : selectedRange === 'custom'
+              ? `Financial Statement (${customStartDate} to ${customEndDate})`
               : 'Daily Financial Settlement & Sales Report'}
           </h1>
           <p className="text-xs text-gray-600 mt-1">RestroAstra Multi-Tenant Restaurant Operations</p>
           <div className="text-xs font-mono font-bold mt-2">
-            Date: {register?.date || (selectedRange === 'yesterday' ? getYesterdayNepalString() : formatDate(new Date()))}
+            Date: {
+              selectedRange === 'yesterday'
+                ? getYesterdayNepalString()
+                : selectedRange === 'date'
+                ? selectedDate
+                : selectedRange === 'all'
+                ? 'All Time Records (Lifetime)'
+                : selectedRange === 'custom'
+                ? `${customStartDate} to ${customEndDate}`
+                : (register?.date || formatDate(new Date()))
+            }
           </div>
         </div>
 
@@ -1520,6 +1882,102 @@ export default function HotelReportsPage() {
           <div>Manager Approval: ___________________</div>
         </div>
       </div>
+
+      {/* ============================================================ */}
+      {/* OWNER VERIFICATION MODAL FOR HISTORICAL DATES / ALL TIME     */}
+      {/* ============================================================ */}
+      {isAuthModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-sm animate-fade-in print:hidden">
+          <div className="relative w-full max-w-md bg-white rounded-2xl shadow-2xl border border-stone-200 overflow-hidden p-6 space-y-4">
+            <div className="flex items-center justify-between pb-3 border-b border-stone-100">
+              <div className="flex items-center space-x-3">
+                <div className="w-10 h-10 rounded-2xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-700">
+                  <Crown className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="font-serif font-bold text-base text-stone-900">Owner Verification Required</h3>
+                  <p className="text-xs text-stone-500">Historical date records & all-time reports are protected.</p>
+                </div>
+              </div>
+              <button
+                onClick={() => {
+                  setIsAuthModalOpen(false);
+                  setPendingAction(null);
+                  setAuthError(null);
+                }}
+                className="p-1 rounded-lg text-stone-400 hover:text-stone-700 hover:bg-stone-100"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <p className="text-xs text-stone-600 leading-relaxed">
+              {activeStaff?.name ? `Active Profile: ${activeStaff.name} (${activeStaff.role || 'Staff'}). ` : ''}
+              Please enter your <strong>Restaurant Owner Login Password</strong> to unlock historical date queries and all-time records for this session.
+            </p>
+
+            <form onSubmit={handleVerifyOwner} className="space-y-3 pt-1">
+              <div>
+                <label className="text-xs font-bold text-stone-700 block mb-1.5">
+                  Owner Account Password:
+                </label>
+                <div className="relative">
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    value={ownerPasswordInput}
+                    onChange={(e) => {
+                      setOwnerPasswordInput(e.target.value);
+                      setAuthError(null);
+                    }}
+                    placeholder="Enter owner password..."
+                    autoFocus
+                    className="w-full bg-stone-50 border border-stone-300 rounded-xl px-3.5 py-2.5 text-xs text-stone-900 focus:outline-none focus:border-amber-500 focus:bg-white pr-10"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    className="absolute right-3 top-2.5 text-stone-400 hover:text-stone-700"
+                  >
+                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
+                </div>
+                {authError && (
+                  <p className="text-xs text-rose-600 font-semibold mt-1.5 flex items-center space-x-1">
+                    <AlertTriangle className="w-3.5 h-3.5 shrink-0" />
+                    <span>{authError}</span>
+                  </p>
+                )}
+              </div>
+
+              <div className="flex items-center space-x-2 pt-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setIsAuthModalOpen(false);
+                    setPendingAction(null);
+                    setAuthError(null);
+                  }}
+                  className="flex-1 py-2.5 rounded-xl bg-stone-100 hover:bg-stone-200 text-stone-700 text-xs font-semibold"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={isVerifyingOwner}
+                  className="flex-1 py-2.5 rounded-xl bronze-btn text-white text-xs font-bold flex items-center justify-center space-x-1.5 shadow-sm"
+                >
+                  {isVerifyingOwner ? (
+                    <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                  ) : (
+                    <KeyRound className="w-3.5 h-3.5" />
+                  )}
+                  <span>{isVerifyingOwner ? 'Verifying...' : 'Unlock Access'}</span>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
